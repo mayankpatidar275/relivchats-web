@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "../components/layout/Header";
 import { QueryProvider } from "../lib/query";
+import ClerkClientWrapper from "../components/ClerkClientWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,18 +40,18 @@ export default function RootLayout({
   }
 
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}
-        >
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}
+      >
+        <ClerkClientWrapper>
           <QueryProvider>
             <Header />
             <main className="min-h-[60vh]">{children}</main>
             {/* optional Footer */}
           </QueryProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkClientWrapper>
+      </body>
+    </html>
   );
 }

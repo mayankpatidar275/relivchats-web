@@ -1,5 +1,7 @@
+/* ✅ Tailwind v4 syntax */
 @import "tailwindcss";
 
+/* Root theme variables - Reliv Chats Theme */
 @theme {
   /* Brand Colors - Soft Purples */
   --color-brand-50: #f5f3ff;
@@ -35,43 +37,49 @@
   --color-gray-900: #18181b;
   --color-gray-950: #0a0a0a;
 
-  /* Semantic Aliases */
+  /* Feedback Colors */
+  --color-red-50: #fef2f2;
+  --color-red-400: #fca5a5;
+  --color-red-500: #f87171;
+  --color-red-600: #ef4444;
+  --color-red-700: #dc2626;
+
+  --color-amber-50: #fff8e7;
+  --color-amber-400: #fcd34d;
+  --color-amber-500: #fbbf24;
+  --color-amber-600: #f59e0b;
+
+  --color-blue-50: #eff6ff;
+  --color-blue-400: #93c5fd;
+  --color-blue-500: #60a5fa;
+  --color-blue-600: #3b82f6;
+
+  --color-green-500: #10b981;
+  --color-green-600: #059669;
+
+  /* Semantic tokens */
   --color-primary: var(--color-brand-500);
   --color-primary-foreground: #ffffff;
-  --color-secondary: var(--color-brand-100);
-  --color-secondary-foreground: var(--color-brand-900);
+  --color-primary-hover: var(--color-brand-600);
+  --color-primary-light: var(--color-brand-50);
+
+  --color-secondary: var(--color-lavender-500);
+  --color-secondary-foreground: var(--color-gray-900);
 
   --color-accent: var(--color-blush-500);
   --color-accent-foreground: var(--color-gray-900);
 
-  --color-muted: var(--color-gray-100);
-  --color-muted-foreground: var(--color-gray-500);
+  --color-success: var(--color-green-500);
+  --color-warning: var(--color-amber-500);
+  --color-error: var(--color-red-600);
+  --color-info: var(--color-blue-500);
 
-  --color-destructive: #ef4444;
-  --color-destructive-foreground: #ffffff;
-
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-info: #3b82f6;
-
-  /* Background & Foreground */
-  --color-background: #ffffff;
-  --color-foreground: var(--color-gray-900);
-
-  --color-card: #ffffff;
-  --color-card-foreground: var(--color-gray-900);
-
-  /* Borders */
-  --color-border: var(--color-gray-200);
-  --color-input: var(--color-gray-200);
-  --color-ring: var(--color-brand-500);
-
-  /* Radius */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
+  /* Border radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -80,55 +88,61 @@
     0 4px 6px -4px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 
-/* Dark mode overrides */
+/* Light mode variables */
+:root {
+  --background: var(--color-gray-50);
+  --foreground: var(--color-gray-900);
+  --muted: var(--color-gray-100);
+  --muted-foreground: var(--color-gray-500);
+  --border: var(--color-gray-200);
+  --card: #ffffff;
+  --card-foreground: var(--color-gray-900);
+}
+
+/* Dark mode variables */
 @media (prefers-color-scheme: dark) {
-  @theme {
-    --color-background: var(--color-gray-950);
-    --color-foreground: var(--color-gray-50);
-    --color-card: var(--color-gray-900);
-    --color-card-foreground: var(--color-gray-50);
-    --color-muted: var(--color-gray-800);
-    --color-muted-foreground: var(--color-gray-400);
-    --color-border: var(--color-gray-800);
-    --color-input: var(--color-gray-800);
+  :root {
+    --background: var(--color-gray-950);
+    --foreground: var(--color-gray-50);
+    --muted: var(--color-gray-800);
+    --muted-foreground: var(--color-gray-400);
+    --border: var(--color-gray-800);
+    --card: var(--color-gray-900);
+    --card-foreground: var(--color-gray-50);
   }
 }
 
-/* Base Styles */
+/* Base styles */
 * {
-  border-color: var(--color-border);
+  border-color: var(--border);
 }
 
 html,
-body {
+body,
+#__next {
   height: 100%;
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", sans-serif;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--color-muted);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-gray-400);
-  border-radius: var(--radius-md);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gray-500);
+/* Focus visible styles */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }

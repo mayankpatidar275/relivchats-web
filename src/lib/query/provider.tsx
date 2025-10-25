@@ -4,8 +4,8 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 import { createQueryClient } from "./client";
-import { useAuth } from "@clerk/nextjs";
 import { clientApi } from "../api";
+import { useAuth } from "@clerk/nextjs";
 
 export function QueryProvider({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => createQueryClient());

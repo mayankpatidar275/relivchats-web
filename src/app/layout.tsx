@@ -38,7 +38,7 @@ export default function RootLayout({
   }
 
   return (
-    <ClerkProvider key={publishableKey}>
+    <ClerkProvider>
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}

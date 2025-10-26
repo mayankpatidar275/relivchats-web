@@ -1,4 +1,4 @@
-import { clientApi } from "@/src/lib/api";
+import { clientApi } from "@/src/lib/api/client-api";
 import type { Chat, ChatStats } from "../types";
 
 export const chatsApi = {

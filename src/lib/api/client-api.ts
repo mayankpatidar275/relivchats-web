@@ -1,4 +1,4 @@
-import { env } from "../env";
+import { env } from "../env.client";
 import {
   ApiError,
   UnauthorizedError,
@@ -198,4 +198,4 @@ class ClientApiClient {
   }
 }
 
-export const clientApi = new ClientApiClient(env.NEXT_PUBLIC_API_URL);
+export const clientApi = new ClientApiClient(env.NEXT_PUBLIC_BACKEND_URL);

@@ -9,7 +9,7 @@ import {
   ServerError,
 } from "./errors";
 import type { ApiErrorResponse, RequestConfig } from "./types";
-import { env } from "../env";
+import { env } from "../env.server";
 
 class ServerApiClient {
   private baseURL: string;
@@ -191,4 +191,4 @@ class ServerApiClient {
   }
 }
 
-export const serverApi = new ServerApiClient(env.NEXT_PUBLIC_API_URL);
+export const serverApi = new ServerApiClient(env.NEXT_PUBLIC_BACKEND_URL);

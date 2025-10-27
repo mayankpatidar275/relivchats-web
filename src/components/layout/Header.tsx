@@ -1,87 +1,203 @@
 "use client";
 
-import { HeaderLogo, WhiteLogo } from "@/src/app/assets";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignOutButton,
-  useUser,
-} from "@clerk/nextjs";
-import Image from "next/image";
+import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
+import { Coins, Menu, Sparkles, X } from "lucide-react";
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Header() {
-  const { user } = useUser();
+  const router = useRouter();
+  const pathname = usePathname();
+  const { isSignedIn } = useUser();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "Categories", href: "/#categories" },
+    { name: "How It Works", href: "/#how-it-works" },
+    { name: "Pricing", href: "/pricing" },
+  ];
 
   return (
-    <header className="header w-full border-b border-primary-20 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 py-4 sm:py-6 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            src={HeaderLogo}
-            alt="Reliv Chats Logo"
-            className="h-8 sm:h-12 w-auto"
-            width={150}
-            height={150}
-            priority
-          />
-          <span className="text-xl sm:text-2xl font-bold text-primary-deep">
-            Reliv Chats
-          </span>
-        </Link>
-
-        {/* Navigation and User Actions */}
-        <div className="flex items-center gap-4 sm:gap-6">
-          {/* Categories Link */}
-          <Link href="/category/romantic" className="hidden sm:inline-block">
-            <button className="px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-sm hover:bg-primary hover:text-white transition-all duration-300">
-              Categories
-            </button>
-          </Link>
-
-          <SignedOut>
-            <SignInButton mode="modal">
-              <button className="group relative px-5 py-2 bg-gradient-to-r-primary-accent text-white rounded-full font-semibold text-sm shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
-                <span className="relative z-10 flex items-center gap-2">
-                  Sign In
-                  <Sparkles className="w-4 h-4 group-hover:animate-pulse-glow" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r-primary-deep-accent opacity-0 group-hover:opacity-100 transition-opacity" />
-              </button>
-            </SignInButton>
-          </SignedOut>
-
-          <SignedIn>
-            <div className="flex items-center gap-3 sm:gap-4">
-              {/* Coin Balance */}
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-accent-pink-light text-accent-pink font-semibold text-sm">
-                <Sparkles className="w-4 h-4 animate-pulse-glow" />
-                <span>{/* {balance?.coins ?? "--"} */} 50 ⍟</span>
-              </div>
-
-              {/* User Profile */}
-              <div className="flex items-center gap-2">
-                <img
-                  src={user?.imageUrl ?? "/default-avatar.png"}
-                  alt={user?.fullName ?? "User"}
-                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-primary-20"
-                />
-                <span className="hidden sm:inline text-sm font-semibold text-gray-900">
-                  {user?.firstName ?? "User"}
-                </span>
-                <SignOutButton>
-                  <button className="px-3 py-1 rounded-full bg-white text-gray-900 text-sm font-semibold border border-gray-200 hover:bg-primary hover:text-white transition-all duration-300">
-                    Sign Out
-                  </button>
-                </SignOutButton>
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/80 backdrop-blur-xl shadow-lg border-b border-gray-100"
+          : "bg-transparent"
+      }`}
+    >
+      <nav className="container mx-auto px-6 py-4 max-w-7xl">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="relative">
+              <div className="absolute inset-0 bg-linear-to-r from-primary to-accent-pink rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
+              <div className="relative w-10 h-10 bg-linear-to-br from-primary to-accent-pink rounded-xl flex items-center justify-center shadow-lg">
+                <Sparkles className="w-5 h-5 text-white" />
               </div>
             </div>
-          </SignedIn>
+            <span className="text-2xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
+              Reliv
+            </span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`relative font-medium transition-colors ${
+                  pathname === link.href
+                    ? "text-primary"
+                    : "text-gray-700 hover:text-primary"
+                }`}
+              >
+                {link.name}
+                {pathname === link.href && (
+                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-linear-to-r from-primary to-accent-pink rounded-full" />
+                )}
+              </Link>
+            ))}
+          </div>
+
+          {/* Right side - Auth & Actions */}
+          <div className="flex items-center gap-4">
+            {isSignedIn ? (
+              <>
+                {/* Credit Balance */}
+                <button
+                  onClick={() => router.push("/dashboard")}
+                  className="hidden sm:flex items-center gap-2 px-4 py-2 bg-linear-to-r from-primary-light to-accent-pink-light rounded-full border border-primary/20 hover:shadow-lg transition-all group"
+                >
+                  <Coins className="w-4 h-4 text-primary group-hover:rotate-12 transition-transform" />
+                  <span className="font-semibold text-primary">
+                    50 {/* Replace with actual balance */}
+                  </span>
+                </button>
+
+                {/* Dashboard button */}
+                <button
+                  onClick={() => router.push("/dashboard")}
+                  className="hidden sm:block px-5 py-2 bg-linear-to-r from-primary to-primary-hover text-white rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all"
+                >
+                  Dashboard
+                </button>
+
+                {/* User button */}
+                <div className="flex items-center gap-2">
+                  <UserButton
+                    afterSignOutUrl="/"
+                    appearance={{
+                      elements: {
+                        avatarBox:
+                          "w-10 h-10 ring-2 ring-primary/20 hover:ring-primary transition-all",
+                      },
+                    }}
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Sign In */}
+                <SignInButton mode="modal">
+                  <button className="hidden sm:block px-5 py-2 text-gray-700 font-medium hover:text-primary transition-colors">
+                    Sign In
+                  </button>
+                </SignInButton>
+
+                {/* Get Started */}
+                <button
+                  onClick={() => router.push("/signup")}
+                  className="px-6 py-2.5 bg-linear-to-r from-primary to--primary-hover text-white rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all flex items-center gap-2"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  Get Started
+                </button>
+              </>
+            )}
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-gray-700 hover:text-primary transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
         </div>
-      </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-xl">
+            <div className="container mx-auto px-6 py-6 space-y-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block py-2 text-lg font-medium transition-colors ${
+                    pathname === link.href
+                      ? "text-[--color-primary]"
+                      : "text-gray-700"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+
+              {isSignedIn ? (
+                <div className="pt-4 border-t border-gray-200 space-y-3">
+                  <button
+                    onClick={() => {
+                      router.push("/dashboard");
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-primary to-primary-hover text-white rounded-xl font-semibold"
+                  >
+                    <Coins className="w-5 h-5" />
+                    Dashboard (50 coins)
+                  </button>
+                </div>
+              ) : (
+                <div className="pt-4 border-t border-gray-200 space-y-3">
+                  <SignInButton mode="modal">
+                    <button className="w-full px-6 py-3 text-gray-700 font-medium border-2 border-gray-200 rounded-xl hover:border-primary transition-colors">
+                      Sign In
+                    </button>
+                  </SignInButton>
+                  <button
+                    onClick={() => {
+                      router.push("/signup");
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-primary to-primary-hover text-white rounded-xl font-semibold"
+                  >
+                    <Sparkles className="w-5 h-5" />
+                    Get Started Free
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </nav>
     </header>
   );
 }

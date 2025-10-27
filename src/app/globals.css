@@ -1,13 +1,33 @@
 @import "tailwindcss";
 
 @theme {
+  /* Primary colors */
   --color-primary: #8b5cf6;
   --color-primary-hover: #7c3aed;
   --color-primary-deep: #6b46c1;
   --color-primary-light: #f5f3ff;
+
+  /* Accent colors */
   --color-accent-pink: #f9a8d4;
   --color-accent-pink-light: #fdf2f8;
   --color-lavender: #ede9fe;
+
+  /* Category specific gradients */
+  --color-romantic-from: #ec4899;
+  --color-romantic-to: #f43f5e;
+  --color-romantic-bg: #fdf2f8;
+
+  --color-friendship-from: #3b82f6;
+  --color-friendship-to: #06b6d4;
+  --color-friendship-bg: #eff6ff;
+
+  --color-family-from: #10b981;
+  --color-family-to: #059669;
+  --color-family-bg: #f0fdf4;
+
+  --color-work-from: #8b5cf6;
+  --color-work-to: #6366f1;
+  --color-work-bg: #f5f3ff;
 }
 
 /* Animations */
@@ -41,8 +61,37 @@
   }
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 3s linear infinite;
+  background-size: 200% 100%;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out forwards;
 }
 
 .animate-gradient {

@@ -153,9 +153,7 @@ export default function Header() {
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`block py-2 text-lg font-medium transition-colors ${
-                    pathname === link.href
-                      ? "text-[--color-primary]"
-                      : "text-gray-700"
+                    pathname === link.href ? "text-primary" : "text-gray-700"
                   }`}
                 >
                   {link.name}

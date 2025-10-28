@@ -1,7 +1,9 @@
 "use client";
 
+import { PurpleLogo } from "@/src/app/assets";
 import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import { Coins, Menu, Sparkles, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -22,11 +24,12 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Categories", href: "/#categories" },
-    { name: "How It Works", href: "/#how-it-works" },
-    { name: "Pricing", href: "/pricing" },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const navLinks: any[] = [
+    // { name: "Home", href: "/" },
+    // { name: "Categories", href: "/#categories" },
+    // { name: "How It Works", href: "/#how-it-works" },
+    // { name: "Pricing", href: "/pricing" },
   ];
 
   return (
@@ -42,13 +45,17 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <div className="relative">
-              <div className="absolute inset-0 bg-linear-to-r from-primary to-accent-pink rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
-              <div className="relative w-10 h-10 bg-linear-to-br from-primary to-accent-pink rounded-xl flex items-center justify-center shadow-lg">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
+              <Image
+                src={PurpleLogo}
+                alt="Logo"
+                className="h-8 sm:h-12 w-auto"
+                width={150}
+                height={50}
+                priority
+              />
             </div>
             <span className="text-2xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
-              Reliv
+              Reliv Chats AI
             </span>
           </Link>
 

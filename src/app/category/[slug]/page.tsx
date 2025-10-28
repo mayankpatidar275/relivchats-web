@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
-// import InsightTypesSection from "@/components/category/InsightTypesSection";
-// import UploadSection from "@/components/category/UploadSection";
-// import HowItWorksSection from "@/components/category/HowItWorksSection";
 import { CATEGORIES } from "@/src/types/category";
 import CategoryHero from "@/src/components/category/CategoryHero";
+import InsightTypesSection from "@/src/components/category/InsightTypesSection";
+import UploadSection from "@/src/components/category/UploadSection";
+import HowItWorksSection from "@/src/components/category/HowItWorksSection";
 
 interface CategoryPageProps {
   params: {
@@ -23,9 +23,9 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   return (
     <div className="min-h-screen bg-white">
       <CategoryHero category={category} />
-      {/* <InsightTypesSection category={category} />
+      <InsightTypesSection category={category} />
       <UploadSection category={category} />
-      <HowItWorksSection /> */}
+      <HowItWorksSection />
     </div>
   );
 }

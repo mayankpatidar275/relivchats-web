@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
+// import { useUser } from "@clerk/nextjs";
 import {
   Sparkles,
   Heart,
@@ -13,14 +13,16 @@ import {
 
 export default function HeroSection() {
   const router = useRouter();
-  const { isSignedIn } = useUser();
+  // const { isSignedIn } = useUser();
 
   const handleGetStarted = () => {
-    if (isSignedIn) {
-      router.push("/dashboard");
-    } else {
-      router.push("/signup");
-    }
+    const element = document.getElementById("categories");
+    element?.scrollIntoView({ behavior: "smooth" });
+    // if (isSignedIn) {
+    //   router.push("/dashboard");
+    // } else {
+    //   router.push("/signup");
+    // }
   };
 
   return (

@@ -1,16 +1,21 @@
-import { clientApi } from "@/src/lib/api/client-api";
+import { clientApi } from "@/src/lib/api";
 import type {
-  Chat,
-  UnlockInsightRequest,
-  UnlockInsightResponse,
+  UnlockInsightsRequest,
+  UnlockInsightsResponse,
   UploadChatResponse,
 } from "../types";
 
 export const chatsMutations = {
   // Upload chat file
-  uploadChat: async (file: File): Promise<UploadChatResponse> => {
+  uploadChat: async (
+    file: File,
+    categorySlug?: string
+  ): Promise<UploadChatResponse> => {
     const formData = new FormData();
     formData.append("file", file);
+    if (categorySlug) {
+      formData.append("category_slug", categorySlug);
+    }
 
     // For file uploads, we need to override content-type
     const response = await fetch(
@@ -32,17 +37,15 @@ export const chatsMutations = {
     return response.json();
   },
 
-  // Unlock insights for a chat
+  // Unlock all insights for a category (simplified)
   unlockInsights: async (
-    data: UnlockInsightRequest
-  ): Promise<UnlockInsightResponse> => {
-    return clientApi.post<UnlockInsightResponse>("/insights/unlock", data);
+    data: UnlockInsightsRequest
+  ): Promise<UnlockInsightsResponse> => {
+    return clientApi.post<UnlockInsightsResponse>("/insights/unlock", data);
   },
 
-  // Assign category to chat
-  assignCategory: async (chatId: string, categoryId: string): Promise<Chat> => {
-    return clientApi.patch<Chat>(`/chats/${chatId}/category`, {
-      category_id: categoryId,
-    });
+  // Delete chat
+  deleteChat: async (chatId: string): Promise<void> => {
+    return clientApi.delete<void>(`/chats/${chatId}`);
   },
 };

@@ -3,6 +3,7 @@ export interface Chat {
   filename: string;
   platform: "whatsapp" | "telegram" | "instagram" | "other";
   category_id?: string;
+  category_slug?: string;
   category_name?: string;
   uploaded_at: string;
   participant_count: number;
@@ -11,6 +12,7 @@ export interface Chat {
   date_range_end?: string;
   file_size_bytes: number;
   processing_status: "pending" | "processed" | "failed";
+  insights_unlocked: boolean; // NEW: Track if insights are unlocked
 }
 
 export interface ChatStats {
@@ -37,16 +39,27 @@ export interface ChatStats {
   most_active_participant: string;
 }
 
-export interface UnlockInsightRequest {
+export interface UnlockInsightsRequest {
   chat_id: string;
-  insight_type_ids: string[];
+  category_slug: string; // Changed: now just need category
 }
 
-export interface UnlockInsightResponse {
+export interface UnlockInsightsResponse {
   success: boolean;
   coins_deducted: number;
   remaining_balance: number;
   job_id: string;
+  insights: Insight[]; // All insights for the category
+}
+
+export interface Insight {
+  id: string;
+  chat_id: string;
+  insight_type_id: string;
+  insight_type_name: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: Record<string, any>; // The actual insight data from AI
+  generated_at: string;
 }
 
 export interface UploadChatResponse {

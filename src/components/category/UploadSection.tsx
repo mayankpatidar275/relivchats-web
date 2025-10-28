@@ -5,6 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useState, useRef, DragEvent } from "react";
 import { Category } from "@/src/types/category";
+import { chatsMutations } from "@/src/features/chats/api";
 
 interface UploadSectionProps {
   category: Category;
@@ -17,6 +18,7 @@ export default function UploadSection({ category }: UploadSectionProps) {
 
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   // Color mapping
   const colorMap: Record<
@@ -76,7 +78,7 @@ export default function UploadSection({ category }: UploadSectionProps) {
     }
   };
 
-  const handleFileSelect = (file: File) => {
+  const handleFileSelect = async (file: File) => {
     // Validate file type
     const validTypes = [".txt", ".zip"];
     const fileExtension = "." + file.name.split(".").pop()?.toLowerCase();
@@ -89,8 +91,19 @@ export default function UploadSection({ category }: UploadSectionProps) {
     }
 
     setSelectedFile(file);
-    // Here you would trigger the upload mutation
-    console.log("File selected:", file.name);
+    setIsUploading(true);
+
+    try {
+      // Upload with category
+      const response = await chatsMutations.uploadChat(file, category.slug);
+
+      // Redirect to chat page
+      router.push(`/chat/${response.chat_id}`);
+    } catch (error) {
+      console.error("Upload failed:", error);
+      alert("Upload failed. Please try again.");
+      setIsUploading(false);
+    }
   };
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -303,6 +316,15 @@ export default function UploadSection({ category }: UploadSectionProps) {
           </div>
         </div>
       </div>
+      {/* Update only the upload button text */}
+      {/* {selectedFile && (
+        <button
+          disabled={isUploading}
+          className={`mt-4 px-6 py-3 bg-linear-to-r ${colors.gradient} text-white rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50`}
+        >
+          {isUploading ? "Uploading..." : "Upload & Continue"}
+        </button>
+      )} */}
     </section>
   );
 }

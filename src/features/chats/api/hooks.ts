@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import type { UnlockInsightRequest } from "../types";
 import { useAuth } from "@clerk/nextjs";
 import { queryKeys } from "@/src/lib/query/keys";
 import { chatsApi } from "./queries";
 import { chatsMutations } from "./mutations";
+import { UnlockInsightsRequest } from "../types";
 
 // Queries
 export const useChats = () => {
@@ -50,7 +50,7 @@ export const useUnlockInsights = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: UnlockInsightRequest) =>
+    mutationFn: (data: UnlockInsightsRequest) =>
       chatsMutations.unlockInsights(data),
     onSuccess: (_, variables) => {
       // Invalidate insights for this chat

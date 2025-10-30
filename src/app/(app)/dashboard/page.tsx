@@ -1,7 +1,7 @@
-import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import CreditBalanceWidget from "@/components/dashboard/CreditBalanceWidget";
-import ChatsListSection from "@/components/dashboard/ChatsListSection";
-import QuickActionsSection from "@/components/dashboard/QuickActionsSection";
+import ChatsListSection from "@/src/components/dashboard/ChatsListSection";
+import CreditBalanceWidget from "@/src/components/dashboard/CreditBalanceWidget";
+import DashboardHeader from "@/src/components/dashboard/DashboardHeader";
+import QuickActionsSection from "@/src/components/dashboard/QuickActionsSection";
 
 export default function DashboardPage() {
   return (

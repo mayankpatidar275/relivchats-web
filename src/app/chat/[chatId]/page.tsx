@@ -31,7 +31,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
   );
 }
 
-export function generateMetadata({ params }: ChatPageProps) {
+export function generateMetadata() {
   return {
     title: `Chat Analysis | Reliv Chats`,
     description: "View your chat analysis and insights",

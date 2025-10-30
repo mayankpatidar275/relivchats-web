@@ -1,5 +1,5 @@
 import { clientApi } from "@/src/lib/api/client-api";
-import type { Chat, ChatStats } from "../types";
+import type { Chat } from "../types";
 
 export const chatsApi = {
   // Get all user's chats
@@ -13,9 +13,9 @@ export const chatsApi = {
   },
 
   // Get chat stats (free stats)
-  getChatStats: async (chatId: string): Promise<ChatStats> => {
-    return clientApi.get<ChatStats>(`chats/${chatId}/stats`);
-  },
+  // getChatStats: async (chatId: string): Promise<ChatStats> => {
+  //   return clientApi.get<ChatStats>(`chats/${chatId}/stats`);
+  // },
 
   // Delete chat
   deleteChat: async (chatId: string): Promise<void> => {

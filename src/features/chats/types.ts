@@ -64,7 +64,25 @@ export interface Insight {
 
 export interface UploadChatResponse {
   chat_id: string;
+  user_id: string;
+  title?: string;
   filename: string;
-  processing_status: string;
-  message: string;
+  participants?: string[];
+  user_display_name?: string;
+  chat_metadata?: Record<string, unknown>;
+  category_id?: string;
+  category_slug?: string;
+  category_name?: string;
+  created_at: string;
+  insights_unlocked: boolean;
+  status: string;
+  vector_status: string;
+  chunk_count: number;
+  indexed_at?: string;
+  error_log?: string;
+}
+
+export interface UploadChatRequest {
+  file: File;
+  categoryId?: string;
 }

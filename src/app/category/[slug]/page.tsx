@@ -11,14 +11,10 @@ interface CategoryPageProps {
   };
 }
 
-export default function CategoryPage({ params }: CategoryPageProps) {
-  const category = CATEGORIES.find(
-    async (cat) => cat.slug === (await params.slug)
-  );
-
-  if (!category) {
-    notFound();
-  }
+export default async function CategoryPage({ params }: CategoryPageProps) {
+  const { slug } = await params;
+  const category = CATEGORIES.find((cat) => cat.slug === slug);
+  if (!category) notFound();
 
   return (
     <div className="min-h-screen bg-white">
@@ -38,16 +34,10 @@ export function generateStaticParams() {
 }
 
 // Generate metadata
-export function generateMetadata({ params }: CategoryPageProps) {
-  const category = CATEGORIES.find(
-    async (cat) => cat.slug === (await params.slug)
-  );
-
-  if (!category) {
-    return {
-      title: "Category Not Found",
-    };
-  }
+export async function generateMetadata({ params }: CategoryPageProps) {
+  const { slug } = await params;
+  const category = CATEGORIES.find((cat) => cat.slug === slug);
+  if (!category) return { title: "Category Not Found" };
 
   return {
     title: `${category.name} Chat Analysis | Reliv Chats`,

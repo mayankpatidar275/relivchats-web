@@ -4,7 +4,7 @@ import { useAuth } from "@clerk/nextjs";
 import { queryKeys } from "@/src/lib/query/keys";
 import { chatsApi } from "./queries";
 import { chatsMutations } from "./mutations";
-import { UnlockInsightsRequest } from "../types";
+import { UnlockInsightsRequest, UploadChatRequest } from "../types";
 
 // Queries
 export const useChats = () => {
@@ -38,7 +38,7 @@ export const useUploadChat = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: chatsMutations.uploadChat,
+    mutationFn: (data: UploadChatRequest) => chatsMutations.uploadChat(data),
     onSuccess: () => {
       // Invalidate chats list to show new upload
       queryClient.invalidateQueries({ queryKey: queryKeys.chats.lists() });

@@ -2,39 +2,17 @@ import { clientApi } from "@/src/lib/api";
 import type {
   UnlockInsightsRequest,
   UnlockInsightsResponse,
+  UploadChatRequest,
   UploadChatResponse,
 } from "../types";
 
 export const chatsMutations = {
   // Upload chat file
-  uploadChat: async (
-    file: File,
-    categorySlug?: string
-  ): Promise<UploadChatResponse> => {
-    const formData = new FormData();
-    formData.append("file", file);
-    if (categorySlug) {
-      formData.append("category_slug", categorySlug);
-    }
-
-    // For file uploads, we need to override content-type
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/chats/upload`,
-      {
-        method: "POST",
-        body: formData,
-        headers: {
-          // Don't set Content-Type, let browser set it with boundary
-          // Authorization header will be added by interceptor
-        },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Upload failed");
-    }
-
-    return response.json();
+  uploadChat: async (data: UploadChatRequest): Promise<UploadChatResponse> => {
+    const form = new FormData();
+    form.append("file", data.file);
+    if (data.categoryId) form.append("category_id", data.categoryId);
+    return clientApi.postForm<UploadChatResponse>("chats/upload", form);
   },
 
   // Unlock all insights for a category (simplified)
@@ -46,6 +24,6 @@ export const chatsMutations = {
 
   // Delete chat
   deleteChat: async (chatId: string): Promise<void> => {
-    return clientApi.delete<void>(`/chats/${chatId}`);
+    return clientApi.delete<void>(`chats/${chatId}`);
   },
 };

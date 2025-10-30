@@ -20,6 +20,8 @@ export default function ChatHeader({ chatId }: ChatHeaderProps) {
   //TODO: should i have a ui for error also?
   const { data: chat, isLoading } = useChat(chatId);
 
+  console.log("data: ", chat);
+
   if (isLoading) {
     return (
       <div className="bg-white border-b border-gray-200">
@@ -104,7 +106,7 @@ export default function ChatHeader({ chatId }: ChatHeaderProps) {
             )}
 
             {/* Filename */}
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 break-words">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 wrap-break-word">
               {chat.filename}
             </h1>
 

@@ -5,7 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useState, useRef, DragEvent } from "react";
 import { Category } from "@/src/types/category";
-import { chatsMutations } from "@/src/features/chats/api";
+import { chatsMutations, useUploadChat } from "@/src/features/chats/api";
 
 interface UploadSectionProps {
   category: Category;
@@ -19,6 +19,7 @@ export default function UploadSection({ category }: UploadSectionProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const uploadChatMutation = useUploadChat();
 
   // Color mapping
   const colorMap: Record<
@@ -95,7 +96,11 @@ export default function UploadSection({ category }: UploadSectionProps) {
 
     try {
       // Upload with category
-      const response = await chatsMutations.uploadChat(file, category.slug);
+      const response = await uploadChatMutation.mutateAsync({
+        file: file,
+        // categoryId: category.slug,
+        categoryId: "2dd602d5-1e31-456d-8f34-f5bf5fd64e23",
+      });
 
       // Redirect to chat page
       router.push(`/chat/${response.chat_id}`);

@@ -191,4 +191,6 @@ class ServerApiClient {
   }
 }
 
-export const serverApi = new ServerApiClient(env.NEXT_PUBLIC_BACKEND_URL);
+export const serverApi = new ServerApiClient(
+  `${env.NEXT_PUBLIC_BACKEND_URL}/api/`
+);

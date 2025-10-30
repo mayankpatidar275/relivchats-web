@@ -105,13 +105,11 @@ class ClientApiClient {
     params?: Record<string, string | number | boolean>
   ): string {
     const url = new URL(endpoint, this.baseURL);
-
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         url.searchParams.append(key, String(value));
       });
     }
-
     return url.toString();
   }
 
@@ -169,6 +167,28 @@ class ClientApiClient {
     });
   }
 
+  async postForm<T>(
+    endpoint: string,
+    formData: FormData,
+    config: RequestConfig = {}
+  ): Promise<T> {
+    const url = this.buildURL(endpoint, config?.params);
+    const authHeaders = await this.getAuthHeaders();
+
+    const response = await fetch(url, {
+      method: "POST",
+      body: formData,
+      headers: {
+        ...authHeaders,
+        ...(config?.headers || {}), // allow overriding other headers but NOT Content-Type
+      },
+      // include other fetch config if needed:
+      ...config,
+    });
+
+    return this.handleResponse<T>(response);
+  }
+
   async put<T>(
     endpoint: string,
     data?: unknown,
@@ -198,4 +218,6 @@ class ClientApiClient {
   }
 }
 
-export const clientApi = new ClientApiClient(env.NEXT_PUBLIC_BACKEND_URL);
+export const clientApi = new ClientApiClient(
+  `${env.NEXT_PUBLIC_BACKEND_URL}/api/`
+);

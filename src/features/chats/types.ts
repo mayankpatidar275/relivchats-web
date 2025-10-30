@@ -1,80 +1,99 @@
 export interface Chat {
-  id: string;
+  chat_id: string;
+  user_id: string;
+  title: string;
   filename: string;
-  platform: "whatsapp" | "telegram" | "instagram" | "other";
+  participants: string[];
+  user_display_name: string;
+  chat_metadata: ChatMetadata;
   category_id?: string;
   category_slug?: string;
   category_name?: string;
-  uploaded_at: string;
-  participant_count: number;
-  message_count: number;
-  date_range_start?: string;
-  date_range_end?: string;
-  file_size_bytes: number;
-  processing_status: "pending" | "processed" | "failed";
-  insights_unlocked: boolean; // NEW: Track if insights are unlocked
+  insights_unlocked: boolean;
+  created_at: string;
+  status: string;
+  vector_status: string;
+  chunk_count: number;
+  indexed_at?: string;
+  error_log?: string;
 }
 
-export interface ChatStats {
-  chat_id: string;
+export interface ChatMetadata {
   total_messages: number;
-  participants: {
-    name: string;
-    message_count: number;
-    percentage: number;
-  }[];
+  total_words: number;
   date_range: {
     start: string;
     end: string;
   };
-  busiest_day: string;
+  total_days: number;
+  messages_per_day_avg: number;
+  deleted_messages_count: number;
+  media_shared_count: number;
+  links_shared_count: number;
   busiest_hour: number;
-  media_count: {
-    images: number;
-    videos: number;
-    documents: number;
-    audio: number;
+  busiest_day: string;
+  hourly_distribution: number[];
+  daily_distribution: Record<string, number>;
+  top_words: Array<{ word: string; count: number }>;
+  top_emojis: Array<{ emoji: string; count: number }>;
+  user_stats: Record<string, UserStats>;
+}
+
+export interface UserStats {
+  message_count: number;
+  word_count: number;
+  avg_words_per_message: number;
+  avg_message_length_chars: number;
+  deleted_messages: number;
+  media_shared: number;
+  links_shared: number;
+  conversation_initiations: number;
+  double_texting_rate: number;
+  questions_asked: number;
+  avg_response_time_seconds: number;
+  top_words: Array<{ word: string; count: number }>;
+  top_emojis: Array<{ emoji: string; count: number }>;
+  busiest_hour: number;
+  hourly_distribution: number[];
+  longest_message: {
+    word_count: number;
+    char_count: number;
+    timestamp: string;
   };
-  avg_message_length: number;
-  most_active_participant: string;
+}
+
+export interface AssignCategoryRequest {
+  chat_id: string;
+  category_id: string;
 }
 
 export interface UnlockInsightsRequest {
   chat_id: string;
-  category_slug: string; // Changed: now just need category
+  category_id: string;
 }
 
 export interface UnlockInsightsResponse {
   success: boolean;
+  job_id: string;
   coins_deducted: number;
   remaining_balance: number;
-  job_id: string;
-  insights: Insight[]; // All insights for the category
-}
-
-export interface Insight {
-  id: string;
-  chat_id: string;
-  insight_type_id: string;
-  insight_type_name: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: Record<string, any>; // The actual insight data from AI
-  generated_at: string;
+  total_insights: number;
+  estimated_time_seconds: number;
 }
 
 export interface UploadChatResponse {
   chat_id: string;
   user_id: string;
-  title?: string;
+  title: string;
   filename: string;
-  participants?: string[];
-  user_display_name?: string;
-  chat_metadata?: Record<string, unknown>;
+  participants: string[];
+  user_display_name: string;
+  chat_metadata: ChatMetadata;
   category_id?: string;
   category_slug?: string;
   category_name?: string;
-  created_at: string;
   insights_unlocked: boolean;
+  created_at: string;
   status: string;
   vector_status: string;
   chunk_count: number;

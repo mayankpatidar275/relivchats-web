@@ -1,8 +1,8 @@
+import CategorySelectorWrapper from "@/src/components/chat/CategorySelectorWrapper";
 import ChatHeader from "@/src/components/chat/ChatHeader";
 import FreeStatsSection from "@/src/components/chat/FreeStatsSection";
 import InsightsDisplaySection from "@/src/components/chat/InsightsDisplaySection";
 import UnlockInsightsSection from "@/src/components/chat/UnlockInsightsSection";
-import { notFound } from "next/navigation";
 
 interface ChatPageProps {
   params: {
@@ -20,6 +20,11 @@ export default async function ChatPage({ params }: ChatPageProps) {
     <div className="min-h-screen bg-gray-50">
       <ChatHeader chatId={chatId} />
       <FreeStatsSection chatId={chatId} />
+
+      {/* Show category selector only if no category assigned */}
+      {/* This will be handled by the component itself checking chat.category_id */}
+      <CategorySelectorWrapper chatId={chatId} />
+
       <UnlockInsightsSection chatId={chatId} />
       <InsightsDisplaySection chatId={chatId} />
     </div>

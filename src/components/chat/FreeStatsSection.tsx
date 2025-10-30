@@ -1,13 +1,13 @@
 "use client";
 
-import { useChatStats } from "@/src/features/chats/api";
+import { useChat } from "@/src/features/chats/api";
 import {
   Users,
   MessageCircle,
   Calendar,
   TrendingUp,
-  Image,
-  File,
+  Zap,
+  Clock,
 } from "lucide-react";
 
 interface FreeStatsSectionProps {
@@ -15,7 +15,7 @@ interface FreeStatsSectionProps {
 }
 
 export default function FreeStatsSection({ chatId }: FreeStatsSectionProps) {
-  const { data: stats, isLoading } = useChatStats(chatId);
+  const { data: chat, isLoading } = useChat(chatId);
 
   if (isLoading) {
     return (
@@ -34,9 +34,28 @@ export default function FreeStatsSection({ chatId }: FreeStatsSectionProps) {
     );
   }
 
-  if (!stats) {
+  if (!chat || !chat.chat_metadata) {
     return null;
   }
+
+  const stats = chat.chat_metadata;
+
+  // Calculate days duration
+  const startDate = new Date(stats.date_range.start);
+  const endDate = new Date(stats.date_range.end);
+  const daysDiff = Math.ceil(
+    (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+  );
+
+  // Get most active participant
+  const participants = Object.entries(stats.user_stats);
+  const mostActive = participants.reduce(
+    (max, [name, userStats]) =>
+      userStats.message_count > max.count
+        ? { name, count: userStats.message_count }
+        : max,
+    { name: "", count: 0 }
+  );
 
   const statCards = [
     {
@@ -44,48 +63,36 @@ export default function FreeStatsSection({ chatId }: FreeStatsSectionProps) {
       label: "Total Messages",
       value: stats.total_messages.toLocaleString(),
       color: "from-blue-500 to-cyan-500",
-      bg: "bg-blue-50",
     },
     {
       icon: Users,
       label: "Participants",
-      value: stats.participants.length,
+      value: chat.participants.length,
       color: "from-purple-500 to-pink-500",
-      bg: "bg-purple-50",
     },
     {
       icon: Calendar,
       label: "Chat Duration",
-      value: `${Math.ceil(
-        (new Date(stats.date_range.end).getTime() -
-          new Date(stats.date_range.start).getTime()) /
-          (1000 * 60 * 60 * 24)
-      )} days`,
+      value: `${daysDiff} days`,
       color: "from-green-500 to-emerald-500",
-      bg: "bg-green-50",
     },
     {
       icon: TrendingUp,
-      label: "Avg Message Length",
-      value: `${stats.avg_message_length} chars`,
+      label: "Avg Messages/Day",
+      value: stats.messages_per_day_avg.toFixed(1),
       color: "from-amber-500 to-orange-500",
-      bg: "bg-amber-50",
     },
     {
-      icon: Image,
-      label: "Media Shared",
-      value: (
-        stats.media_count.images + stats.media_count.videos
-      ).toLocaleString(),
+      icon: Clock,
+      label: "Busiest Hour",
+      value: `${stats.busiest_hour}:00`,
       color: "from-pink-500 to-rose-500",
-      bg: "bg-pink-50",
     },
     {
-      icon: File,
+      icon: Zap,
       label: "Most Active",
-      value: stats.most_active_participant,
+      value: mostActive.name,
       color: "from-indigo-500 to-blue-500",
-      bg: "bg-indigo-50",
     },
   ];
 
@@ -112,7 +119,7 @@ export default function FreeStatsSection({ chatId }: FreeStatsSectionProps) {
           {statCards.map((stat, index) => (
             <div
               key={index}
-              className={`relative group rounded-2xl border-2 border-gray-100 bg-white p-6 hover:shadow-lg transition-all duration-300`}
+              className="relative group rounded-2xl border-2 border-gray-100 bg-white p-6 hover:shadow-lg transition-all duration-300"
             >
               <div className="flex items-start justify-between mb-4">
                 <div
@@ -125,7 +132,9 @@ export default function FreeStatsSection({ chatId }: FreeStatsSectionProps) {
                 <p className="text-sm text-gray-600 font-medium">
                   {stat.label}
                 </p>
-                <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
+                <p className="text-3xl font-bold text-gray-900 truncate">
+                  {stat.value}
+                </p>
               </div>
             </div>
           ))}
@@ -137,30 +146,35 @@ export default function FreeStatsSection({ chatId }: FreeStatsSectionProps) {
             Participant Activity
           </h3>
           <div className="space-y-4">
-            {stats.participants.map((participant, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary to-[--color-accent-pink] flex items-center justify-center text-white font-bold">
-                  {participant.name.charAt(0).toUpperCase()}
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-gray-900">
-                      {participant.name}
-                    </span>
-                    <span className="text-sm text-gray-600">
-                      {participant.message_count.toLocaleString()} messages (
-                      {participant.percentage}%)
-                    </span>
+            {participants.map(([name, userStats], index) => {
+              const percentage =
+                (userStats.message_count / stats.total_messages) * 100;
+
+              return (
+                <div key={index} className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary to-[--color-accent-pink] flex items-center justify-center text-white font-bold shrink-0">
+                    {name.charAt(0).toUpperCase()}
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                    <div
-                      className="h-full bg-linear-to-r from-primary to-[--color-accent-pink] rounded-full transition-all duration-500"
-                      style={{ width: `${participant.percentage}%` }}
-                    />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-semibold text-gray-900 truncate">
+                        {name}
+                      </span>
+                      <span className="text-sm text-gray-600 ml-2 shrink-0">
+                        {userStats.message_count.toLocaleString()} messages (
+                        {percentage.toFixed(1)}%)
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                      <div
+                        className="h-full bg-linear-to-r from-primary to-[--color-accent-pink] rounded-full transition-all duration-500"
+                        style={{ width: `${percentage}%` }}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

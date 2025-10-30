@@ -2,7 +2,7 @@
 
 import { useChat, useUnlockInsights } from "@/src/features/chats/api";
 import { CATEGORIES, INSIGHT_TYPES } from "@/src/types/category";
-import { Lock, Sparkles, TrendingUp, Check, Zap } from "lucide-react";
+import { Lock, Sparkles, Check, Zap } from "lucide-react";
 import { useState } from "react";
 
 interface UnlockInsightsSectionProps {
@@ -16,18 +16,18 @@ export default function UnlockInsightsSection({
   const unlockMutation = useUnlockInsights();
   const [isUnlocking, setIsUnlocking] = useState(false);
 
-  if (!chat || chat.insights_unlocked) {
-    return null; // Don't show if insights already unlocked
+  if (!chat || chat.insights_unlocked || !chat.category_id) {
+    return null; // Don't show if insights unlocked or no category selected
   }
 
-  const category = CATEGORIES.find((cat) => cat.slug === chat.category_slug);
+  const category = CATEGORIES.find((cat) => cat.id === chat.category_id);
   const insights = chat.category_slug ? INSIGHT_TYPES[chat.category_slug] : [];
 
   if (!category) {
     return null;
   }
 
-  // Color mapping
+  // Color mapping (same as before)
   const colorMap: Record<
     string,
     {
@@ -65,7 +65,7 @@ export default function UnlockInsightsSection({
     try {
       await unlockMutation.mutateAsync({
         chat_id: chatId,
-        category_slug: category.slug,
+        category_id: chat.category_id!,
       });
       // Success - insights will be displayed
     } catch (error) {

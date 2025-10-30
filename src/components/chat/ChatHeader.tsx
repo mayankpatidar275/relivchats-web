@@ -114,21 +114,23 @@ export default function ChatHeader({ chatId }: ChatHeaderProps) {
             <div className="flex items-center gap-6 flex-wrap text-sm">
               <div className="flex items-center gap-2 text-gray-600">
                 <Calendar className="w-4 h-4" />
-                <span>Uploaded {formatDate(chat.uploaded_at)}</span>
+                <span>Uploaded {formatDate(chat.created_at)}</span>
               </div>
               <div className="flex items-center gap-2 text-gray-600">
                 <Users className="w-4 h-4" />
-                <span>{chat.participant_count} participants</span>
+                <span>{chat.participants.length} participants</span>
               </div>
               <div className="flex items-center gap-2 text-gray-600">
                 <MessageCircle className="w-4 h-4" />
-                <span>{chat.message_count.toLocaleString()} messages</span>
+                <span>
+                  {chat.chat_metadata.total_messages.toLocaleString()} messages
+                </span>
               </div>
             </div>
 
             {/* Status badge */}
             <div className="flex items-center gap-3">
-              {chat.processing_status === "processed" && (
+              {chat.status === "processed" && (
                 <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm font-medium border border-green-200">
                   <div className="w-2 h-2 rounded-full bg-green-500" />
                   Processed

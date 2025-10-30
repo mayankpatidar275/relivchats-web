@@ -4,7 +4,11 @@ import { useAuth } from "@clerk/nextjs";
 import { queryKeys } from "@/src/lib/query/keys";
 import { chatsApi } from "./queries";
 import { chatsMutations } from "./mutations";
-import { UnlockInsightsRequest, UploadChatRequest } from "../types";
+import {
+  AssignCategoryRequest,
+  UnlockInsightsRequest,
+  UploadChatRequest,
+} from "../types";
 
 // Queries
 export const useChats = () => {
@@ -25,14 +29,6 @@ export const useChat = (chatId: string) => {
   });
 };
 
-export const useChatStats = (chatId: string) => {
-  return useQuery({
-    queryKey: queryKeys.chats.stats(chatId),
-    queryFn: () => chatsApi.getChatStats(chatId),
-    enabled: !!chatId,
-  });
-};
-
 // Mutations
 export const useUploadChat = () => {
   const queryClient = useQueryClient();
@@ -46,6 +42,20 @@ export const useUploadChat = () => {
   });
 };
 
+export const useAssignCategory = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: AssignCategoryRequest) =>
+      chatsMutations.assignCategory(data),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.chats.detail(variables.chat_id),
+      });
+    },
+  });
+};
+
 export const useUnlockInsights = () => {
   const queryClient = useQueryClient();
 
@@ -55,7 +65,7 @@ export const useUnlockInsights = () => {
     onSuccess: (_, variables) => {
       // Invalidate insights for this chat
       queryClient.invalidateQueries({
-        queryKey: queryKeys.chats.insights(variables.chat_id),
+        queryKey: queryKeys.chats.detail(variables.chat_id),
       });
       // Invalidate credit balance
       queryClient.invalidateQueries({
@@ -72,25 +82,6 @@ export const useDeleteChat = () => {
     mutationFn: (chatId: string) => chatsApi.deleteChat(chatId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.chats.lists() });
-    },
-  });
-};
-
-export const useAssignCategory = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: ({
-      chatId,
-      categoryId,
-    }: {
-      chatId: string;
-      categoryId: string;
-    }) => chatsMutations.assignCategory(chatId, categoryId),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.chats.detail(variables.chatId),
-      });
     },
   });
 };

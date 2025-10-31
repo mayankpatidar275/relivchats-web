@@ -9,7 +9,8 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/src/lib/utils";
-import { useChat } from "@/src/features/chats/api";
+import { useChat, useDeleteChat } from "@/src/features/chats/api";
+import { useConfirm } from "@/src/hooks/useConfirm";
 
 interface ChatHeaderProps {
   chatId: string;
@@ -19,9 +20,42 @@ export default function ChatHeader({ chatId }: ChatHeaderProps) {
   const router = useRouter();
   //TODO: should i have a ui for error also?
   const { data: chat, isLoading } = useChat(chatId);
+  const { confirm } = useConfirm();
+  const deleteMutation = useDeleteChat();
 
-  console.log("data: ", chat);
+  const handleDelete = async () => {
+    if (!chat) return;
 
+    await confirm({
+      title: "Delete Chat?",
+      description: (
+        <div className="space-y-2">
+          <p>
+            Are you sure you want to delete{" "}
+            <strong>&quot;{chat.filename}&quot;</strong>?
+          </p>
+          <p className="text-sm text-gray-500">This will permanently delete:</p>
+          <ul className="text-sm text-gray-600 list-disc list-inside space-y-1">
+            <li>
+              All {chat.chat_metadata.total_messages.toLocaleString()} messages
+            </li>
+            <li>Free statistics and analysis</li>
+            {chat.insights_unlocked && <li>All unlocked insights</li>}
+          </ul>
+          <p className="text-sm font-semibold text-red-600">
+            This action cannot be undone.
+          </p>
+        </div>
+      ),
+      confirmText: "Delete Forever",
+      cancelText: "Keep Chat",
+      variant: "danger",
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync(chatId);
+        router.push("/dashboard");
+      },
+    });
+  };
   if (isLoading) {
     return (
       <div className="bg-white border-b border-gray-200">
@@ -148,11 +182,7 @@ export default function ChatHeader({ chatId }: ChatHeaderProps) {
           {/* Right: Actions */}
           <div className="flex items-center gap-3">
             <button
-              onClick={() => {
-                if (confirm("Are you sure you want to delete this chat?")) {
-                  // Handle delete
-                }
-              }}
+              onClick={handleDelete}
               className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-xl font-medium transition-all flex items-center gap-2"
             >
               <Trash2 className="w-4 h-4" />

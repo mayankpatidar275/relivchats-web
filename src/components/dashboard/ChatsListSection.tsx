@@ -1,6 +1,7 @@
 "use client";
 
 import { useChats, useDeleteChat } from "@/src/features/chats/api";
+import { useConfirm } from "@/src/hooks/useConfirm";
 import { formatDate } from "@/src/lib/utils";
 import {
   MessageCircle,
@@ -17,15 +18,30 @@ export default function ChatsListSection() {
   const router = useRouter();
   const { data: chats, isLoading } = useChats();
   const deleteMutation = useDeleteChat();
+  const { confirm } = useConfirm();
 
   const handleDelete = async (chatId: string, filename: string) => {
-    if (confirm(`Are you sure you want to delete "${filename}"?`)) {
-      try {
+    await confirm({
+      title: "Delete Chat?",
+      description: (
+        <div className="space-y-2">
+          <p>
+            Are you sure you want to delete{" "}
+            <strong>&quot;{filename}&quot;</strong>?
+          </p>
+          <p className="text-sm">
+            This action cannot be undone. All messages and insights will be
+            permanently deleted.
+          </p>
+        </div>
+      ),
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      variant: "danger",
+      onConfirm: async () => {
         await deleteMutation.mutateAsync(chatId);
-      } catch {
-        alert("Failed to delete chat");
-      }
-    }
+      },
+    });
   };
 
   if (isLoading) {
@@ -196,7 +212,7 @@ export default function ChatsListSection() {
                     <button
                       onClick={() => handleDelete(chat.chat_id, chat.filename)}
                       disabled={deleteMutation.isPending}
-                      className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-xl font-medium transition-all disabled:opacity-50"
+                      className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-xl font-medium transition-all"
                     >
                       <Trash2 className="w-4 h-4" />
                       Delete

@@ -5,6 +5,7 @@ import Header from "../components/layout/Header";
 import { QueryProvider } from "../lib/query";
 import ClerkClientWrapper from "../components/ClerkClientWrapper";
 import Footer from "../components/layout/Footer";
+import { ConfirmProvider } from "../hooks/useConfirm";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,9 +48,11 @@ export default function RootLayout({
       >
         <ClerkClientWrapper>
           <QueryProvider>
-            <Header />
-            <main className="min-h-[60vh]">{children}</main>
-            <Footer />
+            <ConfirmProvider>
+              <Header />
+              <main className="min-h-[60vh]">{children}</main>
+              <Footer />
+            </ConfirmProvider>
           </QueryProvider>
         </ClerkClientWrapper>
       </body>

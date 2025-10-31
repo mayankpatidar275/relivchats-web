@@ -47,22 +47,22 @@ export default function ChatHeader({ chatId }: ChatHeaderProps) {
     romantic: {
       text: "text-pink-600",
       bg: "bg-pink-50",
-      gradient: "from-[--color-romantic-from] to-[--color-romantic-to]",
+      gradient: "from-romantic-from to-romantic-to",
     },
     friendship: {
       text: "text-blue-600",
       bg: "bg-blue-50",
-      gradient: "from-[--color-friendship-from] to-[--color-friendship-to]",
+      gradient: "from-friendship-from to-friendship-to",
     },
     family: {
       text: "text-green-600",
       bg: "bg-green-50",
-      gradient: "from-[--color-family-from] to-[--color-family-to]",
+      gradient: "from-family-from to-family-to",
     },
     work: {
       text: "text-purple-600",
       bg: "bg-purple-50",
-      gradient: "from-[--color-work-from] to-[--color-work-to]",
+      gradient: "from-work-from to-work-to",
     },
   };
 
@@ -130,7 +130,7 @@ export default function ChatHeader({ chatId }: ChatHeaderProps) {
 
             {/* Status badge */}
             <div className="flex items-center gap-3">
-              {chat.status === "processed" && (
+              {chat.status === "completed" && (
                 <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm font-medium border border-green-200">
                   <div className="w-2 h-2 rounded-full bg-green-500" />
                   Processed

@@ -152,7 +152,7 @@ export default function FreeStatsSection({ chatId }: FreeStatsSectionProps) {
 
               return (
                 <div key={index} className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary to-[--color-accent-pink] flex items-center justify-center text-white font-bold shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary to-accent-pink flex items-center justify-center text-white font-bold shrink-0">
                     {name.charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -167,7 +167,7 @@ export default function FreeStatsSection({ chatId }: FreeStatsSectionProps) {
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                       <div
-                        className="h-full bg-linear-to-r from-primary to-[--color-accent-pink] rounded-full transition-all duration-500"
+                        className="h-full bg-linear-to-r from-primary to-accent-pink rounded-full transition-all duration-500"
                         style={{ width: `${percentage}%` }}
                       />
                     </div>

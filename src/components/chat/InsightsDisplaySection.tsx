@@ -30,22 +30,22 @@ export default function InsightsDisplaySection({
     }
   > = {
     romantic: {
-      gradient: "from-[--color-romantic-from] to-[--color-romantic-to]",
+      gradient: "from-romantic-from to-romantic-to",
       text: "text-pink-600",
       bg: "bg-pink-50",
     },
     friendship: {
-      gradient: "from-[--color-friendship-from] to-[--color-friendship-to]",
+      gradient: "from-friendship-from to-friendship-to",
       text: "text-blue-600",
       bg: "bg-blue-50",
     },
     family: {
-      gradient: "from-[--color-family-from] to-[--color-family-to]",
+      gradient: "from-family-from to-family-to",
       text: "text-green-600",
       bg: "bg-green-50",
     },
     work: {
-      gradient: "from-[--color-work-from] to-[--color-work-to]",
+      gradient: "from-work-from to-work-to",
       text: "text-purple-600",
       bg: "bg-purple-50",
     },
@@ -85,7 +85,7 @@ export default function InsightsDisplaySection({
 
         {/* Insights grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {insights.map((insight, index) => (
+          {insights.map((insight) => (
             <div
               key={insight.id}
               className="bg-white rounded-3xl border-2 border-gray-100 p-8 hover:shadow-xl transition-all duration-300"
@@ -93,7 +93,7 @@ export default function InsightsDisplaySection({
               {/* Header */}
               <div className="flex items-start gap-4 mb-6">
                 <div
-                  className={`w-14 h-14 rounded-2xl bg-linear-to-br ${colors.gradient} flex items-center justify-center text-3xl flex-shrink-0`}
+                  className={`w-14 h-14 rounded-2xl bg-linear-to-br ${colors.gradient} flex items-center justify-center text-3xl shrink-0`}
                 >
                   {insight.icon}
                 </div>

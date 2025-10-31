@@ -1,7 +1,6 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import { Sparkles } from "lucide-react";
 
 export default function DashboardHeader() {
   const { user } = useUser();
@@ -23,14 +22,14 @@ export default function DashboardHeader() {
           {/* Right: Quick stats */}
           <div className="flex items-center gap-6">
             <div className="text-center">
-              <div className="text-3xl font-bold bg-linear-to-r from-primary to-[--color-accent-pink] bg-clip-text text-transparent">
+              <div className="text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
                 0
               </div>
               <div className="text-sm text-gray-600">Chats</div>
             </div>
             <div className="h-12 w-px bg-gray-200" />
             <div className="text-center">
-              <div className="text-3xl font-bold bg-linear-to-r from-primary to-[--color-accent-pink] bg-clip-text text-transparent">
+              <div className="text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
                 0
               </div>
               <div className="text-sm text-gray-600">Insights</div>

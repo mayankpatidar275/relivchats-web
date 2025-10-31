@@ -93,7 +93,7 @@ export default function ChatsListSection() {
           </p>
           <button
             onClick={() => router.push("/")}
-            className="px-8 py-3 bg-linear-to-r from-primary to-[--color-primary-hover] text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+            className="px-8 py-3 bg-linear-to-r from-primary to-primary-hover text-white rounded-xl font-semibold hover:shadow-lg transition-all"
           >
             Choose Category & Upload
           </button>
@@ -164,7 +164,7 @@ export default function ChatsListSection() {
 
                     {/* Status */}
                     <div className="flex items-center gap-2 mt-3">
-                      {chat.status === "processed" && (
+                      {chat.status === "completed" && (
                         <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium">
                           <CheckCircle className="w-3 h-3" />
                           Processed
@@ -188,7 +188,7 @@ export default function ChatsListSection() {
                   <div className="flex flex-col gap-2">
                     <button
                       onClick={() => router.push(`/chat/${chat.chat_id}`)}
-                      className="flex items-center gap-2 px-4 py-2 bg-linear-to-r from-primary to-[--color-primary-hover] text-white rounded-xl font-medium hover:shadow-lg transition-all"
+                      className="flex items-center gap-2 px-4 py-2 bg-linear-to-r from-primary to-primary-hover text-white rounded-xl font-medium hover:shadow-lg transition-all"
                     >
                       <Eye className="w-4 h-4" />
                       View

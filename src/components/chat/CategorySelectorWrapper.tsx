@@ -11,8 +11,12 @@ export default function CategorySelectorWrapper({
 }) {
   const { data: chat } = useChat(chatId);
 
+  if (!chat) {
+    return null;
+  }
+
   // Only show if no category assigned
-  if (!chat || chat.category_id) {
+  if (chat.category_id) {
     return null;
   }
 

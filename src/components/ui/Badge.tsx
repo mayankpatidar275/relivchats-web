@@ -12,15 +12,12 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
     ref
   ) => {
     const variants = {
-      primary:
-        "bg-[--color-brand-100] text-[--color-brand-700] border-[--color-brand-200]",
-      secondary:
-        "bg-[--color-lavender-100] text-[--color-gray-700] border-[--color-lavender-300]",
+      primary: "bg-brand-100 text-brand-700 border-brand-200",
+      secondary: "bg-lavender-100 text-gray-700 border-lavender-300",
       success: "bg-green-50 text-green-700 border-green-200",
-      warning: "bg-[--color-amber-50] text-amber-700 border-amber-200",
-      error:
-        "bg-[--color-red-50] text-[--color-red-700] border-[--color-red-200]",
-      info: "bg-[--color-blue-50] text-[--color-blue-700] border-[--color-blue-200]",
+      warning: "bg-amber-50 text-amber-700 border-amber-200",
+      error: "bg-red-50 text-red-700 border-red-200",
+      info: "bg-blue-50 text-blue-700 border-blue-200",
     };
 
     const sizes = {

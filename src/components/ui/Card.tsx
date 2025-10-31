@@ -15,7 +15,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
           "rounded-[--radius-xl] border border-[--border] bg-[--card] p-6 shadow-[--shadow-card] transition-all duration-300",
           hover &&
             "hover:shadow-[--shadow-lg] hover:-translate-y-1 cursor-pointer",
-          gradient && "bg-linear-to-br from-[--color-brand-50] to-white",
+          gradient && "bg-linear-to-br from-brand-50 to-white",
           className
         )}
         {...props}

@@ -16,11 +16,18 @@ export default function UnlockInsightsSection({
   const unlockMutation = useUnlockInsights();
   const [isUnlocking, setIsUnlocking] = useState(false);
 
-  if (!chat || chat.insights_unlocked || !chat.category_id) {
-    return null; // Don't show if insights unlocked or no category selected
+  if (!chat) {
+    return null;
+  }
+  // Don't show if insights unlocked or no category selected
+  if (chat.insights_unlocked) {
+    return null;
+  }
+  if (!chat.category_id) {
+    return null;
   }
 
-  const category = CATEGORIES.find((cat) => cat.id === chat.category_id);
+  const category = CATEGORIES.find((cat) => cat.slug === chat.category_slug);
   const insights = chat.category_slug ? INSIGHT_TYPES[chat.category_slug] : [];
 
   if (!category) {
@@ -37,22 +44,22 @@ export default function UnlockInsightsSection({
     }
   > = {
     romantic: {
-      gradient: "from-[--color-romantic-from] to-[--color-romantic-to]",
+      gradient: "from-romantic-from to-romantic-to",
       text: "text-pink-600",
       bg: "bg-pink-50",
     },
     friendship: {
-      gradient: "from-[--color-friendship-from] to-[--color-friendship-to]",
+      gradient: "from-friendship-from to-friendship-to",
       text: "text-blue-600",
       bg: "bg-blue-50",
     },
     family: {
-      gradient: "from-[--color-family-from] to-[--color-family-to]",
+      gradient: "from-family-from to-family-to",
       text: "text-green-600",
       bg: "bg-green-50",
     },
     work: {
-      gradient: "from-[--color-work-from] to-[--color-work-to]",
+      gradient: "from-work-from to-work-to",
       text: "text-purple-600",
       bg: "bg-purple-50",
     },
@@ -83,7 +90,7 @@ export default function UnlockInsightsSection({
         <div className="max-w-5xl mx-auto">
           <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-white to-gray-50 border-2 border-gray-200 p-8 md:p-12">
             {/* Background decoration */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-linear-to-br from-primary to-[--color-accent-pink] rounded-full blur-3xl opacity-10" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-linear-to-br from-primary to-accent-pink rounded-full blur-3xl opacity-10" />
 
             <div className="relative z-10">
               {/* Header */}

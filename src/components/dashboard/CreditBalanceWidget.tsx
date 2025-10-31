@@ -27,7 +27,7 @@ export default function CreditBalanceWidget() {
       </div>
 
       {/* Balance display */}
-      <div className="bg-linear-to-br from-primary to-[--color-primary-hover] rounded-2xl p-6 mb-6 text-white relative overflow-hidden">
+      <div className="bg-linear-to-br from-primary to-primary-hover rounded-2xl p-6 mb-6 text-white relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16" />
         <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12" />

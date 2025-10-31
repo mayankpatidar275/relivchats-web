@@ -39,25 +39,25 @@ export default function CategorySelector({ chatId }: CategorySelectorProps) {
     }
   > = {
     romantic: {
-      gradient: "from-[--color-romantic-from] to-[--color-romantic-to]",
+      gradient: "from-romantic-from to-romantic-to",
       border: "border-pink-200 hover:border-pink-400",
       bg: "bg-pink-50",
       text: "text-pink-600",
     },
     friendship: {
-      gradient: "from-[--color-friendship-from] to-[--color-friendship-to]",
+      gradient: "from-friendship-from to-friendship-to",
       border: "border-blue-200 hover:border-blue-400",
       bg: "bg-blue-50",
       text: "text-blue-600",
     },
     family: {
-      gradient: "from-[--color-family-from] to-[--color-family-to]",
+      gradient: "from-family-from to-family-to",
       border: "border-green-200 hover:border-green-400",
       bg: "bg-green-50",
       text: "text-green-600",
     },
     work: {
-      gradient: "from-[--color-work-from] to-[--color-work-to]",
+      gradient: "from-work-from to-work-to",
       border: "border-purple-200 hover:border-purple-400",
       bg: "bg-purple-50",
       text: "text-purple-600",

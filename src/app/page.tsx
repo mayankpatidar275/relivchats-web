@@ -1,11 +1,15 @@
-import HeroSection from "@/src/components/home/HeroSection";
-import CategoriesSection from "@/src/components/home/CategoriesSection";
+import CategoriesSection from "../components/home/CategoriesSection";
+import FAQSection from "../components/home/FAQSection";
+import HeroSection from "../components/home/HeroSection";
+import HomeUploadSection from "../components/home/HomeUploadSection";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen">
       <HeroSection />
+      <HomeUploadSection />
       <CategoriesSection />
+      <FAQSection />
     </div>
   );
 }

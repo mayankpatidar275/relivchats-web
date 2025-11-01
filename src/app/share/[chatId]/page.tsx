@@ -129,7 +129,7 @@ export default async function SharePage({ params }: SharePageProps) {
                 .map((emoji: any, idx: number) => (
                   <div
                     key={idx}
-                    className="flex flex-col items-center gap-2 p-4 bg-gray-50 rounded-2xl min-w-[80px]"
+                    className="flex flex-col items-center gap-2 p-4 bg-gray-50 rounded-2xl min-w-20"
                   >
                     <div className="text-4xl">{emoji.emoji}</div>
                     <div className="text-2xl font-bold text-gray-900">

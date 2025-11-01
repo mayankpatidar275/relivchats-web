@@ -12,17 +12,17 @@ const faqs: FAQItem[] = [
   {
     question: "How does Reliv Chats work?",
     answer:
-      "Upload your WhatsApp, Telegram, or Instagram chat export file. We instantly analyze it and provide free basic statistics like message counts, participant activity, and timeline. For deeper insights, unlock AI-powered analysis with coins.",
+      "Upload your WhatsApp chat export file. We instantly analyze it and provide free basic statistics like message counts, participant activity, and timeline. For deeper insights, unlock AI-powered analysis with coins.",
   },
   {
     question: "Is my chat data secure and private?",
     answer:
-      "Absolutely! Your chats are encrypted and stored securely. We never share your data with third parties. Message content is only used for AI analysis and remains completely private. You can delete your data anytime.",
+      "Absolutely! Your chats are stored securely. We never share your data with third parties. Message content is only used for AI analysis and remains completely private. You can delete your data anytime.",
   },
   {
     question: "What are coins and how do they work?",
     answer:
-      "Coins are our credit system. You get 50 free coins on signup. Use coins to unlock AI insights for your chats. Friendship/Family insights cost 50 coins, while Romantic/Work insights cost 100 coins. You can buy more coins anytime.",
+      "Coins are our credit system. You get 50 free coins on signup. Use coins to unlock AI insights for your chats. You can buy more coins anytime.",
   },
   {
     question: "What's included in the free stats?",
@@ -37,7 +37,7 @@ const faqs: FAQItem[] = [
   {
     question: "Which chat platforms are supported?",
     answer:
-      "We support WhatsApp (.txt export), Telegram (.zip export), and Instagram (.json export). Simply export your chat from the app and upload the file. We handle the rest!",
+      "Currently we support WhatsApp. Simply export your chat from the app and upload the file. We handle the rest!",
   },
   {
     question: "Can I analyze multiple chats?",

@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-// import { useUser } from "@clerk/nextjs";
 import {
   Sparkles,
   Heart,
@@ -13,16 +12,10 @@ import {
 
 export default function HeroSection() {
   const router = useRouter();
-  // const { isSignedIn } = useUser();
 
   const handleGetStarted = () => {
-    const element = document.getElementById("categories");
+    const element = document.getElementById("home-upload");
     element?.scrollIntoView({ behavior: "smooth" });
-    // if (isSignedIn) {
-    //   router.push("/dashboard");
-    // } else {
-    //   router.push("/signup");
-    // }
   };
 
   return (
@@ -77,15 +70,16 @@ export default function HeroSection() {
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
               <span className="block text-gray-900">Understand Your</span>
               <span className="block mt-2 bg-linear-to-r from-primary-deep via-primary to-accent-pink bg-clip-text text-transparent animate-gradient">
-                Relationships Deeper
+                {/* Relationships Deeper */}
+                <span className="text-[#25D366]">WhatsApp </span>
+                <span> Chats</span>
               </span>
             </h1>
 
             {/* Description */}
             <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-xl mx-auto lg:mx-0">
-              Upload your WhatsApp, Telegram, or Instagram chats. Our AI reveals
-              hidden patterns, emotional dynamics, and meaningful insights about
-              your connections.
+              Our AI reveals hidden patterns, emotional dynamics, and meaningful
+              insights about your connections.
             </p>
 
             {/* CTA Buttons */}

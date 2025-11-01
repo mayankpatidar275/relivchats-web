@@ -1,42 +1,37 @@
 "use client";
 
 import Link from "next/link";
-import {
-  Heart,
-  Twitter,
-  Instagram,
-  Linkedin,
-  Mail,
-  Sparkles,
-} from "lucide-react";
+import { Heart, Twitter, Instagram, Linkedin, Mail } from "lucide-react";
+import Image from "next/image";
+import { PurpleLogo } from "@/src/app/assets";
 
 export default function Footer() {
-  const footerLinks = {
-    product: [
-      { name: "Features", href: "/#features" },
-      { name: "Categories", href: "/#categories" },
-      { name: "Pricing", href: "/pricing" },
-      { name: "How It Works", href: "/#how-it-works" },
-    ],
-    company: [
-      { name: "About Us", href: "/about" },
-      { name: "Blog", href: "/blog" },
-      { name: "Careers", href: "/careers" },
-      { name: "Contact", href: "/contact" },
-    ],
-    legal: [
-      { name: "Privacy Policy", href: "/privacy" },
-      { name: "Terms of Service", href: "/terms" },
-      { name: "Cookie Policy", href: "/cookies" },
-      { name: "Refund Policy", href: "/refund" },
-    ],
-    support: [
-      { name: "Help Center", href: "/help" },
-      { name: "FAQ", href: "/faq" },
-      { name: "Community", href: "/community" },
-      { name: "Status", href: "/status" },
-    ],
-  };
+  // const footerLinks = {
+  //   product: [
+  //     { name: "Features", href: "/#features" },
+  //     { name: "Categories", href: "/#categories" },
+  //     { name: "Pricing", href: "/pricing" },
+  //     { name: "How It Works", href: "/#how-it-works" },
+  //   ],
+  //   company: [
+  //     { name: "About Us", href: "/about" },
+  //     { name: "Blog", href: "/blog" },
+  //     { name: "Careers", href: "/careers" },
+  //     { name: "Contact", href: "/contact" },
+  //   ],
+  //   legal: [
+  //     { name: "Privacy Policy", href: "/privacy" },
+  //     { name: "Terms of Service", href: "/terms" },
+  //     { name: "Cookie Policy", href: "/cookies" },
+  //     { name: "Refund Policy", href: "/refund" },
+  //   ],
+  //   support: [
+  //     { name: "Help Center", href: "/help" },
+  //     { name: "FAQ", href: "/faq" },
+  //     { name: "Community", href: "/community" },
+  //     { name: "Status", href: "/status" },
+  //   ],
+  // };
 
   return (
     <footer className="relative bg-linear-to-br from-gray-50 to-white border-t border-gray-100">
@@ -51,18 +46,21 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-12">
           {/* Brand section */}
           <div className="lg:col-span-2 space-y-6">
-            <Link href="/" className="flex items-center gap-2 group w-fit">
+            <Link href="/" className="flex items-center gap-2 group">
               <div className="relative">
-                <div className="absolute inset-0 bg-linear-to-r from-primary to-accent-pink rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
-                <div className="relative w-10 h-10 bg-linear-to-br from-primary to-accent-pink rounded-xl flex items-center justify-center shadow-lg">
-                  <Sparkles className="w-5 h-5 text-white" />
-                </div>
+                <Image
+                  src={PurpleLogo}
+                  alt="Logo"
+                  className="h-8 sm:h-12 w-auto"
+                  width={150}
+                  height={50}
+                  priority
+                />
               </div>
-              <span className="text-2xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
-                Reliv Chats
+              <span className="text-2xl font-bold bg-primary bg-clip-text text-transparent">
+                Reliv Chats AI
               </span>
             </Link>
-
             <p className="text-gray-600 leading-relaxed max-w-sm">
               Unlock the hidden stories in your chats. AI-powered insights for
               deeper connections and meaningful relationships.
@@ -71,7 +69,7 @@ export default function Footer() {
             {/* Social links */}
             <div className="flex items-center gap-4">
               <a
-                href="https://twitter.com"
+                href="https://twitter.com/mkpatidarr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-gray-100 hover:bg-linear-to-br hover:from-primary hover:to-primary-hover flex items-center justify-center text-gray-600 hover:text-white transition-all group"
@@ -79,7 +77,7 @@ export default function Footer() {
                 <Twitter className="w-5 h-5" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/mkpatidarr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-gray-100 hover:bg-linear-to-br hover:from-pink-500 hover:to-rose-500 flex items-center justify-center text-gray-600 hover:text-white transition-all"
@@ -87,7 +85,7 @@ export default function Footer() {
                 <Instagram className="w-5 h-5" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://linkedin.com/in/mkpatidarr/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-gray-100 hover:bg-linear-to-br hover:from-blue-600 hover:to-blue-700 flex items-center justify-center text-gray-600 hover:text-white transition-all"
@@ -95,7 +93,7 @@ export default function Footer() {
                 <Linkedin className="w-5 h-5" />
               </a>
               <a
-                href="mailto:hello@relivchats.com"
+                href="mailto:mayankpatidar275@gmail.com"
                 className="w-10 h-10 rounded-full bg-gray-100 hover:bg-linear-to-br hover:from-primary hover:to-accent-pink flex items-center justify-center text-gray-600 hover:text-white transition-all"
               >
                 <Mail className="w-5 h-5" />
@@ -104,7 +102,7 @@ export default function Footer() {
           </div>
 
           {/* Links sections */}
-          <div>
+          {/* <div>
             <h3 className="font-bold text-gray-900 mb-4">Product</h3>
             <ul className="space-y-3">
               {footerLinks.product.map((link) => (
@@ -118,9 +116,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             <h3 className="font-bold text-gray-900 mb-4">Company</h3>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
@@ -134,9 +132,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             <h3 className="font-bold text-gray-900 mb-4">Support</h3>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
@@ -150,9 +148,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             <h3 className="font-bold text-gray-900 mb-4">Legal</h3>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
@@ -166,7 +164,7 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
 
         {/* Bottom bar */}

@@ -1,11 +1,8 @@
-import { Category } from "@/src/types/category";
+import { Category } from "./types";
 
 export interface CategoryUI extends Category {
-  slug: string; // same as name
   color: string;
   gradient: string;
-  id: string;
-  name: string;
 }
 
 const colorMap: Record<string, { color: string; gradient: string }> = {
@@ -31,7 +28,6 @@ export function toCategoryUI(category: Category): CategoryUI {
   const colors = colorMap[category.name] || colorMap.romantic;
   return {
     ...category,
-    slug: category.name, // name IS the slug
     ...colors,
   };
 }

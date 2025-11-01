@@ -53,11 +53,11 @@ export default function CategoryCard({ category, index }: CategoryCardProps) {
     },
   };
 
-  const colors = colorMap[category.slug] || colorMap.romantic;
+  const colors = colorMap[category.name] || colorMap.romantic;
 
   return (
     <div
-      onClick={() => router.push(`/category/${category.slug}`)}
+      onClick={() => router.push(`/category/${category.name}`)}
       className={`group relative overflow-hidden rounded-3xl border-2 ${colors.border} bg-linear-to-br ${colors.bg} p-8 cursor-pointer transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 animate-scale-in`}
       style={{ animationDelay: `${index * 100}ms` }}
     >
@@ -96,7 +96,7 @@ export default function CategoryCard({ category, index }: CategoryCardProps) {
         <h3
           className={`text-3xl font-bold mb-3 ${colors.text} group-hover:scale-105 transition-transform duration-300 origin-left`}
         >
-          {category.name}
+          {category.display_name}
         </h3>
 
         {/* Description */}

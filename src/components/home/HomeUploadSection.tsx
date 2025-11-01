@@ -52,7 +52,7 @@ export default function HomeUploadSection() {
   };
 
   const handleFileSelect = (file: File) => {
-    const validTypes = [".txt", ".zip", ".json"];
+    const validTypes = [".txt", ".zip"];
     const fileExtension = "." + file.name.split(".").pop()?.toLowerCase();
 
     if (!validTypes.includes(fileExtension)) {
@@ -120,7 +120,10 @@ export default function HomeUploadSection() {
         error={error || undefined}
       />
 
-      <section className="py-24 bg-linear-to-br from-gray-50 to-white">
+      <section
+        id="home-upload"
+        className="py-24 bg-linear-to-br from-gray-50 to-white"
+      >
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Content */}
@@ -140,18 +143,18 @@ export default function HomeUploadSection() {
                 </span>
               </h2>
 
-              <p className="text-xl text-gray-600 leading-relaxed">
+              {/* <p className="text-xl text-gray-600 leading-relaxed">
                 No signup required for basic stats! Upload any WhatsApp,
                 Telegram, or Instagram chat and see your conversation patterns
                 in seconds.
-              </p>
+              </p> */}
 
               {/* Features */}
               <div className="space-y-3 pt-4">
                 {[
                   "Free basic statistics for every chat",
                   "Message counts, timelines, and activity patterns",
-                  "100% private and secure",
+                  // "100% private and secure",
                   "Unlock deeper AI insights with coins",
                 ].map((feature, index) => (
                   <div key={index} className="flex items-center gap-3">
@@ -231,9 +234,9 @@ export default function HomeUploadSection() {
                         <span className="px-3 py-1.5 bg-gray-100 rounded-lg text-sm font-medium text-gray-700">
                           .zip
                         </span>
-                        <span className="px-3 py-1.5 bg-gray-100 rounded-lg text-sm font-medium text-gray-700">
+                        {/* <span className="px-3 py-1.5 bg-gray-100 rounded-lg text-sm font-medium text-gray-700">
                           .json
-                        </span>
+                        </span> */}
                       </div>
                     </>
                   )}
@@ -248,7 +251,7 @@ export default function HomeUploadSection() {
               )}
 
               {/* Supported Platforms */}
-              <div className="flex items-center justify-center gap-6 flex-wrap pt-4">
+              {/* <div className="flex items-center justify-center gap-6 flex-wrap pt-4">
                 <div className="flex items-center gap-2">
                   <div className="w-10 h-10 rounded-xl bg-green-500 flex items-center justify-center text-white font-bold text-lg">
                     W
@@ -273,7 +276,7 @@ export default function HomeUploadSection() {
                     Instagram
                   </span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

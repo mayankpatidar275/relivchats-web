@@ -1,7 +1,7 @@
 "use client";
 
 import { useCategories } from "@/src/features/categories/api";
-import { Brain, Shield, TrendingUp, Zap } from "lucide-react";
+import { Brain, Search, TrendingUp, Zap } from "lucide-react";
 import CategoryCard from "./CategoryCard";
 import { toCategoryUI } from "@/src/features/categories/utils";
 
@@ -27,6 +27,11 @@ export default function CategoriesSection() {
       </section>
     );
   }
+
+  const handleStartFreeAnalysis = () => {
+    const element = document.getElementById("home-upload");
+    element?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <section
@@ -102,6 +107,21 @@ export default function CategoriesSection() {
             <div className="absolute inset-0 bg-linear-to-br from-purple-500 to-pink-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
             <div className="relative bg-white rounded-2xl p-6 border-2 border-gray-100 group-hover:border-purple-200 transition-all">
               <div className="w-12 h-12 rounded-xl bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4">
+                <Search className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">
+                Free Statistical Insights
+              </h3>
+              <p className="text-sm text-gray-600">
+                Get basic insights for free like message counts, timelines,
+                media shared and activity patterns
+              </p>
+            </div>
+          </div>
+          {/* <div className="relative group">
+            <div className="absolute inset-0 bg-linear-to-br from-purple-500 to-pink-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
+            <div className="relative bg-white rounded-2xl p-6 border-2 border-gray-100 group-hover:border-purple-200 transition-all">
+              <div className="w-12 h-12 rounded-xl bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4">
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">
@@ -112,7 +132,7 @@ export default function CategoriesSection() {
                 privacy completely.
               </p>
             </div>
-          </div>
+          </div> */}
 
           {/* Feature 3 */}
           <div className="relative group">
@@ -156,7 +176,10 @@ export default function CategoriesSection() {
               anytime with coins!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-4 bg-white text-primary rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all">
+              <button
+                onClick={handleStartFreeAnalysis}
+                className="px-8 py-4 bg-white text-primary rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
+              >
                 Start Free Analysis
               </button>
               <button className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all">

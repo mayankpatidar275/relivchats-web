@@ -34,7 +34,7 @@ export default async function SharePage({ params }: SharePageProps) {
   );
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-primary/5 via-white to-[--color-accent-pink]/5">
+    <div className="min-h-screen bg-linear-to-br from-primary/5 via-white to-accent-pink/5">
       <div className="container mx-auto px-6 py-20 max-w-4xl">
         {/* Header */}
         <div className="text-center mb-12">
@@ -142,7 +142,7 @@ export default async function SharePage({ params }: SharePageProps) {
         )}
 
         {/* CTA */}
-        <div className="bg-linear-to-br from-primary to-[--color-primary-deep] rounded-3xl p-8 md:p-12 text-center text-white shadow-2xl">
+        <div className="bg-linear-to-br from-primary to-primary-deep rounded-3xl p-8 md:p-12 text-center text-white shadow-2xl">
           <div className="text-5xl mb-4">✨</div>
           <h2 className="text-3xl font-bold mb-4">Want Deeper Insights?</h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">

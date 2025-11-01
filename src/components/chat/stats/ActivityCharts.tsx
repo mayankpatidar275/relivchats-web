@@ -46,7 +46,7 @@ export default function ActivityCharts({ stats }: ActivityChartsProps) {
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
                       isBusiest
-                        ? "bg-linear-to-r from-primary to-[--color-accent-pink]"
+                        ? "bg-linear-to-r from-primary to-accent-pink"
                         : "bg-linear-to-r from-blue-400 to-blue-500"
                     }`}
                     style={{ width: `${percentage}%` }}
@@ -94,7 +94,7 @@ export default function ActivityCharts({ stats }: ActivityChartsProps) {
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
                       isBusiest
-                        ? "bg-linear-to-r from-primary to-[--color-accent-pink]"
+                        ? "bg-linear-to-r from-primary to-accent-pink"
                         : "bg-linear-to-r from-green-400 to-green-500"
                     }`}
                     style={{ width: `${percentage}%` }}

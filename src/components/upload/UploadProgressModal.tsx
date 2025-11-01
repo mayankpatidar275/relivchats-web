@@ -146,7 +146,7 @@ export default function UploadProgressModal({
             {/* Progress bar */}
             <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
               <div
-                className="h-full bg-linear-to-r from-primary to-[--color-accent-pink] transition-all duration-500 ease-out"
+                className="h-full bg-linear-to-r from-primary to-accent-pink transition-all duration-500 ease-out"
                 style={{
                   width: `${((currentStepIndex + 1) / steps.length) * 100}%`,
                 }}

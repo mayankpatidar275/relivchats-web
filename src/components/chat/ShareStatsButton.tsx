@@ -79,7 +79,7 @@ export default function ShareStatsButton({ chat }: ShareStatsButtonProps) {
             </div>
 
             {/* Stats Preview */}
-            <div className="bg-linear-to-br from-primary/10 to-[--color-accent-pink]/10 rounded-2xl p-6 mb-6 text-center border border-primary/20">
+            <div className="bg-linear-to-br from-primary/10 to-accent-pink/10 rounded-2xl p-6 mb-6 text-center border border-primary/20">
               <div className="text-5xl mb-2">💬</div>
               <div className="text-3xl font-bold text-gray-900 mb-1">
                 {chat.chat_metadata.total_messages.toLocaleString()}

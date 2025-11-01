@@ -1,11 +1,11 @@
 "use client";
 
-import { Category } from "@/src/types/category";
+import { CategoryUI } from "@/src/features/categories/utils";
 import { ArrowLeft, Sparkles, TrendingUp } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface CategoryHeroProps {
-  category: Category;
+  category: CategoryUI;
 }
 
 export default function CategoryHero({ category }: CategoryHeroProps) {

@@ -2,10 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { ArrowRight, Sparkles, TrendingUp } from "lucide-react";
-import { Category } from "@/src/types/category";
+import { CategoryUI } from "@/src/features/categories/utils";
 
 interface CategoryCardProps {
-  category: Category;
+  category: CategoryUI;
   index: number;
 }
 

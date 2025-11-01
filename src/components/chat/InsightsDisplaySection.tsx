@@ -1,8 +1,8 @@
 "use client";
 
 import { useChat } from "@/src/features/chats/api";
-import { INSIGHT_TYPES } from "@/src/types/category";
-import { Sparkles, TrendingUp } from "lucide-react";
+import { useChatInsights } from "@/src/features/insights/api/hooks";
+import { Sparkles, TrendingUp, Loader2 } from "lucide-react";
 
 interface InsightsDisplaySectionProps {
   chatId: string;
@@ -12,13 +12,12 @@ export default function InsightsDisplaySection({
   chatId,
 }: InsightsDisplaySectionProps) {
   const { data: chat } = useChat(chatId);
+  const { data: insights, isLoading } = useChatInsights(chatId);
 
   // Only show if insights are unlocked
   if (!chat || !chat.insights_unlocked) {
     return null;
   }
-
-  const insights = chat.category_slug ? INSIGHT_TYPES[chat.category_slug] : [];
 
   // Color mapping
   const colorMap: Record<
@@ -59,6 +58,25 @@ export default function InsightsDisplaySection({
         bg: "bg-gray-50",
       };
 
+  if (isLoading) {
+    return (
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="flex items-center justify-center py-20">
+            <div className="text-center space-y-4">
+              <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto" />
+              <p className="text-gray-600">Loading insights...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!insights || insights.length === 0) {
+    return null;
+  }
+
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-6 max-w-7xl">
@@ -95,73 +113,101 @@ export default function InsightsDisplaySection({
                 <div
                   className={`w-14 h-14 rounded-2xl bg-linear-to-br ${colors.gradient} flex items-center justify-center text-3xl shrink-0`}
                 >
-                  {insight.icon}
+                  {insight.icon || "💡"}
                 </div>
                 <div className="flex-1">
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                    {insight.name}
+                    {insight.display_title}
                   </h3>
                   <p className="text-gray-600">{insight.description}</p>
                 </div>
               </div>
 
-              {/* Mock insight data - replace with real data from API */}
-              <div
-                className={`${
-                  colors.bg
-                } rounded-2xl p-6 border-2 ${colors.text.replace(
-                  "text-",
-                  "border-"
-                )}`}
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <TrendingUp className={`w-5 h-5 ${colors.text}`} />
-                  <span className={`font-semibold ${colors.text}`}>
-                    Key Finding:
+              {/* Status badge */}
+              {insight.status === "generating" && (
+                <div className="mb-6 flex items-center gap-2 p-3 bg-blue-50 border border-blue-200 rounded-xl">
+                  <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
+                  <span className="text-sm font-medium text-blue-700">
+                    Generating insight...
                   </span>
                 </div>
-                <p className="text-gray-800 leading-relaxed mb-4">
-                  {insight.example}
-                </p>
+              )}
 
-                {/* Mock score/metric */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                  <span className="text-sm text-gray-600">
-                    Confidence Score
+              {insight.status === "failed" && (
+                <div className="mb-6 p-3 bg-red-50 border border-red-200 rounded-xl">
+                  <span className="text-sm font-medium text-red-700">
+                    Failed to generate this insight. Please try again.
                   </span>
-                  <div className="flex items-center gap-2">
-                    <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full bg-linear-to-r ${colors.gradient}`}
-                        style={{ width: "85%" }}
-                      />
-                    </div>
-                    <span className={`font-bold ${colors.text}`}>85%</span>
+                </div>
+              )}
+
+              {/* Insight content - only show if completed */}
+              {insight.status === "completed" && insight.content && (
+                <div
+                  className={`${
+                    colors.bg
+                  } rounded-2xl p-6 border-2 ${colors.text.replace(
+                    "text-",
+                    "border-"
+                  )}`}
+                >
+                  <div className="flex items-center gap-2 mb-4">
+                    <TrendingUp className={`w-5 h-5 ${colors.text}`} />
+                    <span className={`font-semibold ${colors.text}`}>
+                      Key Finding:
+                    </span>
                   </div>
-                </div>
-              </div>
 
-              {/* Recommendations section */}
-              <div className="mt-6 space-y-2">
-                <h4 className="font-semibold text-gray-900 text-sm">
-                  💡 Recommendations:
-                </h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li className="flex items-start gap-2">
-                    <span className={`${colors.text} font-bold`}>•</span>
-                    <span>
-                      Continue expressing emotions openly to maintain connection
-                      depth
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className={`${colors.text} font-bold`}>•</span>
-                    <span>
-                      Schedule regular quality time for deeper conversations
-                    </span>
-                  </li>
-                </ul>
-              </div>
+                  {/* Render insight content dynamically based on structure */}
+                  <div className="text-gray-800 leading-relaxed mb-4">
+                    {typeof insight.content === "string"
+                      ? insight.content
+                      : JSON.stringify(insight.content, null, 2)}
+                  </div>
+
+                  {/* Confidence/metrics if available */}
+                  {insight.content.confidence && (
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                      <span className="text-sm text-gray-600">
+                        Confidence Score
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full bg-linear-to-r ${colors.gradient}`}
+                            style={{ width: `${insight.content.confidence}%` }}
+                          />
+                        </div>
+                        <span className={`font-bold ${colors.text}`}>
+                          {insight.content.confidence}%
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Recommendations if available */}
+              {insight.status === "completed" &&
+                insight.content?.recommendations && (
+                  <div className="mt-6 space-y-2">
+                    <h4 className="font-semibold text-gray-900 text-sm">
+                      💡 Recommendations:
+                    </h4>
+                    <ul className="space-y-2 text-sm text-gray-600">
+                      {insight.content.recommendations.map(
+                        (rec: string, idx: number) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className={`${colors.text} font-bold`}>
+                              •
+                            </span>
+                            <span>{rec}</span>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                )}
             </div>
           ))}
         </div>

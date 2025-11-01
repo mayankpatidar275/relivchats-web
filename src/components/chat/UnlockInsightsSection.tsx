@@ -1,7 +1,7 @@
 "use client";
 
+import { useCategories } from "@/src/features/categories/api";
 import { useChat, useUnlockInsights } from "@/src/features/chats/api";
-import { CATEGORIES, INSIGHT_TYPES } from "@/src/types/category";
 import { Lock, Sparkles, Check, Zap } from "lucide-react";
 import { useState } from "react";
 
@@ -15,6 +15,27 @@ export default function UnlockInsightsSection({
   const { data: chat } = useChat(chatId);
   const unlockMutation = useUnlockInsights();
   const [isUnlocking, setIsUnlocking] = useState(false);
+  const { data: categories, isLoading } = useCategories();
+
+  if (isLoading) {
+    return (
+      <section
+        id="categories"
+        className="relative py-24 bg-white overflow-hidden"
+      >
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="animate-pulse space-y-8">
+            <div className="h-12 bg-gray-200 rounded w-1/2 mx-auto" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-64 bg-gray-200 rounded-3xl" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   if (!chat) {
     return null;
@@ -27,12 +48,13 @@ export default function UnlockInsightsSection({
     return null;
   }
 
-  const category = CATEGORIES.find((cat) => cat.slug === chat.category_slug);
-  const insights = chat.category_slug ? INSIGHT_TYPES[chat.category_slug] : [];
+  const category = categories?.find((cat) => cat.name === chat.category_slug);
 
   if (!category) {
     return null;
   }
+
+  const insights = category?.insight_types ?? [];
 
   // Color mapping (same as before)
   const colorMap: Record<
@@ -65,7 +87,7 @@ export default function UnlockInsightsSection({
     },
   };
 
-  const colors = colorMap[category.slug];
+  const colors = colorMap[category.name];
 
   const handleUnlock = async () => {
     setIsUnlocking(true);

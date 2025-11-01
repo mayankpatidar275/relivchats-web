@@ -1,7 +1,7 @@
 "use client";
 
+import { useCategories } from "@/src/features/categories/api";
 import { useAssignCategory } from "@/src/features/chats/api";
-import { CATEGORIES } from "@/src/types/category";
 import { Check } from "lucide-react";
 import { useState } from "react";
 
@@ -14,6 +14,27 @@ export default function CategorySelector({ chatId }: CategorySelectorProps) {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     null
   );
+  const { data: categories, isLoading } = useCategories();
+
+  if (isLoading) {
+    return (
+      <section
+        id="categories"
+        className="relative py-24 bg-white overflow-hidden"
+      >
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="animate-pulse space-y-8">
+            <div className="h-12 bg-gray-200 rounded w-1/2 mx-auto" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-64 bg-gray-200 rounded-3xl" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const handleSelectCategory = async (categoryId: string) => {
     setSelectedCategoryId(categoryId);
@@ -81,8 +102,8 @@ export default function CategorySelector({ chatId }: CategorySelectorProps) {
 
           {/* Category grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {CATEGORIES.map((category) => {
-              const colors = colorMap[category.slug];
+            {categories?.map((category) => {
+              const colors = colorMap[category.name];
               const isSelected = selectedCategoryId === category.id;
               const isLoading = assignCategoryMutation.isPending && isSelected;
 

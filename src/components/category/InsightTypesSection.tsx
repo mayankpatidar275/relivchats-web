@@ -1,16 +1,16 @@
 "use client";
 
-import { Category, INSIGHT_TYPES } from "@/src/types/category";
+import { CategoryUI } from "@/src/features/categories/utils";
 import { Sparkles, Check } from "lucide-react";
 
 interface InsightTypesSectionProps {
-  category: Category;
+  category: CategoryUI;
 }
 
 export default function InsightTypesSection({
   category,
 }: InsightTypesSectionProps) {
-  const insights = INSIGHT_TYPES[category.slug] || [];
+  const insights = category.insight_types; // Use insights from API
 
   // Color mapping
   const colorMap: Record<
@@ -70,8 +70,8 @@ export default function InsightTypesSection({
           </h2>
 
           <p className="text-lg text-gray-600">
-            Unlock all {insights.length} AI-powered insights with deep analysis
-            of your {category.name.toLowerCase()} conversations.
+            Unlock all {category.insights_count} AI-powered insights with deep
+            analysis of your {category.name.toLowerCase()} conversations.
           </p>
         </div>
 
@@ -84,7 +84,7 @@ export default function InsightTypesSection({
             >
               {/* Icon */}
               <div className="flex items-start justify-between mb-4">
-                <div className="text-4xl">{insight.icon}</div>
+                <div className="text-4xl">{insight.icon || "💡"}</div>
                 <div
                   className={`w-6 h-6 rounded-full ${colors.bg} border-2 ${colors.border} flex items-center justify-center`}
                 >
@@ -99,17 +99,20 @@ export default function InsightTypesSection({
                 </h3>
 
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  {insight.description}
+                  {insight.description || "AI-powered insight analysis"}
                 </p>
 
-                {/* Example */}
-                <div
-                  className={`mt-4 p-3 rounded-xl ${colors.bg} border ${colors.border}`}
-                >
-                  <p className={`text-xs font-medium ${colors.text} mb-1`}>
-                    Example:
-                  </p>
-                  <p className="text-xs text-gray-700">{insight.example}</p>
+                {/* Cost badge */}
+                <div className="mt-4 flex items-center gap-2">
+                  <span className="text-xs text-gray-500">Cost:</span>
+                  <span className={`text-sm font-bold ${colors.text}`}>
+                    {insight.cost} coins
+                  </span>
+                  {insight.cost && (
+                    <span className="text-xs px-2 py-0.5 bg-amber-100 text-amber-700 rounded-full font-semibold">
+                      Premium
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -141,7 +144,7 @@ export default function InsightTypesSection({
             <div className="pt-4 space-y-2 text-white/90">
               <p className="flex items-center justify-center gap-2">
                 <Check className="w-5 h-5" />
-                All {insights.length} AI-powered insights
+                All {category.insights_count} AI-powered insights
               </p>
               <p className="flex items-center justify-center gap-2">
                 <Check className="w-5 h-5" />

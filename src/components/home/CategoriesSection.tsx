@@ -1,10 +1,33 @@
 "use client";
 
-import { CATEGORIES } from "@/src/types/category";
+import { useCategories } from "@/src/features/categories/api";
+import { Brain, Shield, TrendingUp, Zap } from "lucide-react";
 import CategoryCard from "./CategoryCard";
-import { Brain, Zap, Shield, TrendingUp } from "lucide-react";
+import { toCategoryUI } from "@/src/features/categories/utils";
 
 export default function CategoriesSection() {
+  const { data: categories, isLoading } = useCategories();
+
+  if (isLoading) {
+    return (
+      <section
+        id="categories"
+        className="relative py-24 bg-white overflow-hidden"
+      >
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="animate-pulse space-y-8">
+            <div className="h-12 bg-gray-200 rounded w-1/2 mx-auto" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-64 bg-gray-200 rounded-3xl" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       id="categories"
@@ -46,8 +69,12 @@ export default function CategoriesSection() {
 
         {/* Categories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {CATEGORIES.map((category, index) => (
-            <CategoryCard key={category.id} category={category} index={index} />
+          {categories?.map((category, index) => (
+            <CategoryCard
+              key={category.id}
+              category={toCategoryUI(category)}
+              index={index}
+            />
           ))}
         </div>
 

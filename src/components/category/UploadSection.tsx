@@ -5,12 +5,12 @@ import { ArrowRight, FileText, Lock, Shield, Upload, Zap } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { DragEvent, useRef, useState } from "react";
 
+import { CategoryUI } from "@/src/features/categories/utils";
 import { useUploadChat } from "@/src/features/chats/api";
-import { Category } from "@/src/types/category";
 import UploadProgressModal from "../upload/UploadProgressModal";
 
 interface UploadSectionProps {
-  category: Category;
+  category: CategoryUI;
 }
 
 type UploadProgress =

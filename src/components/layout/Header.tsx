@@ -85,7 +85,7 @@ export default function Header() {
               <>
                 {/* Credit Balance */}
                 <button
-                  onClick={() => router.push("/dashboard")}
+                  onClick={() => router.push("/pricing")}
                   className="hidden sm:flex items-center gap-2 px-4 py-2 bg-linear-to-r from-primary-light to-accent-pink-light rounded-full border border-primary/20 hover:shadow-lg transition-all group"
                 >
                   <Coins className="w-4 h-4 text-primary group-hover:rotate-12 transition-transform" />
@@ -172,7 +172,7 @@ export default function Header() {
                 <div className="pt-4 border-t border-gray-200 space-y-3">
                   <button
                     onClick={() => {
-                      router.push("/dashboard");
+                      router.push("/pricing");
                       setIsMobileMenuOpen(false);
                     }}
                     className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-primary to-primary-hover text-white rounded-xl font-semibold"

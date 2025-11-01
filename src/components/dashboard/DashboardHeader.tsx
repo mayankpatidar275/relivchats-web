@@ -1,6 +1,8 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
+import { Settings } from "lucide-react";
+import Link from "next/link";
 
 export default function DashboardHeader() {
   const { user } = useUser();
@@ -34,6 +36,13 @@ export default function DashboardHeader() {
               </div>
               <div className="text-sm text-gray-600">Insights</div>
             </div>
+            <Link
+              href="/settings"
+              className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-xl transition-all"
+            >
+              <Settings className="w-4 h-4" />
+              Settings
+            </Link>
           </div>
         </div>
       </div>

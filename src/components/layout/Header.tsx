@@ -1,7 +1,7 @@
 "use client";
 
 import { PurpleLogo } from "@/src/app/assets";
-import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 import { Coins, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -118,11 +118,12 @@ export default function Header() {
             ) : (
               <>
                 {/* Sign In */}
-                <SignInButton mode="modal">
-                  <button className="hidden sm:block px-5 py-2 text-gray-700 font-medium hover:text-primary transition-colors">
-                    Sign In
-                  </button>
-                </SignInButton>
+                <button
+                  onClick={() => router.push("/sign-in")}
+                  className="hidden sm:block px-5 py-2 text-gray-700 font-medium hover:text-primary transition-colors"
+                >
+                  Sign In
+                </button>
 
                 {/* Get Started */}
                 {/* <button
@@ -182,11 +183,16 @@ export default function Header() {
                 </div>
               ) : (
                 <div className="pt-4 border-t border-gray-200 space-y-3">
-                  <SignInButton mode="modal">
-                    <button className="w-full px-6 py-3 text-gray-700 font-medium border-2 border-gray-200 rounded-xl hover:border-primary transition-colors">
-                      Sign In
-                    </button>
-                  </SignInButton>
+                  <button
+                    onClick={() => {
+                      router.push("/sign-in");
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full px-6 py-3 text-gray-700 font-medium border-2 border-gray-200 rounded-xl hover:border-primary transition-colors"
+                  >
+                    Sign In
+                  </button>
+
                   {/* <button
                     onClick={() => {
                       router.push("/signup");

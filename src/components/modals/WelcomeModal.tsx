@@ -8,38 +8,35 @@ import confetti from "canvas-confetti";
 export default function WelcomeModal() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isOpen, setIsOpen] = useState(false);
+
+  // initialize from search params instead of setting state inside useEffect
+  const initialOpen = searchParams?.get("welcome") === "true";
+  const [isOpen, setIsOpen] = useState<boolean>(!!initialOpen);
 
   useEffect(() => {
-    // Show modal if welcome=true in URL
-    const isWelcome = searchParams.get("welcome") === "true";
+    if (!isOpen) return;
 
-    if (isWelcome) {
-      setIsOpen(true);
+    // Trigger confetti
+    const t = setTimeout(() => {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
+    }, 300);
 
-      // Trigger confetti
-      setTimeout(() => {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-        });
-      }, 300);
+    // Remove welcome param from URL (side-effect only)
+    const url = new URL(window.location.href);
+    url.searchParams.delete("welcome");
+    window.history.replaceState({}, "", url.toString());
 
-      // Remove welcome param from URL
-      const url = new URL(window.location.href);
-      url.searchParams.delete("welcome");
-      window.history.replaceState({}, "", url.toString());
-    }
-  }, [searchParams]);
+    return () => clearTimeout(t);
+  }, [isOpen]);
 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
+  const handleClose = () => setIsOpen(false);
   const handleGetStarted = () => {
     setIsOpen(false);
-    router.push("/#upload");
+    router.push("/#home-upload");
   };
 
   if (!isOpen) return null;
@@ -156,9 +153,9 @@ export default function WelcomeModal() {
           </div>
 
           {/* Reminder */}
-          <div className="text-center text-sm text-gray-500">
+          {/* <div className="text-center text-sm text-gray-500">
             💡 Tip: 50 coins = 1 complete Friendship or Family analysis
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

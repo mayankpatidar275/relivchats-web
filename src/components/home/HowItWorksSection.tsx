@@ -46,7 +46,7 @@ export default function HowItWorksSection() {
   ];
 
   return (
-    <section className="py-24 bg-white">
+    <section id="home-how" className="py-24 bg-white">
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-20">
@@ -113,7 +113,7 @@ export default function HowItWorksSection() {
         {/* CTA */}
         <div className="text-center">
           <button
-            onClick={() => router.push("#upload")}
+            onClick={() => router.push("#home-upload")}
             className="group inline-flex items-center gap-3 px-8 py-4 bg-linear-to-r from-primary to-primary-hover text-white rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
           >
             Try It Now - It&apos;s Free

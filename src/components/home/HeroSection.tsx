@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import {
   Sparkles,
   Heart,
@@ -11,10 +10,13 @@ import {
 } from "lucide-react";
 
 export default function HeroSection() {
-  const router = useRouter();
-
   const handleGetStarted = () => {
     const element = document.getElementById("home-upload");
+    element?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleHow = () => {
+    const element = document.getElementById("home-how");
     element?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -96,7 +98,7 @@ export default function HeroSection() {
               </button>
 
               <button
-                onClick={() => router.push("#how-it-works")}
+                onClick={handleHow}
                 className="px-8 py-4 bg-white text-gray-900 rounded-2xl font-semibold text-lg border-2 border-gray-200 hover:border-primary hover:shadow-lg transition-all duration-300"
               >
                 See How It Works

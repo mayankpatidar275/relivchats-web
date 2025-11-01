@@ -2,7 +2,7 @@
 
 import { PurpleLogo } from "@/src/app/assets";
 import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
-import { Coins, Menu, Sparkles, X } from "lucide-react";
+import { Coins, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -36,7 +36,7 @@ export default function Header() {
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/80 backdrop-blur-xl shadow-lg border-b border-gray-100"
+          ? "bg-white/80 backdrop-blur-xl shadow-lg border-gray-100"
           : "bg-transparent"
       }`}
     >
@@ -54,7 +54,7 @@ export default function Header() {
                 priority
               />
             </div>
-            <span className="text-2xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
+            <span className="text-2xl font-bold bg-primary bg-clip-text text-transparent">
               Reliv Chats AI
             </span>
           </Link>
@@ -125,13 +125,13 @@ export default function Header() {
                 </SignInButton>
 
                 {/* Get Started */}
-                <button
+                {/* <button
                   onClick={() => router.push("/signup")}
-                  className="px-6 py-2.5 bg-linear-to-r from-primary to--primary-hover text-white rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all flex items-center gap-2"
+                  className="px-6 py-2.5 bg-linear-to-r from-primary to-primary-hover text-white rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all flex items-center gap-2"
                 >
                   <Sparkles className="w-4 h-4" />
                   Get Started
-                </button>
+                </button> */}
               </>
             )}
 
@@ -187,7 +187,7 @@ export default function Header() {
                       Sign In
                     </button>
                   </SignInButton>
-                  <button
+                  {/* <button
                     onClick={() => {
                       router.push("/signup");
                       setIsMobileMenuOpen(false);
@@ -196,7 +196,7 @@ export default function Header() {
                   >
                     <Sparkles className="w-5 h-5" />
                     Get Started Free
-                  </button>
+                  </button> */}
                 </div>
               )}
             </div>

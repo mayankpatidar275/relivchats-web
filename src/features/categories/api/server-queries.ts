@@ -22,7 +22,7 @@ export const categoriesApi = {
   // Client-side only - needs auth
   getCategoryInsights: async (categoryId: string): Promise<InsightType[]> => {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/categories/${categoryId}/insights`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories/${categoryId}/insights`
     );
 
     if (!response.ok) {

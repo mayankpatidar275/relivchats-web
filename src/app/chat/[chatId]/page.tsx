@@ -18,7 +18,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
   // Fetch chat server-side to get category for theme
   let chat;
   try {
-    chat = await serverApi.get(`/chats/${chatId}`);
+    chat = await serverApi.get(`chats/${chatId}`);
   } catch {
     // Handle error - chat might not exist
   }

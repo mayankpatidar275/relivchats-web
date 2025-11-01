@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { formatDate } from "@/src/lib/utils";
 import { useChat, useDeleteChat } from "@/src/features/chats/api";
 import { useConfirm } from "@/src/hooks/useConfirm";
+import ShareStatsButton from "./ShareStatsButton";
 
 interface ChatHeaderProps {
   chatId: string;
@@ -181,6 +182,7 @@ export default function ChatHeader({ chatId }: ChatHeaderProps) {
 
           {/* Right: Actions */}
           <div className="flex items-center gap-3">
+            <ShareStatsButton chat={chat} />
             <button
               onClick={handleDelete}
               className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-xl font-medium transition-all flex items-center gap-2"

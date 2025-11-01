@@ -2,6 +2,7 @@
 
 import { useChat } from "@/src/features/chats/api";
 import { useChatInsights } from "@/src/features/insights/api/hooks";
+import { useCategoryTheme } from "@/src/lib/theme";
 import { Sparkles, TrendingUp, Loader2 } from "lucide-react";
 
 interface InsightsDisplaySectionProps {
@@ -13,6 +14,7 @@ export default function InsightsDisplaySection({
 }: InsightsDisplaySectionProps) {
   const { data: chat } = useChat(chatId);
   const { data: insights, isLoading } = useChatInsights(chatId);
+  const theme = useCategoryTheme(chat?.category_slug);
 
   // Only show if insights are unlocked
   if (!chat || !chat.insights_unlocked) {
@@ -20,43 +22,43 @@ export default function InsightsDisplaySection({
   }
 
   // Color mapping
-  const colorMap: Record<
-    string,
-    {
-      gradient: string;
-      text: string;
-      bg: string;
-    }
-  > = {
-    romantic: {
-      gradient: "from-romantic-from to-romantic-to",
-      text: "text-pink-600",
-      bg: "bg-pink-50",
-    },
-    friendship: {
-      gradient: "from-friendship-from to-friendship-to",
-      text: "text-blue-600",
-      bg: "bg-blue-50",
-    },
-    family: {
-      gradient: "from-family-from to-family-to",
-      text: "text-green-600",
-      bg: "bg-green-50",
-    },
-    work: {
-      gradient: "from-work-from to-work-to",
-      text: "text-purple-600",
-      bg: "bg-purple-50",
-    },
-  };
+  // const colorMap: Record<
+  //   string,
+  //   {
+  //     gradient: string;
+  //     text: string;
+  //     bg: string;
+  //   }
+  // > = {
+  //   romantic: {
+  //     gradient: "from-romantic-from to-romantic-to",
+  //     text: "text-pink-600",
+  //     bg: "bg-pink-50",
+  //   },
+  //   friendship: {
+  //     gradient: "from-friendship-from to-friendship-to",
+  //     text: "text-blue-600",
+  //     bg: "bg-blue-50",
+  //   },
+  //   family: {
+  //     gradient: "from-family-from to-family-to",
+  //     text: "text-green-600",
+  //     bg: "bg-green-50",
+  //   },
+  //   work: {
+  //     gradient: "from-work-from to-work-to",
+  //     text: "text-purple-600",
+  //     bg: "bg-purple-50",
+  //   },
+  // };
 
-  const colors = chat.category_slug
-    ? colorMap[chat.category_slug]
-    : {
-        gradient: "from-gray-400 to-gray-600",
-        text: "text-gray-600",
-        bg: "bg-gray-50",
-      };
+  // const colors = chat.category_slug
+  //   ? colorMap[chat.category_slug]
+  //   : {
+  //       gradient: "from-gray-400 to-gray-600",
+  //       text: "text-gray-600",
+  //       bg: "bg-gray-50",
+  //     };
 
   if (isLoading) {
     return (
@@ -84,11 +86,11 @@ export default function InsightsDisplaySection({
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${
-              colors.bg
-            } border-2 ${colors.text.replace("text-", "border-")} mb-6`}
+              theme.bg
+            } border-2 ${theme.text.replace("text-", "border-")} mb-6`}
           >
-            <Sparkles className={`w-4 h-4 ${colors.text}`} />
-            <span className={`text-sm font-semibold ${colors.text}`}>
+            <Sparkles className={`w-4 h-4 ${theme.text}`} />
+            <span className={`text-sm font-semibold ${theme.text}`}>
               AI Insights Unlocked
             </span>
           </div>
@@ -111,7 +113,7 @@ export default function InsightsDisplaySection({
               {/* Header */}
               <div className="flex items-start gap-4 mb-6">
                 <div
-                  className={`w-14 h-14 rounded-2xl bg-linear-to-br ${colors.gradient} flex items-center justify-center text-3xl shrink-0`}
+                  className={`w-14 h-14 rounded-2xl bg-linear-to-br ${theme.gradient} flex items-center justify-center text-3xl shrink-0`}
                 >
                   {insight.icon || "💡"}
                 </div>
@@ -145,15 +147,15 @@ export default function InsightsDisplaySection({
               {insight.status === "completed" && insight.content && (
                 <div
                   className={`${
-                    colors.bg
-                  } rounded-2xl p-6 border-2 ${colors.text.replace(
+                    theme.bg
+                  } rounded-2xl p-6 border-2 ${theme.text.replace(
                     "text-",
                     "border-"
                   )}`}
                 >
                   <div className="flex items-center gap-2 mb-4">
-                    <TrendingUp className={`w-5 h-5 ${colors.text}`} />
-                    <span className={`font-semibold ${colors.text}`}>
+                    <TrendingUp className={`w-5 h-5 ${theme.text}`} />
+                    <span className={`font-semibold ${theme.text}`}>
                       Key Finding:
                     </span>
                   </div>
@@ -174,11 +176,11 @@ export default function InsightsDisplaySection({
                       <div className="flex items-center gap-2">
                         <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
                           <div
-                            className={`h-full bg-linear-to-r ${colors.gradient}`}
+                            className={`h-full bg-linear-to-r ${theme.gradient}`}
                             style={{ width: `${insight.content.confidence}%` }}
                           />
                         </div>
-                        <span className={`font-bold ${colors.text}`}>
+                        <span className={`font-bold ${theme.text}`}>
                           {insight.content.confidence}%
                         </span>
                       </div>
@@ -198,9 +200,7 @@ export default function InsightsDisplaySection({
                       {insight.content.recommendations.map(
                         (rec: string, idx: number) => (
                           <li key={idx} className="flex items-start gap-2">
-                            <span className={`${colors.text} font-bold`}>
-                              •
-                            </span>
+                            <span className={`${theme.text} font-bold`}>•</span>
                             <span>{rec}</span>
                           </li>
                         )

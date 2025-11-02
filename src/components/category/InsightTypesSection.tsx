@@ -48,7 +48,7 @@ export default function InsightTypesSection({
     },
   };
 
-  const colors = colorMap[category.slug] || colorMap.romantic;
+  const colors = colorMap[category.name] || colorMap.romantic;
 
   return (
     <section className="py-20 bg-white">
@@ -65,13 +65,15 @@ export default function InsightTypesSection({
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Complete <span className={colors.text}>{category.name}</span>{" "}
+            Complete{" "}
+            <span className={colors.text}>{category.display_name}</span>{" "}
             Analysis
           </h2>
 
           <p className="text-lg text-gray-600">
             Unlock all {category.insights_count} AI-powered insights with deep
-            analysis of your {category.name.toLowerCase()} conversations.
+            analysis of your {category.display_name.toLowerCase()}{" "}
+            conversations.
           </p>
         </div>
 
@@ -95,7 +97,7 @@ export default function InsightTypesSection({
               {/* Content */}
               <div className="space-y-2">
                 <h3 className="text-lg font-bold text-gray-900">
-                  {insight.name}
+                  {insight.display_title}
                 </h3>
 
                 <p className="text-sm text-gray-600 leading-relaxed">
@@ -106,9 +108,9 @@ export default function InsightTypesSection({
                 <div className="mt-4 flex items-center gap-2">
                   <span className="text-xs text-gray-500">Cost:</span>
                   <span className={`text-sm font-bold ${colors.text}`}>
-                    {insight.cost} coins
+                    {insight.credit_cost} coins
                   </span>
-                  {insight.cost && (
+                  {insight.credit_cost && (
                     <span className="text-xs px-2 py-0.5 bg-amber-100 text-amber-700 rounded-full font-semibold">
                       Premium
                     </span>
@@ -130,7 +132,7 @@ export default function InsightTypesSection({
             </div>
 
             <h3 className="text-3xl font-bold">
-              Unlock All {category.name} Insights
+              Unlock All {category.display_name} Insights
             </h3>
 
             <div className="flex items-center justify-center gap-3">

@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 export default function ChatsListSection() {
   const router = useRouter();
   const { data: chats, isLoading } = useChats();
+  console.log("chats", chats);
   const deleteMutation = useDeleteChat();
   const { confirm } = useConfirm();
 
@@ -42,6 +43,10 @@ export default function ChatsListSection() {
         await deleteMutation.mutateAsync(chatId);
       },
     });
+  };
+
+  const handleChooseAndUpload = () => {
+    router.push("/#home-upload");
   };
 
   if (isLoading) {
@@ -108,7 +113,7 @@ export default function ChatsListSection() {
             Upload your first chat to get started with AI-powered insights
           </p>
           <button
-            onClick={() => router.push("/")}
+            onClick={handleChooseAndUpload}
             className="px-8 py-3 bg-linear-to-r from-primary to-primary-hover text-white rounded-xl font-semibold hover:shadow-lg transition-all"
           >
             Choose Category & Upload

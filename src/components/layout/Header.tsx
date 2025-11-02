@@ -5,11 +5,12 @@ import { UserButton, useUser } from "@clerk/nextjs";
 import { Coins, Settings } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const { isSignedIn } = useUser();
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -102,7 +103,22 @@ export default function Header() {
                   </span>
                 </button>
 
-                {/* User Profile Button - Replaces separate dashboard button */}
+                {/* Dashboard Button - Desktop only */}
+                <button
+                  onClick={() => router.push("/dashboard")}
+                  className="hidden sm:block px-5 py-2 bg-linear-to-r from-primary to-primary-hover text-white rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all"
+                  // className={`hidden sm:flex items-center px-4 md:px-5 py-2 rounded-full font-medium transition-all ${
+                  //   pathname === "/dashboard"
+                  //     ? "bg-linear-to-r from-primary to-primary-hover text-white shadow-lg"
+                  //     : "text-gray-700 hover:bg-gray-100"
+                  // }`}
+                  aria-label="Go to dashboard"
+                  aria-current={pathname === "/dashboard" ? "page" : undefined}
+                >
+                  Dashboard
+                </button>
+
+                {/* User Profile Button */}
                 <div className="flex items-center">
                   <UserButton
                     afterSignOutUrl="/"
@@ -116,6 +132,7 @@ export default function Header() {
                     }}
                   >
                     <UserButton.MenuItems>
+                      {/* Dashboard link for mobile */}
                       <UserButton.Action
                         label="Dashboard"
                         labelIcon={<Coins className="w-4 h-4" />}

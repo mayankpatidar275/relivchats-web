@@ -33,39 +33,6 @@ export default function UploadSection({ category }: UploadSectionProps) {
   const [error, setError] = useState<string | null>(null);
   const uploadChatMutation = useUploadChat();
 
-  // Color mapping
-  const colorMap: Record<
-    string,
-    {
-      gradient: string;
-      text: string;
-      bg: string;
-    }
-  > = {
-    romantic: {
-      gradient: "from-romantic-from to-romantic-to",
-      text: "text-pink-600",
-      bg: "bg-pink-50",
-    },
-    friendship: {
-      gradient: "from-friendship-from to-friendship-to",
-      text: "text-blue-600",
-      bg: "bg-blue-50",
-    },
-    family: {
-      gradient: "from-family-from to-family-to",
-      text: "text-green-600",
-      bg: "bg-green-50",
-    },
-    work: {
-      gradient: "from-work-from to-work-to",
-      text: "text-purple-600",
-      bg: "bg-purple-50",
-    },
-  };
-
-  const colors = colorMap[category.slug] || colorMap.romantic;
-
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
@@ -116,8 +83,7 @@ export default function UploadSection({ category }: UploadSectionProps) {
       // Upload with category
       const response = await uploadChatMutation.mutateAsync({
         file: selectedFile,
-        // categoryId: category.slug,
-        categoryId: "2dd602d5-1e31-456d-8f34-f5bf5fd64e23",
+        categoryId: category.id,
       });
 
       // Redirect after short delay
@@ -164,7 +130,10 @@ export default function UploadSection({ category }: UploadSectionProps) {
           {/* Section header */}
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Upload Your <span className={colors.text}>{category.name}</span>{" "}
+              Upload Your{" "}
+              <span className={category.textColor}>
+                {category.display_name}
+              </span>{" "}
               Chat
             </h2>
             <p className="text-lg text-gray-600">
@@ -184,7 +153,7 @@ export default function UploadSection({ category }: UploadSectionProps) {
                 onClick={handleUploadClick}
                 className={`relative border-3 border-dashed rounded-3xl p-12 text-center cursor-pointer transition-all duration-300 ${
                   isDragging
-                    ? `${colors.bg} border-${colors.text.replace("text-", "")}`
+                    ? `${category.lightBg} ${category.borderColor}`
                     : "bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50"
                 }`}
               >
@@ -200,7 +169,7 @@ export default function UploadSection({ category }: UploadSectionProps) {
                           e.stopPropagation();
                           router.push("/signup");
                         }}
-                        className={`px-6 py-3 bg-linear-to-r ${colors.gradient} text-white rounded-xl font-semibold hover:shadow-lg transition-all`}
+                        className={`px-6 py-3 bg-linear-to-r ${category.color} text-white rounded-xl font-semibold hover:shadow-lg transition-all`}
                       >
                         Create Free Account
                       </button>
@@ -220,10 +189,10 @@ export default function UploadSection({ category }: UploadSectionProps) {
                   {/* Icon */}
                   <div className="relative inline-block">
                     <div
-                      className={`absolute inset-0 bg-linear-to-br ${colors.gradient} rounded-2xl blur-xl opacity-30`}
+                      className={`absolute inset-0 bg-linear-to-br ${category.color} rounded-2xl blur-xl opacity-30`}
                     />
                     <div
-                      className={`relative w-20 h-20 mx-auto bg-linear-to-br ${colors.gradient} rounded-2xl flex items-center justify-center`}
+                      className={`relative w-20 h-20 mx-auto bg-linear-to-br ${category.color} rounded-2xl flex items-center justify-center`}
                     >
                       <Upload className="w-10 h-10 text-white" />
                     </div>
@@ -231,7 +200,9 @@ export default function UploadSection({ category }: UploadSectionProps) {
 
                   {selectedFile ? (
                     <div className="space-y-2">
-                      <FileText className={`w-8 h-8 mx-auto ${colors.text}`} />
+                      <FileText
+                        className={`w-8 h-8 mx-auto ${category.textColor}`}
+                      />
                       <p className="font-semibold text-gray-900">
                         {selectedFile.name}
                       </p>
@@ -243,7 +214,7 @@ export default function UploadSection({ category }: UploadSectionProps) {
                           e.stopPropagation();
                           handleUpload();
                         }}
-                        className={`mt-4 px-6 py-3 bg-linear-to-r ${colors.gradient} text-white rounded-xl font-semibold hover:shadow-lg transition-all`}
+                        className={`mt-4 px-6 py-3 bg-linear-to-r ${category.color} text-white rounded-xl font-semibold hover:shadow-lg transition-all`}
                       >
                         Upload & Analyze
                       </button>
@@ -329,7 +300,7 @@ export default function UploadSection({ category }: UploadSectionProps) {
                   title: "Unlock Insights Anytime",
                   description:
                     "Choose which AI insights to unlock using your coins",
-                  color: colors.gradient,
+                  color: category.color,
                 },
               ].map((feature, index) => (
                 <div

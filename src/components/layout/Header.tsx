@@ -36,7 +36,7 @@ export default function Header() {
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/80 backdrop-blur-xl shadow-lg border-b border-gray-100"
+          ? "bg-white/80 backdrop-blur-xl shadow-lg border-gray-100"
           : "bg-transparent"
       }`}
       role="banner"

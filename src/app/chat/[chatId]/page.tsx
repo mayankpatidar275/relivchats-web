@@ -4,7 +4,7 @@ import FreeStatsSection from "@/src/components/chat/FreeStatsSection";
 import InsightsDisplaySection from "@/src/components/chat/InsightsDisplaySection";
 import ThemeProvider from "@/src/components/chat/ThemeProvider";
 import UnlockInsightsSection from "@/src/components/chat/UnlockInsightsSection";
-import { serverApi } from "@/src/lib/api/server-api";
+import { chatsApi } from "@/src/features/chats/api/server-queries";
 
 interface ChatPageProps {
   params: {
@@ -15,13 +15,7 @@ interface ChatPageProps {
 export default async function ChatPage({ params }: ChatPageProps) {
   const { chatId } = await params;
 
-  // Fetch chat server-side to get category for theme
-  let chat;
-  try {
-    chat = await serverApi.get(`chats/${chatId}`);
-  } catch {
-    // Handle error - chat might not exist
-  }
+  const chat = await chatsApi.getChat(chatId);
 
   return (
     <ThemeProvider categorySlug={chat?.category_slug}>
@@ -38,22 +32,15 @@ export default async function ChatPage({ params }: ChatPageProps) {
 
 // Wrapper to conditionally show CategorySelector
 async function CategorySelectorWrapper({ chatId }: { chatId: string }) {
-  let chat;
-  try {
-    chat = await serverApi.get(`/chats/${chatId}`);
-  } catch (error) {
-    return null;
-  }
-
   // Only show if no category assigned
-  if (chat?.category_id) {
-    return null;
-  }
+  // if (chat?.category_id) {
+  //   return null;
+  // }
 
   return <CategorySelector chatId={chatId} />;
 }
 
-export function generateMetadata({ params }: ChatPageProps) {
+export function generateMetadata({}: ChatPageProps) {
   return {
     title: `Chat Analysis | Reliv Chats`,
     description: "View your chat analysis and insights",

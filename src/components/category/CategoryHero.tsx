@@ -11,50 +11,17 @@ interface CategoryHeroProps {
 export default function CategoryHero({ category }: CategoryHeroProps) {
   const router = useRouter();
 
-  // Color mapping
-  const colorMap: Record<
-    string,
-    {
-      gradient: string;
-      bg: string;
-      text: string;
-    }
-  > = {
-    romantic: {
-      gradient: "from-romantic-from to-romantic-to",
-      bg: "from-romantic-bg to-white",
-      text: "text-pink-600",
-    },
-    friendship: {
-      gradient: "from-friendship-from to-friendship-to",
-      bg: "from-friendship-bg to-white",
-      text: "text-blue-600",
-    },
-    family: {
-      gradient: "from-family-from to-family-to",
-      bg: "from-family-bg to-white",
-      text: "text-green-600",
-    },
-    work: {
-      gradient: "from-work-from to-work-to",
-      bg: "from-work-bg to-white",
-      text: "text-purple-600",
-    },
-  };
-
-  const colors = colorMap[category.slug] || colorMap.romantic;
-
   return (
     <section
-      className={`relative py-20 bg-linear-to-br ${colors.bg} overflow-hidden`}
+      className={`relative py-20 bg-linear-to-br ${category.bg} to-white overflow-hidden`}
     >
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
-          className={`absolute top-20 -right-20 w-96 h-96 bg-linear-to-br ${colors.gradient} rounded-full blur-3xl opacity-20`}
+          className={`absolute top-20 -right-20 w-96 h-96 bg-linear-to-br ${category.color} rounded-full blur-3xl opacity-20`}
         />
         <div
-          className={`absolute -bottom-20 -left-20 w-96 h-96 bg-linear-to-br ${colors.gradient} rounded-full blur-3xl opacity-20`}
+          className={`absolute -bottom-20 -left-20 w-96 h-96 bg-linear-to-br ${category.color} rounded-full blur-3xl opacity-20`}
         />
       </div>
 
@@ -74,15 +41,15 @@ export default function CategoryHero({ category }: CategoryHeroProps) {
             {/* Icon */}
             <div className="relative inline-block">
               <div
-                className={`absolute inset-0 bg-linear-to-br ${colors.gradient} rounded-3xl blur-2xl opacity-50`}
+                className={`absolute inset-0 bg-linear-to-br ${category.color} rounded-3xl blur-2xl opacity-50`}
               />
               <div className="relative text-8xl">{category.icon}</div>
             </div>
 
             {/* Category name */}
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900">
-              {category.name}
-              <span className={`block mt-2 text-3xl ${colors.text}`}>
+              {category.display_name}
+              <span className={`block mt-2 text-3xl ${category.textColor}`}>
                 Chat Analysis
               </span>
             </h1>
@@ -96,7 +63,7 @@ export default function CategoryHero({ category }: CategoryHeroProps) {
             <div className="flex flex-wrap items-center gap-6 pt-4">
               <div className="flex items-center gap-3">
                 <div
-                  className={`w-12 h-12 rounded-xl bg-linear-to-br ${colors.gradient} flex items-center justify-center`}
+                  className={`w-12 h-12 rounded-xl bg-linear-to-br ${category.color} flex items-center justify-center`}
                 >
                   <Sparkles className="w-6 h-6 text-white" />
                 </div>
@@ -112,7 +79,7 @@ export default function CategoryHero({ category }: CategoryHeroProps) {
 
               <div className="flex items-center gap-3">
                 <div
-                  className={`w-12 h-12 rounded-xl bg-linear-to-br ${colors.gradient} flex items-center justify-center`}
+                  className={`w-12 h-12 rounded-xl bg-linear-to-br ${category.color} flex items-center justify-center`}
                 >
                   <TrendingUp className="w-6 h-6 text-white" />
                 </div>
@@ -129,15 +96,12 @@ export default function CategoryHero({ category }: CategoryHeroProps) {
           {/* Right visual */}
           <div className="relative hidden lg:block">
             <div
-              className={`relative bg-white rounded-3xl p-8 shadow-2xl border-2 ${colors.text.replace(
-                "text-",
-                "border-"
-              )}`}
+              className={`relative bg-white rounded-3xl p-8 shadow-2xl border-2 ${category.borderColor}`}
             >
               <div className="space-y-4">
                 <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
                   <div
-                    className={`w-3 h-3 rounded-full bg-linear-to-br ${colors.gradient}`}
+                    className={`w-3 h-3 rounded-full bg-linear-to-br ${category.color}`}
                   />
                   <span className="font-semibold text-gray-900">
                     What You&apos;ll Get
@@ -152,7 +116,7 @@ export default function CategoryHero({ category }: CategoryHeroProps) {
                 ].map((item, index) => (
                   <div key={index} className="flex items-center gap-3">
                     <div
-                      className={`w-6 h-6 rounded-lg bg-linear-to-br ${colors.gradient} flex items-center justify-center shrink-0`}
+                      className={`w-6 h-6 rounded-lg bg-linear-to-br ${category.color} flex items-center justify-center shrink-0`}
                     >
                       <span className="text-white text-xs font-bold">✓</span>
                     </div>

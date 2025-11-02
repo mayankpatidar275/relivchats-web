@@ -22,7 +22,7 @@ export default function DashboardHeader() {
           </div>
 
           {/* Right: Quick stats */}
-          <div className="flex items-center gap-6">
+          {/* <div className="flex items-center gap-6">
             <div className="text-center">
               <div className="text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
                 0
@@ -43,7 +43,7 @@ export default function DashboardHeader() {
               <Settings className="w-4 h-4" />
               Settings
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

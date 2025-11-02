@@ -41,7 +41,7 @@ export default function CreditBalanceWidget() {
           </div>
           <div className="text-5xl font-bold mb-4">{balance}</div>
           <p className="text-sm text-white/80">
-            Enough for {Math.floor(balance / 50)} friendship or{" "}
+            Enough for {Math.floor(balance / 60)} friendship or{" "}
             {Math.floor(balance / 100)} romantic insights
           </p>
         </div>

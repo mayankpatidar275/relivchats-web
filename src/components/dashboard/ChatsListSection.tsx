@@ -17,7 +17,6 @@ import { useRouter } from "next/navigation";
 export default function ChatsListSection() {
   const router = useRouter();
   const { data: chats, isLoading } = useChats();
-  console.log("chats", chats);
   const deleteMutation = useDeleteChat();
   const { confirm } = useConfirm();
 

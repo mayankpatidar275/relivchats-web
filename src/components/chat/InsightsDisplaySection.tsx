@@ -21,45 +21,6 @@ export default function InsightsDisplaySection({
     return null;
   }
 
-  // Color mapping
-  // const colorMap: Record<
-  //   string,
-  //   {
-  //     gradient: string;
-  //     text: string;
-  //     bg: string;
-  //   }
-  // > = {
-  //   romantic: {
-  //     gradient: "from-romantic-from to-romantic-to",
-  //     text: "text-pink-600",
-  //     bg: "bg-pink-50",
-  //   },
-  //   friendship: {
-  //     gradient: "from-friendship-from to-friendship-to",
-  //     text: "text-blue-600",
-  //     bg: "bg-blue-50",
-  //   },
-  //   family: {
-  //     gradient: "from-family-from to-family-to",
-  //     text: "text-green-600",
-  //     bg: "bg-green-50",
-  //   },
-  //   work: {
-  //     gradient: "from-work-from to-work-to",
-  //     text: "text-purple-600",
-  //     bg: "bg-purple-50",
-  //   },
-  // };
-
-  // const colors = chat.category_slug
-  //   ? colorMap[chat.category_slug]
-  //   : {
-  //       gradient: "from-gray-400 to-gray-600",
-  //       text: "text-gray-600",
-  //       bg: "bg-gray-50",
-  //     };
-
   if (isLoading) {
     return (
       <section className="py-12 bg-white">

@@ -9,6 +9,8 @@ export interface CategoryUI extends Category {
   borderColor: string;
   lightBorder: string; // Add this for border-pink-200 etc
   lightBg: string; // Add this for lighter backgrounds
+  badgeBg: string; // Add this
+  badgeText: string; // Add this
 }
 
 const colorMap: Record<
@@ -22,6 +24,8 @@ const colorMap: Record<
     borderColor: string;
     lightBorder: string;
     lightBg: string;
+    badgeBg: string; // Add this
+    badgeText: string; // Add this
   }
 > = {
   romantic: {
@@ -33,6 +37,8 @@ const colorMap: Record<
     borderColor: "border-pink-600",
     lightBorder: "border-pink-200",
     lightBg: "bg-pink-50",
+    badgeBg: "bg-pink-100",
+    badgeText: "text-pink-700",
   },
   friendship: {
     color: "from-blue-500 to-cyan-500",
@@ -43,6 +49,8 @@ const colorMap: Record<
     borderColor: "border-blue-600",
     lightBorder: "border-blue-200",
     lightBg: "bg-blue-50",
+    badgeBg: "bg-blue-100",
+    badgeText: "text-blue-700",
   },
   family: {
     color: "from-green-500 to-emerald-500",
@@ -53,6 +61,8 @@ const colorMap: Record<
     borderColor: "border-green-600",
     lightBorder: "border-green-200",
     lightBg: "bg-green-50",
+    badgeBg: "bg-green-100",
+    badgeText: "text-green-700",
   },
   work: {
     color: "from-purple-500 to-indigo-500",
@@ -63,6 +73,8 @@ const colorMap: Record<
     borderColor: "border-purple-600",
     lightBorder: "border-purple-200",
     lightBg: "bg-purple-50",
+    badgeBg: "bg-purple-100",
+    badgeText: "text-purple-700",
   },
 };
 
@@ -72,4 +84,9 @@ export function toCategoryUI(category: Category): CategoryUI {
     ...category,
     ...colors,
   };
+}
+
+export function getCategoryColors(categorySlug: string) {
+  const colors = colorMap[categorySlug] || colorMap.romantic;
+  return colors;
 }

@@ -3,6 +3,7 @@
 import { useChats, useDeleteChat } from "@/src/features/chats/api";
 import { useConfirm } from "@/src/hooks/useConfirm";
 import { formatDate } from "@/src/lib/utils";
+import { getCategoryColors } from "@/src/features/categories/utils";
 import {
   MessageCircle,
   Calendar,
@@ -60,33 +61,6 @@ export default function ChatsListSection() {
     );
   }
 
-  // Category color mapping
-  const colorMap: Record<
-    string,
-    { text: string; bg: string; gradient: string }
-  > = {
-    romantic: {
-      text: "text-pink-600",
-      bg: "bg-pink-50",
-      gradient: "from-pink-500 to-rose-500",
-    },
-    friendship: {
-      text: "text-blue-600",
-      bg: "bg-blue-50",
-      gradient: "from-blue-500 to-cyan-500",
-    },
-    family: {
-      text: "text-green-600",
-      bg: "bg-green-50",
-      gradient: "from-green-500 to-emerald-500",
-    },
-    work: {
-      text: "text-purple-600",
-      bg: "bg-purple-50",
-      gradient: "from-purple-500 to-indigo-500",
-    },
-  };
-
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -122,11 +96,12 @@ export default function ChatsListSection() {
         <div className="space-y-4">
           {chats.map((chat) => {
             const colors = chat.category_slug
-              ? colorMap[chat.category_slug]
+              ? getCategoryColors(chat.category_slug)
               : {
-                  text: "text-gray-600",
-                  bg: "bg-gray-50",
-                  gradient: "from-gray-400 to-gray-600",
+                  textColor: "text-gray-600",
+                  lightBg: "bg-gray-50",
+                  color: "from-gray-400 to-gray-600",
+                  borderColor: "border-gray-600",
                 };
 
             return (
@@ -140,18 +115,13 @@ export default function ChatsListSection() {
                     {/* Category badge */}
                     {chat.category_name && (
                       <div
-                        className={`inline-flex items-center gap-2 px-3 py-1 rounded-full ${
-                          colors.bg
-                        } border ${colors.text.replace(
-                          "text-",
-                          "border-"
-                        )} mb-3`}
+                        className={`inline-flex items-center gap-2 px-3 py-1 rounded-full ${colors.lightBg} border ${colors.borderColor} mb-3`}
                       >
                         <div
-                          className={`w-2 h-2 rounded-full bg-linear-to-r ${colors.gradient}`}
+                          className={`w-2 h-2 rounded-full bg-linear-to-r ${colors.color}`}
                         />
                         <span
-                          className={`text-xs font-semibold ${colors.text}`}
+                          className={`text-xs font-semibold ${colors.textColor}`}
                         >
                           {chat.category_name}
                         </span>

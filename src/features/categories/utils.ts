@@ -7,6 +7,8 @@ export interface CategoryUI extends Category {
   iconName: string;
   textColor: string;
   borderColor: string;
+  lightBorder: string; // Add this for border-pink-200 etc
+  lightBg: string; // Add this for lighter backgrounds
 }
 
 const colorMap: Record<
@@ -18,6 +20,8 @@ const colorMap: Record<
     iconName: string;
     textColor: string;
     borderColor: string;
+    lightBorder: string;
+    lightBg: string;
   }
 > = {
   romantic: {
@@ -27,6 +31,8 @@ const colorMap: Record<
     iconName: "Heart",
     textColor: "text-pink-600",
     borderColor: "border-pink-600",
+    lightBorder: "border-pink-200",
+    lightBg: "bg-pink-50",
   },
   friendship: {
     color: "from-blue-500 to-cyan-500",
@@ -35,6 +41,8 @@ const colorMap: Record<
     iconName: "Users",
     textColor: "text-blue-600",
     borderColor: "border-blue-600",
+    lightBorder: "border-blue-200",
+    lightBg: "bg-blue-50",
   },
   family: {
     color: "from-green-500 to-emerald-500",
@@ -43,6 +51,8 @@ const colorMap: Record<
     iconName: "Home",
     textColor: "text-green-600",
     borderColor: "border-green-600",
+    lightBorder: "border-green-200",
+    lightBg: "bg-green-50",
   },
   work: {
     color: "from-purple-500 to-indigo-500",
@@ -51,6 +61,8 @@ const colorMap: Record<
     iconName: "Briefcase",
     textColor: "text-purple-600",
     borderColor: "border-purple-600",
+    lightBorder: "border-purple-200",
+    lightBg: "bg-purple-50",
   },
 };
 

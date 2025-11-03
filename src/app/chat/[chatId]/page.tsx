@@ -1,25 +1,16 @@
-import ChatFlow from "@/src/components/chat/ChatFlow";
-import ChatHeader from "@/src/components/chat/ChatHeader";
-import FreeStatsSection from "@/src/components/chat/FreeStatsSection";
-import InsightsDisplaySection from "@/src/components/chat/InsightsDisplaySection";
+// app/chat/[chatId]/page.tsx
+import ChatPageClient from "@/src/components/chat/ChatPageClient";
 
-interface ChatPageProps {
-  params: {
-    chatId: string;
-  };
+interface PageProps {
+  params: { chatId: string };
 }
 
-export default async function ChatPage({ params }: ChatPageProps) {
+export default async function Page({ params }: PageProps) {
+  // This runs on the server; params is available synchronously
   const { chatId } = await params;
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <ChatHeader chatId={chatId} />
-      <FreeStatsSection chatId={chatId} />
-      <ChatFlow chatId={chatId} />
-      <InsightsDisplaySection chatId={chatId} />
-    </div>
-  );
+  // Render the client component and pass chatId as a prop
+  return <ChatPageClient chatId={chatId} />;
 }
 
 export function generateMetadata() {

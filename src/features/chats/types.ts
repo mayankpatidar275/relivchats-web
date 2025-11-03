@@ -37,6 +37,11 @@ export interface ChatMetadata {
   top_words: Array<{ word: string; count: number }>;
   top_emojis: Array<{ emoji: string; count: number }>;
   user_stats: Record<string, UserStats>;
+  links?: Array<{
+    url: string;
+    user: string;
+    timestamp: string;
+  }>;
 }
 
 export interface UserStats {

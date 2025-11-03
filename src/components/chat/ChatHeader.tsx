@@ -1,172 +1,54 @@
 "use client";
 
-import {
-  ArrowLeft,
-  Calendar,
-  Users,
-  MessageCircle,
-  Trash2,
-} from "lucide-react";
+import { useChat } from "@/src/features/chats/api";
+import { ArrowLeft, Share2, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { formatDate } from "@/src/lib/utils";
-import { useChat, useDeleteChat } from "@/src/features/chats/api";
-import { useConfirm } from "@/src/hooks/useConfirm";
-import { getCategoryColors } from "@/src/features/categories/utils";
-import ShareStatsButton from "./ShareStatsButton";
 
 interface ChatHeaderProps {
   chatId: string;
 }
 
 export default function ChatHeader({ chatId }: ChatHeaderProps) {
+  const { data: chat } = useChat(chatId);
   const router = useRouter();
-  //TODO: should i have a ui for error also?
-  const { data: chat, isLoading } = useChat(chatId);
-  const { confirm } = useConfirm();
-  const deleteMutation = useDeleteChat();
 
-  const handleDelete = async () => {
-    if (!chat) return;
-
-    await confirm({
-      title: "Delete Chat?",
-      description: (
-        <div className="space-y-2">
-          <p>
-            Are you sure you want to delete{" "}
-            <strong>&quot;{chat.filename}&quot;</strong>?
-          </p>
-          <p className="text-sm text-gray-500">This will permanently delete:</p>
-          <ul className="text-sm text-gray-600 list-disc list-inside space-y-1">
-            <li>
-              All {chat.chat_metadata.total_messages.toLocaleString()} messages
-            </li>
-            <li>Free statistics and analysis</li>
-            {chat.insights_unlocked && <li>All unlocked insights</li>}
-          </ul>
-          <p className="text-sm font-semibold text-red-600">
-            This action cannot be undone.
-          </p>
-        </div>
-      ),
-      confirmText: "Delete Forever",
-      cancelText: "Keep Chat",
-      variant: "danger",
-      onConfirm: async () => {
-        await deleteMutation.mutateAsync(chatId);
-        router.push("/dashboard");
-      },
-    });
-  };
-
-  if (isLoading) {
-    return (
-      <div className="bg-white border-b border-gray-200">
-        <div className="container mx-auto px-6 py-6 max-w-7xl">
-          <div className="animate-pulse space-y-4">
-            <div className="h-8 bg-gray-200 rounded w-1/4" />
-            <div className="h-6 bg-gray-200 rounded w-1/3" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!chat) {
-    return null;
-  }
-
-  const colors = chat.category_slug
-    ? getCategoryColors(chat.category_slug)
-    : {
-        textColor: "text-gray-600",
-        lightBg: "bg-gray-50",
-        color: "from-gray-400 to-gray-600",
-        borderColor: "border-gray-600",
-      };
+  if (!chat) return null;
 
   return (
-    <div className="bg-white border-b border-gray-200">
-      <div className="container mx-auto px-6 py-6 max-w-7xl">
-        {/* Back button */}
-        <button
-          onClick={() => router.push("/dashboard")}
-          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors group"
-        >
-          <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-          <span className="font-medium">Back to Dashboard</span>
-        </button>
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-[60px]">
+          {/* Left: Back button + Title */}
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <button
+              onClick={() => router.push("/dashboard")}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors shrink-0"
+              aria-label="Back to dashboard"
+            >
+              <ArrowLeft className="w-5 h-5 text-gray-700" />
+            </button>
 
-        <div className="flex items-start justify-between gap-6 flex-wrap">
-          {/* Left: Chat info */}
-          <div className="space-y-4 flex-1 min-w-0">
-            {/* Category badge */}
-            {chat.category_name && (
-              <div
-                className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${colors.lightBg} border-2 ${colors.borderColor}`}
-              >
-                <div
-                  className={`w-2 h-2 rounded-full bg-linear-to-r ${colors.color}`}
-                />
-                <span className={`text-sm font-semibold ${colors.textColor}`}>
-                  {chat.category_name}
-                </span>
-              </div>
-            )}
-
-            {/* Filename */}
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 wrap-break-word">
-              {chat.filename}
-            </h1>
-
-            {/* Quick stats */}
-            <div className="flex items-center gap-6 flex-wrap text-sm">
-              <div className="flex items-center gap-2 text-gray-600">
-                <Calendar className="w-4 h-4" />
-                <span>Uploaded {formatDate(chat.created_at)}</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-600">
-                <Users className="w-4 h-4" />
+            <div className="min-w-0">
+              <h1 className="text-lg font-bold text-gray-900 truncate">
+                {chat.title}
+              </h1>
+              <div className="flex items-center gap-2 text-xs text-gray-600">
+                <Users className="w-3 h-3" />
                 <span>{chat.participants.length} participants</span>
               </div>
-              <div className="flex items-center gap-2 text-gray-600">
-                <MessageCircle className="w-4 h-4" />
-                <span>
-                  {chat.chat_metadata.total_messages.toLocaleString()} messages
-                </span>
-              </div>
-            </div>
-
-            {/* Status badge */}
-            <div className="flex items-center gap-3">
-              {chat.status === "completed" && (
-                <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm font-medium border border-green-200">
-                  <div className="w-2 h-2 rounded-full bg-green-500" />
-                  Processed
-                </span>
-              )}
-              {chat.insights_unlocked && (
-                <span className="inline-flex items-center gap-2 px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm font-medium border border-purple-200">
-                  <div className="w-2 h-2 rounded-full bg-purple-500" />
-                  Insights Unlocked
-                </span>
-              )}
             </div>
           </div>
 
-          {/* Right: Actions */}
-          <div className="flex items-center gap-3">
-            <ShareStatsButton chat={chat} />
-            <button
-              onClick={handleDelete}
-              className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-xl font-medium transition-all flex items-center gap-2"
-            >
-              <Trash2 className="w-4 h-4" />
-              Delete
-            </button>
-          </div>
+          {/* Right: Share button */}
+          <button
+            onClick={() => router.push(`/share/${chatId}`)}
+            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors shrink-0"
+          >
+            <Share2 className="w-4 h-4" />
+            <span className="hidden sm:inline">Share</span>
+          </button>
         </div>
       </div>
-    </div>
+    </header>
   );
 }

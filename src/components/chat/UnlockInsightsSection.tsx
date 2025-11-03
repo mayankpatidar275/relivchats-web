@@ -1,36 +1,33 @@
 "use client";
 
-import { useCategoryInsights } from "@/src/features/categories/api";
-import { useChat, useUnlockInsights } from "@/src/features/chats/api";
+import {
+  useCategories,
+  useCategoryInsights,
+} from "@/src/features/categories/api";
 import { getCategoryColors } from "@/src/features/categories/utils";
-import { Lock, Sparkles, Check, Zap, AlertCircle } from "lucide-react";
-import { useState } from "react";
+import { useUnlockInsights } from "@/src/features/chats/api";
+import { Check, Lock, Sparkles, Zap } from "lucide-react";
+import { useRef, useState } from "react";
 
 interface UnlockInsightsSectionProps {
   chatId: string;
-  selectedCategoryId: string | null;
+  onUnlockSuccess?: () => void;
 }
 
 export default function UnlockInsightsSection({
   chatId,
-  selectedCategoryId,
+  onUnlockSuccess,
 }: UnlockInsightsSectionProps) {
-  const { data: chat } = useChat(chatId);
-  const { data: insights } = useCategoryInsights(selectedCategoryId || "");
-  const unlockMutation = useUnlockInsights();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null
+  );
   const [isUnlocking, setIsUnlocking] = useState(false);
+  const unlockMutation = useUnlockInsights();
 
-  // Don't show if already unlocked or if chat already has a category
-  if (!chat || chat.insights_unlocked || chat.category_id) {
-    return null;
-  }
+  const { data: categories } = useCategories();
+  const { data: insights } = useCategoryInsights(selectedCategoryId || "");
 
-  // Don't show if no category selected
-  if (!selectedCategoryId) {
-    return null;
-  }
-
-  const colors = getCategoryColors(insights?.[0]?.category_slug || "romantic");
+  const unlockSectionRef = useRef<HTMLDivElement>(null);
 
   const handleUnlock = async () => {
     if (!selectedCategoryId) {
@@ -44,6 +41,7 @@ export default function UnlockInsightsSection({
         chat_id: chatId,
         category_id: selectedCategoryId,
       });
+      onUnlockSuccess?.();
     } catch (error) {
       console.error("Failed to unlock insights:", error);
       alert("Failed to unlock insights. Please try again.");
@@ -52,133 +50,234 @@ export default function UnlockInsightsSection({
     }
   };
 
+  // const scrollToUnlock = () => {
+  //   unlockSectionRef.current?.scrollIntoView({
+  //     behavior: "smooth",
+  //     block: "center",
+  //   });
+  // };
+
   const totalCost = insights?.reduce((sum, i) => sum + i.credit_cost, 0) || 0;
   const insightCount = insights?.length || 0;
-  const categoryName =
-    insights?.[0]?.category_name || chat.category_name || "relationship";
+  const selectedCategory = categories?.find((c) => c.id === selectedCategoryId);
+  const colors = selectedCategory
+    ? getCategoryColors(selectedCategory.name)
+    : getCategoryColors("romantic");
 
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-6 max-w-7xl">
-        <div className="max-w-5xl mx-auto">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-50 border-2 border-gray-200 p-8 md:p-12">
-            {/* Background decoration */}
-            <div
-              className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${colors.color} rounded-full blur-3xl opacity-10`}
-            />
+    <section
+      ref={unlockSectionRef}
+      className="py-12 bg-linear-to-br from-purple-50 to-pink-50"
+    >
+      <div className="container mx-auto px-4 max-w-6xl">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-purple-200 rounded-full mb-4">
+            <Sparkles className="w-4 h-4 text-purple-600" />
+            <span className="text-sm font-semibold text-purple-600">
+              AI-Powered Insights
+            </span>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+            Unlock Deeper Understanding
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Choose your relationship type and get personalized AI insights
+          </p>
+        </div>
 
-            <div className="relative z-10">
-              {/* Header */}
-              <div className="text-center mb-8">
-                <div
-                  className={`inline-flex items-center gap-2 px-4 py-2 ${colors.lightBg} border ${colors.lightBorder} rounded-full mb-6`}
+        {/* Category Selector */}
+        <div className="mb-8">
+          <h3 className="text-lg font-bold text-gray-900 mb-4">
+            Choose Analysis Type
+          </h3>
+
+          {/* Mobile: Horizontal scroll */}
+          <div className="md:hidden overflow-x-auto -mx-4 px-4 pb-2">
+            <div className="flex gap-3">
+              {categories?.map((category) => {
+                const catColors = getCategoryColors(category.name);
+                const isSelected = selectedCategoryId === category.id;
+
+                return (
+                  <button
+                    key={category.id}
+                    onClick={() => setSelectedCategoryId(category.id)}
+                    className={`shrink-0 w-[140px] p-4 rounded-xl border-2 transition-all ${
+                      isSelected
+                        ? `${catColors.borderColor} bg-white shadow-lg`
+                        : "border-gray-200 bg-white hover:border-gray-300"
+                    }`}
+                  >
+                    <div className="text-3xl mb-2">{category.icon}</div>
+                    <div
+                      className={`text-sm font-bold mb-1 ${
+                        isSelected ? catColors.textColor : "text-gray-900"
+                      }`}
+                    >
+                      {category.display_name}
+                    </div>
+                    <div className="text-xs text-gray-600">
+                      {category.base_cost} coins
+                    </div>
+                    {isSelected && (
+                      <div className="mt-2">
+                        <Check
+                          className={`w-4 h-4 ${catColors.textColor} mx-auto`}
+                        />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Desktop: Grid */}
+          <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {categories?.map((category) => {
+              const catColors = getCategoryColors(category.name);
+              const isSelected = selectedCategoryId === category.id;
+
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategoryId(category.id)}
+                  className={`p-6 rounded-xl border-2 transition-all text-left ${
+                    isSelected
+                      ? `${catColors.borderColor} bg-white shadow-lg`
+                      : "border-gray-200 bg-white hover:border-gray-300"
+                  }`}
                 >
-                  <Lock className={`w-4 h-4 ${colors.textColor}`} />
-                  <span className={`text-sm font-semibold ${colors.textColor}`}>
-                    Unlock Required
-                  </span>
-                </div>
+                  <div className="text-4xl mb-3">{category.icon}</div>
+                  <div
+                    className={`text-base font-bold mb-2 ${
+                      isSelected ? catColors.textColor : "text-gray-900"
+                    }`}
+                  >
+                    {category.display_name}
+                  </div>
+                  <div className="text-sm text-gray-600 mb-3">
+                    {category.insights_count} insights
+                  </div>
+                  <div className={`text-sm font-bold ${catColors.textColor}`}>
+                    {category.base_cost} coins
+                  </div>
+                  {isSelected && (
+                    <div className="mt-3">
+                      <Check className={`w-5 h-5 ${catColors.textColor}`} />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                  Ready for Deeper Insights?
-                </h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                  Unlock all {insightCount} AI-powered {categoryName} insights
-                  and discover hidden patterns.
+        {/* Preview Insights */}
+        {selectedCategoryId && insights && insights.length > 0 && (
+          <div className="mb-8">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">
+              What You&apos;ll Get
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {insights.slice(0, 3).map((insight) => (
+                <div
+                  key={insight.id}
+                  className="relative bg-white rounded-xl border-2 border-gray-200 p-4 overflow-hidden"
+                >
+                  <div className="text-3xl mb-2">{insight.icon || "💡"}</div>
+                  <h4 className="font-bold text-sm mb-1 text-gray-900">
+                    {insight.display_title}
+                  </h4>
+                  <p className="text-xs text-gray-600 line-clamp-2">
+                    {insight.description}
+                  </p>
+
+                  {/* Blur overlay */}
+                  <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px] flex items-center justify-center">
+                    <div className="text-center">
+                      <Lock className="w-6 h-6 text-gray-400 mx-auto mb-1" />
+                      <div className="text-xs font-medium text-gray-600">
+                        Locked
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Unlock CTA */}
+        {selectedCategoryId ? (
+          <div
+            className={`bg-white rounded-2xl border-2 ${colors.borderColor} p-6 md:p-8 shadow-xl`}
+          >
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex-1 text-center md:text-left">
+                <div className="flex items-center gap-2 justify-center md:justify-start mb-2">
+                  <span className="text-3xl">{selectedCategory?.icon}</span>
+                  <div>
+                    <div className="text-xs text-gray-600">
+                      Selected Category
+                    </div>
+                    <div className="font-bold text-gray-900">
+                      {selectedCategory?.display_name}
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  Unlock {insightCount} AI Insights
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Deep analysis • Communication patterns • Actionable
+                  recommendations
                 </p>
               </div>
 
-              {/* Insights preview */}
-              {insights && insights.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                  {insights.slice(0, 3).map((insight) => (
-                    <div
-                      key={insight.id}
-                      className="bg-white rounded-2xl border border-gray-200 p-4 text-center hover:shadow-md transition-shadow"
-                    >
-                      <div className="text-3xl mb-2">
-                        {insight.icon || "💡"}
-                      </div>
-                      <h4 className="font-semibold text-gray-900 text-sm mb-1">
-                        {insight.display_title}
-                      </h4>
-                      <p className="text-xs text-gray-600 line-clamp-2">
-                        {insight.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* What you'll get */}
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-8">
-                <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <Sparkles className={colors.textColor} />
-                  What You&apos;ll Get:
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {[
-                    `All ${insightCount} AI-powered insights`,
-                    "Deep emotional analysis",
-                    "Communication patterns",
-                    "Visual reports & charts",
-                    "Actionable recommendations",
-                    "Lifetime access to results",
-                  ].map((feature, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <Check
-                        className={`w-5 h-5 ${colors.textColor} shrink-0`}
-                      />
-                      <span className="text-gray-700">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* CTA */}
-              <div
-                className={`rounded-2xl p-8 text-white text-center bg-gradient-to-br ${colors.color}`}
-              >
-                <div className="flex items-center justify-center gap-4 mb-6">
-                  <div>
-                    <div className="text-6xl font-bold">{totalCost}</div>
-                    <div className="text-sm text-white/80">coins</div>
+              <div className="shrink-0 text-center">
+                <div className="mb-4">
+                  <div className="text-4xl font-bold text-gray-900">
+                    {totalCost}
                   </div>
-                  <div className="text-left">
-                    <div className="text-xl font-semibold">One-time unlock</div>
-                    <div className="text-sm text-white/80">
-                      All insights included
-                    </div>
-                  </div>
+                  <div className="text-sm text-gray-600">coins</div>
                 </div>
-
                 <button
                   onClick={handleUnlock}
                   disabled={isUnlocking}
-                  className="group w-full md:w-auto px-12 py-4 bg-white text-gray-900 rounded-2xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 mx-auto"
+                  className={`group w-full md:w-auto px-8 py-4 bg-linear-to-r ${colors.color} text-white rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
                 >
                   {isUnlocking ? (
                     <>
-                      <div className="w-5 h-5 border-3 border-gray-300 border-t-gray-900 rounded-full animate-spin" />
+                      <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin" />
                       Unlocking...
                     </>
                   ) : (
                     <>
-                      <Zap className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-                      Unlock All Insights Now
+                      <Zap className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                      Unlock Now
                     </>
                   )}
                 </button>
-
-                <p className="text-sm text-white/80 mt-4">
-                  <AlertCircle className="w-4 h-4 inline mr-1" />
-                  This will also assign the selected category to your chat
-                </p>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="bg-white rounded-2xl border-2 border-dashed border-gray-300 p-8 text-center">
+            <Lock className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-gray-900 mb-2">
+              Select a Category to Continue
+            </h3>
+            <p className="text-gray-600">
+              Choose your relationship type above to see available insights
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );
 }
+
+// Export helper function for external button clicks
+export { UnlockInsightsSection };

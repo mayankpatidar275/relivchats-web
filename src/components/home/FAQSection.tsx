@@ -8,41 +8,27 @@ interface FAQItem {
   answer: string;
 }
 
+// Curated top FAQs - most important only
 const faqs: FAQItem[] = [
   {
     question: "How does Reliv Chats work?",
     answer:
-      "Upload your WhatsApp chat export file. We instantly analyze it and provide free basic statistics like message counts, participant activity, and timeline. For deeper insights, unlock AI-powered analysis with coins.",
+      "Upload your WhatsApp chat export file (.txt or .zip). We instantly analyze it and provide free basic statistics like message counts, activity patterns, and timelines. For deeper insights, unlock AI-powered analysis with coins.",
   },
   {
-    question: "Is my chat data secure and private?",
+    question: "Is my chat data private and secure?",
     answer:
-      "Absolutely! Your chats are stored securely. We never share your data with third parties. Message content is only used for AI analysis and remains completely private. You can delete your data anytime.",
-  },
-  {
-    question: "What are coins and how do they work?",
-    answer:
-      "Coins are our credit system. You get 50 free coins on signup. Use coins to unlock AI insights for your chats. You can buy more coins anytime.",
+      "Yes! Your chats are encrypted and stored securely. We never share your data with third parties. Message content is only used for AI analysis and remains completely private. You can delete your data anytime.",
   },
   {
     question: "What's included in the free stats?",
     answer:
-      "Free stats include: total messages & words, participant activity breakdown, date range & duration, busiest hours & days, top words & emojis, response times, conversation patterns, and media/link counts. No coins required!",
+      "Free stats include: total messages & words, participant activity breakdown, date range & duration, busiest hours & days, top words & emojis, response times, and conversation patterns. No coins required!",
   },
   {
-    question: "What AI insights can I unlock?",
+    question: "What are coins and how do they work?",
     answer:
-      "Depending on your category (Romantic, Friendship, Family, Work), you get 6-8 specialized insights like emotional depth analysis, communication patterns, conflict resolution, support patterns, team dynamics, and personalized recommendations.",
-  },
-  {
-    question: "Which chat platforms are supported?",
-    answer:
-      "Currently we support WhatsApp. Simply export your chat from the app and upload the file. We handle the rest!",
-  },
-  {
-    question: "Can I analyze multiple chats?",
-    answer:
-      "Yes! Upload as many chats as you want. Each chat is analyzed separately. Free stats are always available. You only spend coins when you unlock deeper insights for a specific chat.",
+      "Coins are our credit system. You get 50 free coins on signup. Use coins to unlock category-specific AI insights (50-100 coins per chat depending on the category). Buy more coins anytime via flexible packages.",
   },
   {
     question: "How do I export my WhatsApp chat?",
@@ -50,14 +36,9 @@ const faqs: FAQItem[] = [
       "Open WhatsApp → Select chat → Tap menu (⋮) → More → Export chat → Without Media. This creates a .txt file you can upload to Reliv Chats.",
   },
   {
-    question: "Do insights expire?",
+    question: "Can I analyze multiple chats?",
     answer:
-      "No! Once you unlock insights for a chat, you have lifetime access. Your stats and insights remain available in your dashboard forever (unless you delete the chat).",
-  },
-  {
-    question: "Can I share my chat stats?",
-    answer:
-      "Yes! You can share your basic statistics publicly via a shareable link. Only stats are shared - message content remains private. Perfect for showing friends your chat activity!",
+      "Yes! Upload as many chats as you want. Each chat is analyzed separately. Free stats are always available. You only spend coins when you unlock deeper AI insights for a specific chat.",
   },
 ];
 
@@ -65,34 +46,34 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-24 bg-white">
-      <div className="container mx-auto px-6 max-w-4xl">
+    <section className="py-12 md:py-20 lg:py-24 bg-white">
+      <div className="container mx-auto px-4 max-w-4xl">
         {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full border border-primary/20 mb-6">
-            <MessageCircle className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-primary">
+        <div className="text-center mb-8 md:mb-12">
+          <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-primary/10 rounded-full border border-primary/20 mb-4">
+            <MessageCircle className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary" />
+            <span className="text-xs md:text-sm font-semibold text-primary">
               Got Questions?
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Frequently Asked Questions
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 md:mb-4">
+            FAQ
           </h2>
-          <p className="text-xl text-gray-600">
-            Everything you need to know about Reliv Chats
+          <p className="text-base md:text-lg lg:text-xl text-gray-600">
+            Quick answers to common questions
           </p>
         </div>
 
-        {/* FAQ Items */}
-        <div className="space-y-4">
+        {/* FAQ Items - Compact */}
+        <div className="space-y-3 md:space-y-4">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
 
             return (
               <div
                 key={index}
-                className={`border-2 rounded-2xl transition-all duration-300 ${
+                className={`border-2 rounded-xl md:rounded-2xl transition-all duration-300 ${
                   isOpen
                     ? "border-primary bg-primary/5"
                     : "border-gray-200 bg-white hover:border-gray-300"
@@ -100,10 +81,10 @@ export default function FAQSection() {
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full flex items-center justify-between p-6 text-left"
+                  className="w-full flex items-center justify-between p-4 md:p-5 text-left"
                 >
                   <span
-                    className={`font-semibold text-lg pr-4 ${
+                    className={`font-semibold text-sm md:text-base lg:text-lg pr-4 ${
                       isOpen ? "text-primary" : "text-gray-900"
                     }`}
                   >
@@ -121,7 +102,7 @@ export default function FAQSection() {
                     isOpen ? "max-h-96" : "max-h-0"
                   }`}
                 >
-                  <div className="px-6 pb-6 text-gray-700 leading-relaxed">
+                  <div className="px-4 md:px-5 pb-4 md:pb-5 text-sm md:text-base text-gray-700 leading-relaxed">
                     {faq.answer}
                   </div>
                 </div>
@@ -131,11 +112,13 @@ export default function FAQSection() {
         </div>
 
         {/* CTA */}
-        <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4">Still have questions?</p>
+        <div className="mt-8 md:mt-12 text-center">
+          <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4">
+            Still have questions?
+          </p>
           <a
             href="mailto:support@relivchats.com"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-xl font-semibold transition-all"
+            className="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-xl font-semibold transition-all text-sm md:text-base"
           >
             Contact Support
           </a>

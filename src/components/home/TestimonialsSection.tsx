@@ -1,6 +1,6 @@
 "use client";
 
-import { Star, Quote } from "lucide-react";
+import { Star } from "lucide-react";
 
 interface Testimonial {
   name: string;
@@ -11,117 +11,101 @@ interface Testimonial {
   category: string;
 }
 
+// Curated top testimonials - show 3-4 on mobile, 6 on desktop
 const testimonials: Testimonial[] = [
   {
-    name: "Sarah Johnson",
+    name: "Sarah J.",
     role: "Digital Marketer",
     image: "👩‍💼",
     rating: 5,
-    text: "Reliv Chats helped me understand my communication patterns in my relationship. The emotional depth analysis was spot-on and gave us actionable ways to improve!",
+    text: "The emotional depth analysis was spot-on! Helped us improve our relationship communication significantly.",
     category: "Romantic",
   },
   {
-    name: "Michael Chen",
+    name: "Michael C.",
     role: "Software Engineer",
     image: "👨‍💻",
     rating: 5,
-    text: "I analyzed my team's work chat and discovered we were missing key collaboration patterns. The insights helped us restructure our communication. Game changer!",
+    text: "Analyzed our team chat and discovered missing collaboration patterns. Game changer for remote work!",
     category: "Work",
   },
   {
-    name: "Priya Sharma",
+    name: "Priya S.",
     role: "Student",
     image: "👩‍🎓",
     rating: 5,
-    text: "The friendship analysis showed me who I really connect with most. The response time patterns and conversation starters were fascinating! Worth every coin.",
+    text: "Free stats are amazing! The response time patterns and conversation starters were so insightful.",
     category: "Friendship",
   },
   {
-    name: "David Martinez",
+    name: "David M.",
     role: "Entrepreneur",
     image: "👨‍💼",
     rating: 5,
-    text: "I uploaded 6 months of family group chat. The AI insights revealed beautiful patterns of support and celebration we didn't even notice. Made me emotional!",
+    text: "Family chat analysis revealed beautiful support patterns we didn't notice. Made me emotional! 💙",
     category: "Family",
-  },
-  {
-    name: "Emily Roberts",
-    role: "Content Creator",
-    image: "👩‍🎨",
-    rating: 5,
-    text: "The free stats alone are amazing! Message counts, emoji usage, top words - I shared my stats on Instagram and everyone wanted to try it. Love it!",
-    category: "General",
-  },
-  {
-    name: "Alex Thompson",
-    role: "Product Manager",
-    image: "👨‍💼",
-    rating: 5,
-    text: "Used it to analyze customer support chats. The sentiment analysis and response patterns helped us improve our support strategy significantly.",
-    category: "Work",
   },
 ];
 
 export default function TestimonialsSection() {
   return (
-    <section className="py-24 bg-linear-to-br from-primary/5 via-white to-accent-pink/5">
-      <div className="container mx-auto px-6 max-w-7xl">
+    <section className="py-12 md:py-20 lg:py-24 bg-linear-to-br from-primary/5 via-white to-accent-pink/5">
+      <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 rounded-full border border-amber-300 mb-6">
-            <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
-            <span className="text-sm font-semibold text-amber-700">
+        <div className="text-center mb-8 md:mb-12">
+          <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-amber-50 rounded-full border border-amber-200 mb-4">
+            <Star className="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-600 fill-amber-600" />
+            <span className="text-xs md:text-sm font-semibold text-amber-700">
               Loved by thousands
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 md:mb-4">
             What Our Users Say
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-base md:text-lg lg:text-xl text-gray-600">
             Real stories from people who discovered deeper connections
           </p>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Testimonials Grid - Responsive */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-white rounded-3xl border-2 border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="bg-white rounded-2xl border border-gray-200 p-5 md:p-6 hover:shadow-lg transition-all duration-300"
             >
-              {/* Quote Icon */}
-              <Quote className="w-10 h-10 text-primary/20 mb-4" />
-
               {/* Rating */}
-              <div className="flex gap-1 mb-4">
+              <div className="flex gap-0.5 mb-3">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
                   <Star
                     key={i}
-                    className="w-5 h-5 text-amber-400 fill-amber-400"
+                    className="w-4 h-4 text-amber-400 fill-amber-400"
                   />
                 ))}
               </div>
 
               {/* Text */}
-              <p className="text-gray-700 leading-relaxed mb-6">
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-4">
                 &quot;{testimonial.text}&quot;
               </p>
 
               {/* Author */}
-              <div className="flex items-center gap-4 pt-6 border-t border-gray-100">
-                <div className="w-12 h-12 rounded-full bg-linear-to-br from-primary to-accent-pink flex items-center justify-center text-2xl">
-                  {testimonial.image}
-                </div>
-                <div className="flex-1">
-                  <div className="font-semibold text-gray-900">
-                    {testimonial.name}
+              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary to-accent-pink flex items-center justify-center text-xl">
+                    {testimonial.image}
                   </div>
-                  <div className="text-sm text-gray-600">
-                    {testimonial.role}
+                  <div>
+                    <div className="font-semibold text-gray-900 text-sm">
+                      {testimonial.name}
+                    </div>
+                    <div className="text-xs text-gray-600">
+                      {testimonial.role}
+                    </div>
                   </div>
                 </div>
-                <div className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-semibold">
+                <div className="px-2.5 py-1 bg-primary/10 text-primary rounded-full text-xs font-semibold">
                   {testimonial.category}
                 </div>
               </div>
@@ -129,29 +113,31 @@ export default function TestimonialsSection() {
           ))}
         </div>
 
-        {/* Social Proof */}
-        <div className="mt-16 text-center">
-          <div className="flex items-center justify-center gap-12 flex-wrap">
-            <div>
-              <div className="text-4xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent mb-1">
-                10,000+
-              </div>
-              <div className="text-gray-600">Chats Analyzed</div>
+        {/* Social Proof - Compact */}
+        <div className="flex items-center justify-center gap-6 md:gap-12 flex-wrap">
+          <div className="text-center">
+            <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
+              10K+
             </div>
-            <div className="h-12 w-px bg-gray-200" />
-            <div>
-              <div className="text-4xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent mb-1">
-                4.9/5
-              </div>
-              <div className="text-gray-600">Average Rating</div>
+            <div className="text-xs md:text-sm text-gray-600">
+              Chats Analyzed
             </div>
-            <div className="h-12 w-px bg-gray-200" />
-            <div>
-              <div className="text-4xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent mb-1">
-                5,000+
-              </div>
-              <div className="text-gray-600">Happy Users</div>
+          </div>
+          <div className="h-10 w-px bg-gray-200" />
+          <div className="text-center">
+            <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
+              4.9/5
             </div>
+            <div className="text-xs md:text-sm text-gray-600">
+              Average Rating
+            </div>
+          </div>
+          <div className="h-10 w-px bg-gray-200" />
+          <div className="text-center">
+            <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
+              5K+
+            </div>
+            <div className="text-xs md:text-sm text-gray-600">Happy Users</div>
           </div>
         </div>
       </div>

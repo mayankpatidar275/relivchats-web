@@ -22,15 +22,15 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-[85vh] md:min-h-[90vh] flex items-center overflow-hidden bg-linear-to-br from-primary-light via-white to-accent-pink-light">
-      {/* Animated background blobs - Hidden on mobile for performance */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
-        <div className="absolute top-20 -left-20 w-64 h-64 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-float" />
+      {/* Animated background blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 -left-20 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" />
         <div
-          className="absolute top-40 -right-20 w-64 h-64 bg-accent-pink rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-float"
+          className="absolute top-40 -right-20 w-72 h-72 bg-accent-pink rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"
           style={{ animationDelay: "2s" }}
         />
         <div
-          className="absolute -bottom-20 left-1/2 w-64 h-64 bg-levender rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-float"
+          className="absolute -bottom-20 left-1/2 w-72 h-72 bg-lavender rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"
           style={{ animationDelay: "4s" }}
         />
       </div>

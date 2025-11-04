@@ -79,7 +79,7 @@ export default function ActivityCharts({
         className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
       >
         <div className="flex items-center gap-2">
-          <BarChart3 className="w-5 h-5 text-purple-600" />
+          <BarChart3 className="w-5 h-5 text-primary" />
           <h3 className="text-lg font-bold text-gray-900">
             Activity Distribution
           </h3>

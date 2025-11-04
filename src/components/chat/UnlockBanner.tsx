@@ -19,7 +19,7 @@ export default function UnlockBanner({
   if (dismissed) return null;
 
   return (
-    <div className="sticky top-[110px] z-30 bg-linear-to-r from-purple-600 to-pink-600 text-white">
+    <div className="sticky top-[110px] z-30 bg-linear-to-r from-primary to-pink-600 text-white">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-3 gap-4">
           <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -39,7 +39,7 @@ export default function UnlockBanner({
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={onUnlockClick}
-              className="px-4 py-2 bg-white text-purple-600 rounded-lg text-sm font-bold hover:bg-gray-100 transition-colors"
+              className="px-4 py-2 bg-white text-primary rounded-lg text-sm font-bold hover:bg-gray-100 transition-colors"
             >
               <span className="hidden sm:inline">Unlock for </span>
               {cost} coins

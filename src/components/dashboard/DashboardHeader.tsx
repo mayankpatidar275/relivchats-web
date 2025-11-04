@@ -1,49 +1,71 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import { Settings } from "lucide-react";
-import Link from "next/link";
+import { Sparkles } from "lucide-react";
+import { useChats } from "@/src/features/chats/api";
 
 export default function DashboardHeader() {
   const { user } = useUser();
+  const { data: chats } = useChats();
+
+  const totalChats = chats?.length || 0;
+  const unlockedChats = chats?.filter((c) => c.insights_unlocked).length || 0;
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning";
+    if (hour < 18) return "Good afternoon";
+    return "Good evening";
+  };
 
   return (
-    <div className="bg-white border-b border-gray-200">
-      <div className="container mx-auto px-6 py-8 max-w-7xl">
-        <div className="flex items-center justify-between gap-6 flex-wrap">
-          {/* Left: Greeting */}
+    <div className="bg-linear-to-br from-purple-50 via-pink-50 to-white border-b border-gray-100">
+      <div className="container mx-auto px-4 py-6 md:py-8 max-w-7xl">
+        <div className="flex flex-col gap-4">
+          {/* Greeting */}
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
-              Welcome back, {user?.firstName || "there"}! 👋
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1">
+              {getGreeting()}, {user?.firstName || "there"}! 👋
             </h1>
-            <p className="text-lg text-gray-600">
+            <p className="text-sm md:text-base text-gray-600">
               Manage your chats and unlock deeper insights
             </p>
           </div>
 
-          {/* Right: Quick stats */}
-          {/* <div className="flex items-center gap-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
-                0
+          {/* Stats Cards - Mobile responsive */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {/* Total Chats */}
+            <div className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md transition-shadow">
+              <div className="text-xs text-gray-600 mb-1">Total Chats</div>
+              <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-pink-600 bg-clip-text text-transparent">
+                {totalChats}
               </div>
-              <div className="text-sm text-gray-600">Chats</div>
             </div>
-            <div className="h-12 w-px bg-gray-200" />
-            <div className="text-center">
-              <div className="text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
-                0
+
+            {/* Unlocked Insights */}
+            <div className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md transition-shadow">
+              <div className="text-xs text-gray-600 mb-1 flex items-center gap-1">
+                <Sparkles className="w-3 h-3" />
+                Insights Unlocked
               </div>
-              <div className="text-sm text-gray-600">Insights</div>
+              <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-pink-600 bg-clip-text text-transparent">
+                {unlockedChats}
+              </div>
             </div>
-            <Link
-              href="/settings"
-              className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-xl transition-all"
-            >
-              <Settings className="w-4 h-4" />
-              Settings
-            </Link>
-          </div> */}
+
+            {/* Total Messages */}
+            <div className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md transition-shadow col-span-2 md:col-span-1">
+              <div className="text-xs text-gray-600 mb-1">Total Messages</div>
+              <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-pink-600 bg-clip-text text-transparent">
+                {chats
+                  ?.reduce(
+                    (sum, chat) => sum + chat.chat_metadata.total_messages,
+                    0
+                  )
+                  .toLocaleString() || 0}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

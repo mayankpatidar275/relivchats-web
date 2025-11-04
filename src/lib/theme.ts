@@ -53,7 +53,7 @@ export const categoryThemes: Record<string, CategoryTheme> = {
     gradient: "from-purple-500 to-indigo-500",
     gradientFrom: "#a855f7",
     gradientTo: "#6366f1",
-    text: "text-purple-600",
+    text: "text-primary",
     bg: "bg-purple-50",
     bgLight: "bg-purple-100",
     border: "border-purple-200",

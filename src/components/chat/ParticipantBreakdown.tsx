@@ -36,7 +36,7 @@ export default function ParticipantBreakdown({
     return (
       <div className="bg-white rounded-xl border border-gray-200 p-6">
         <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <MessageSquare className="w-5 h-5 text-purple-600" />
+          <MessageSquare className="w-5 h-5 text-primary" />
           Conversation Balance
         </h3>
 
@@ -74,7 +74,7 @@ export default function ParticipantBreakdown({
         {participants.length === 2 && (
           <button
             onClick={onSwitchToCompare}
-            className="w-full py-2 text-sm font-medium text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
+            className="w-full py-2 text-sm font-medium text-primary hover:bg-purple-50 rounded-lg transition-colors"
           >
             Switch to Compare View →
           </button>

@@ -73,8 +73,8 @@ export default function UnlockInsightsSection({
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-purple-200 rounded-full mb-4">
-            <Sparkles className="w-4 h-4 text-purple-600" />
-            <span className="text-sm font-semibold text-purple-600">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <span className="text-sm font-semibold text-primary">
               AI-Powered Insights
             </span>
           </div>

@@ -257,7 +257,7 @@ export default function UploadSection({ category }: UploadSectionProps) {
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-xl bg-linear-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white text-xl">
+                  <div className="w-10 h-10 rounded-xl bg-linear-to-br from-primary to-pink-600 flex items-center justify-center text-white text-xl">
                     I
                   </div>
                   <span className="text-sm font-medium text-gray-700">

@@ -16,26 +16,32 @@ export default function InsightTypesSection({
     <section className="py-20 bg-white">
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Section header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-8 md:mb-12">
+          {/* Badge */}
           <div
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${category.lightBg} border ${category.lightBorder} mb-6`}
+            className={`inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-linear-to-r ${category.lightBg} border ${category.lightBorder} mb-4 md:mb-6`}
           >
             <Sparkles className={`w-4 h-4 ${category.textColor}`} />
-            <span className={`text-sm font-semibold ${category.textColor}`}>
+            <span
+              className={`text-xs md:text-sm font-semibold ${category.textColor}`}
+            >
               What You&apos;ll Get
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Complete{" "}
-            <span className={category.textColor}>{category.display_name}</span>{" "}
+          {/* Heading */}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
+            Complete
+            <span className={category.textColor}>
+              {" "}
+              {category.display_name}{" "}
+            </span>
             Analysis
           </h2>
 
-          <p className="text-lg text-gray-600">
-            Unlock all {category.insights_count} AI-powered insights with deep
-            analysis of your {category.display_name.toLowerCase()}{" "}
-            conversations.
+          {/* Description */}
+          <p className="text-base md:text-lg lg:text-xl text-gray-600">
+            AI-tailored analysis for your specific relationship type
           </p>
         </div>
 
@@ -84,7 +90,7 @@ export default function InsightTypesSection({
         </div>
 
         {/* Pricing card */}
-        <div
+        {/* <div
           className={`max-w-2xl mx-auto bg-linear-to-br ${category.color} rounded-3xl p-8 text-center text-white shadow-2xl`}
         >
           <div className="space-y-4">
@@ -129,7 +135,7 @@ export default function InsightTypesSection({
               immediately, and can unlock these insights anytime.
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

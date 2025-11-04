@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import CategoryHero from "@/src/components/category/CategoryHero";
 import InsightTypesSection from "@/src/components/category/InsightTypesSection";
 import UploadSection from "@/src/components/category/UploadSection";
-import HowItWorksSection from "@/src/components/category/HowItWorksSection";
+// import HowItWorksSection from "@/src/components/category/HowItWorksSection";
 import { categoriesApi } from "@/src/features/categories/api/server-queries";
 import { toCategoryUI } from "@/src/features/categories/utils";
 
@@ -28,7 +28,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <CategoryHero category={categoryUI} />
       <InsightTypesSection category={categoryUI} />
       <UploadSection category={categoryUI} />
-      <HowItWorksSection />
+      {/* <HowItWorksSection /> */}
     </div>
   );
 }

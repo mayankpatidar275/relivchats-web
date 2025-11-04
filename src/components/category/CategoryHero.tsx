@@ -1,7 +1,7 @@
 "use client";
 
 import { CategoryUI } from "@/src/features/categories/utils";
-import { ArrowLeft, Sparkles, TrendingUp } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface CategoryHeroProps {
@@ -13,116 +13,53 @@ export default function CategoryHero({ category }: CategoryHeroProps) {
 
   return (
     <section
-      className={`relative py-20 bg-linear-to-br ${category.bg} to-white overflow-hidden`}
+      className={`relative py-8 sm:py-12 bg-linear-to-br ${category.bg} to-white`}
     >
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div
-          className={`absolute top-20 -right-20 w-96 h-96 bg-linear-to-br ${category.color} rounded-full blur-3xl opacity-20`}
-        />
-        <div
-          className={`absolute -bottom-20 -left-20 w-96 h-96 bg-linear-to-br ${category.color} rounded-full blur-3xl opacity-20`}
-        />
-      </div>
-
-      <div className="container relative mx-auto px-6 max-w-7xl">
+      <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
         {/* Back button */}
         <button
           onClick={() => router.push("/")}
-          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-8 transition-colors group"
+          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 sm:mb-6 transition-colors group text-sm sm:text-base"
         >
-          <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-          <span className="font-medium">Back to Categories</span>
+          <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-x-1 transition-transform" />
+          <span className="font-medium">Back</span>
         </button>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left content */}
-          <div className="space-y-6">
-            {/* Icon */}
-            <div className="relative inline-block">
-              <div
-                className={`absolute inset-0 bg-linear-to-br ${category.color} rounded-3xl blur-2xl opacity-50`}
-              />
-              <div className="relative text-8xl">{category.icon}</div>
-            </div>
-
-            {/* Category name */}
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900">
-              {category.display_name}
-              <span className={`block mt-2 text-3xl ${category.textColor}`}>
-                Chat Analysis
-              </span>
-            </h1>
-
-            {/* Description */}
-            <p className="text-xl text-gray-600 leading-relaxed">
-              {category.description}
-            </p>
-
-            {/* Stats */}
-            <div className="flex flex-wrap items-center gap-6 pt-4">
-              <div className="flex items-center gap-3">
-                <div
-                  className={`w-12 h-12 rounded-xl bg-linear-to-br ${category.color} flex items-center justify-center`}
-                >
-                  <Sparkles className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {category.insights_count}
-                  </div>
-                  <div className="text-sm text-gray-600">AI Insights</div>
-                </div>
-              </div>
-
-              <div className="h-12 w-px bg-gray-300" />
-
-              <div className="flex items-center gap-3">
-                <div
-                  className={`w-12 h-12 rounded-xl bg-linear-to-br ${category.color} flex items-center justify-center`}
-                >
-                  <TrendingUp className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {category.base_cost}
-                  </div>
-                  <div className="text-sm text-gray-600">Starting Coins</div>
-                </div>
-              </div>
+        {/* Compact header */}
+        <div className="flex items-center gap-4 sm:gap-6">
+          {/* Icon */}
+          <div className="relative shrink-0">
+            <div
+              className={`absolute inset-0 bg-linear-to-br ${category.color} rounded-2xl blur-xl opacity-50`}
+            />
+            <div className="relative text-5xl sm:text-6xl md:text-7xl">
+              {category.icon}
             </div>
           </div>
 
-          {/* Right visual */}
-          <div className="relative hidden lg:block">
-            <div
-              className={`relative bg-white rounded-3xl p-8 shadow-2xl border-2 ${category.borderColor}`}
-            >
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
-                  <div
-                    className={`w-3 h-3 rounded-full bg-linear-to-br ${category.color}`}
-                  />
-                  <span className="font-semibold text-gray-900">
-                    What You&apos;ll Get
-                  </span>
-                </div>
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-1 sm:mb-2">
+              {category.display_name}
+            </h1>
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-3 sm:mb-4">
+              {category.description}
+            </p>
 
-                {[
-                  "Deep emotional analysis",
-                  "Communication patterns",
-                  "Actionable insights",
-                  "Visual reports",
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div
-                      className={`w-6 h-6 rounded-lg bg-linear-to-br ${category.color} flex items-center justify-center shrink-0`}
-                    >
-                      <span className="text-white text-xs font-bold">✓</span>
-                    </div>
-                    <span className="text-gray-700">{item}</span>
-                  </div>
-                ))}
+            {/* Compact stats */}
+            <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm">
+              <div className="flex items-center gap-1.5">
+                <span className="font-bold text-primary text-base sm:text-lg">
+                  {category.insights_count}
+                </span>
+                <span className="text-gray-600">AI Insights</span>
+              </div>
+              <div className="h-4 w-px bg-gray-300" />
+              <div className="flex items-center gap-1.5">
+                <span className="font-bold text-primary text-base sm:text-lg">
+                  {category.base_cost}
+                </span>
+                <span className="text-gray-600">Coins</span>
               </div>
             </div>
           </div>

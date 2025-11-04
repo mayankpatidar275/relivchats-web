@@ -1,25 +1,22 @@
 "use client";
 
 import { useCategories } from "@/src/features/categories/api";
-import { Brain, Search, TrendingUp, Zap } from "lucide-react";
 import CategoryCard from "./CategoryCard";
 import { toCategoryUI } from "@/src/features/categories/utils";
+import { Zap } from "lucide-react";
 
 export default function CategoriesSection() {
   const { data: categories, isLoading } = useCategories();
 
   if (isLoading) {
     return (
-      <section
-        id="categories"
-        className="relative py-24 bg-white overflow-hidden"
-      >
-        <div className="container mx-auto px-6 max-w-7xl">
-          <div className="animate-pulse space-y-8">
-            <div className="h-12 bg-gray-200 rounded w-1/2 mx-auto" />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <section className="py-12 md:py-20 lg:py-24 bg-white">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="animate-pulse space-y-6">
+            <div className="h-10 bg-gray-200 rounded w-1/2 mx-auto" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-64 bg-gray-200 rounded-3xl" />
+                <div key={i} className="h-56 bg-gray-200 rounded-2xl" />
               ))}
             </div>
           </div>
@@ -28,36 +25,30 @@ export default function CategoriesSection() {
     );
   }
 
-  const handleStartFreeAnalysis = () => {
-    const element = document.getElementById("home-upload");
-    element?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <section
       id="categories"
-      className="relative py-24 bg-white overflow-hidden"
+      className="py-12 md:py-20 lg:py-24 bg-white overflow-hidden"
     >
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-64 h-64 bg-primary-light rounded-full blur-3xl opacity-30" />
         <div className="absolute bottom-20 right-10 w-64 h-64 bg-accent-pink-light rounded-full blur-3xl opacity-30" />
       </div>
-
-      <div className="container relative mx-auto px-6 max-w-7xl">
+      <div className="container mx-auto px-4 max-w-7xl">
         {/* Section header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-8 md:mb-12">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-primary-light to-accent-pink-light border border-primary/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-linear-to-r from-primary-light to-accent-pink-light border border-purple-200 mb-4 md:mb-6">
             <Zap className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-primary">
+            <span className="text-xs md:text-sm font-semibold text-primary">
               Choose Your Category
             </span>
           </div>
 
           {/* Heading */}
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-            <span className="text-gray-900">Discover Insights for</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
+            <span className="text-gray-900">Insights for</span>
             <br />
             <span className="bg-linear-to-r from-primary via-primary to-accent-pink bg-clip-text text-transparent">
               Every Relationship
@@ -65,15 +56,13 @@ export default function CategoriesSection() {
           </h2>
 
           {/* Description */}
-          <p className="text-xl text-gray-600 leading-relaxed">
-            Select the category that matches your chat type. Our AI analyzes
-            your conversations and reveals deep insights about communication
-            patterns, emotions, and connection quality.
+          <p className="text-base md:text-lg lg:text-xl text-gray-600">
+            AI-tailored analysis for your specific relationship type
           </p>
         </div>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        {/* Categories Grid - Mobile optimized */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {categories?.map((category, index) => (
             <CategoryCard
               key={category.id}
@@ -84,9 +73,9 @@ export default function CategoriesSection() {
         </div>
 
         {/* Features callout section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {/* Feature 1 */}
-          <div className="relative group">
+        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto"> */}
+        {/* Feature 1 */}
+        {/* <div className="relative group">
             <div className="absolute inset-0 bg-linear-to-br from-blue-500 to-cyan-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
             <div className="relative bg-white rounded-2xl p-6 border-2 border-gray-100 group-hover:border-blue-200 transition-all">
               <div className="w-12 h-12 rounded-xl bg-linear-to-br from-blue-500 to-cyan-500 flex items-center justify-center mb-4">
@@ -100,10 +89,10 @@ export default function CategoriesSection() {
                 depth in your conversations.
               </p>
             </div>
-          </div>
+          </div> */}
 
-          {/* Feature 2 */}
-          <div className="relative group">
+        {/* Feature 2 */}
+        {/* <div className="relative group">
             <div className="absolute inset-0 bg-linear-to-br from-purple-500 to-pink-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
             <div className="relative bg-white rounded-2xl p-6 border-2 border-gray-100 group-hover:border-purple-200 transition-all">
               <div className="w-12 h-12 rounded-xl bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4">
@@ -117,8 +106,8 @@ export default function CategoriesSection() {
                 media shared and activity patterns
               </p>
             </div>
-          </div>
-          {/* <div className="relative group">
+          </div> */}
+        {/* <div className="relative group">
             <div className="absolute inset-0 bg-linear-to-br from-purple-500 to-pink-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
             <div className="relative bg-white rounded-2xl p-6 border-2 border-gray-100 group-hover:border-purple-200 transition-all">
               <div className="w-12 h-12 rounded-xl bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4">
@@ -134,8 +123,8 @@ export default function CategoriesSection() {
             </div>
           </div> */}
 
-          {/* Feature 3 */}
-          <div className="relative group">
+        {/* Feature 3 */}
+        {/* <div className="relative group">
             <div className="absolute inset-0 bg-linear-to-br from-green-500 to-emerald-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
             <div className="relative bg-white rounded-2xl p-6 border-2 border-gray-100 group-hover:border-green-200 transition-all">
               <div className="w-12 h-12 rounded-xl bg-linear-to-br from-green-500 to-emerald-500 flex items-center justify-center mb-4">
@@ -150,12 +139,12 @@ export default function CategoriesSection() {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* CTA Banner */}
-        <div className="mt-16 relative overflow-hidden rounded-3xl bg-linear-to-r from-primary to-primary-deep p-12 text-center">
-          {/* Background pattern */}
-          <div className="absolute inset-0 opacity-10">
+        {/* <div className="mt-16 relative overflow-hidden rounded-3xl bg-linear-to-r from-primary to-primary-deep p-12 text-center"> */}
+        {/* Background pattern */}
+        {/* <div className="absolute inset-0 opacity-10">
             <div
               className="absolute top-0 left-0 w-full h-full"
               style={{
@@ -187,7 +176,7 @@ export default function CategoriesSection() {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

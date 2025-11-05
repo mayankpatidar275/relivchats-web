@@ -19,7 +19,7 @@ export default function UnlockBanner({
   if (dismissed) return null;
 
   return (
-    <div className="sticky top-[110px] z-30 bg-linear-to-r from-primary to-pink-600 text-white">
+    <div className="sticky top-[125px] z-50 bg-linear-to-r from-primary to-pink-600 text-white">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-3 gap-4">
           <div className="flex items-center gap-3 min-w-0 flex-1">

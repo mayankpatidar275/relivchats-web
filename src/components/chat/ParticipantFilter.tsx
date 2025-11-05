@@ -27,7 +27,7 @@ export default function ParticipantFilter({
   const isActive = (mode: ParticipantMode) => selectedMode === mode;
 
   return (
-    <div className="sticky top-[60px] z-40 bg-white border-b border-gray-200">
+    <div className="sticky top-[60px] z-50 bg-white border-b border-gray-200">
       <div className="container mx-auto px-4">
         <div className="flex items-center gap-2 py-3 overflow-x-auto scrollbar-hide">
           {/* All button */}

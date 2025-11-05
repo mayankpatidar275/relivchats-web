@@ -58,7 +58,7 @@ export default function WelcomeModal() {
   // Show loading state while mutation runs
   if (isPending) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-black/50 text-white text-lg">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 text-white text-lg">
         Setting up your account...
       </div>
     );

@@ -1,121 +1,48 @@
+// src/components/home/HomeUploadSection.tsx
 "use client";
 
-import { useState, useRef } from "react";
-import {
-  Upload,
-  FileText,
-  ArrowRight,
-  CheckCircle,
-  Shield,
-} from "lucide-react";
+import { useUploadChat } from "@/src/features/chats/api";
+import { CheckCircle, Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
-import { chatsMutations } from "@/src/features/chats/api";
+import { useState } from "react";
 import UploadProgressModal from "../upload/UploadProgressModal";
-
-type UploadProgress =
-  | "uploading"
-  | "parsing"
-  | "analyzing"
-  | "completed"
-  | "error";
+import UploadZone, { UploadProgress } from "../upload/UploadZone";
 
 export default function HomeUploadSection() {
   const router = useRouter();
-  const { isSignedIn } = useUser();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState<UploadProgress | null>(
     null
   );
   const [error, setError] = useState<string | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
+  const uploadChatMutation = useUploadChat();
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
+  const handleUploadComplete = (chatId: string) => {
+    setUploadProgress("completed");
+    setTimeout(() => {
+      router.push(`/chat/${chatId}`);
+    }, 1000);
   };
 
-  const handleDragLeave = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
+  const handleUploadError = (errorMsg: string) => {
+    setUploadProgress("error");
+    setError(errorMsg);
   };
 
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-
-    if (!isSignedIn) {
-      router.push("/sign-up");
-      return;
-    }
-
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      handleFileSelect(files[0]);
-    }
-  };
-
-  const handleFileSelect = (file: File) => {
-    const validTypes = [".txt", ".zip"];
-    const fileExtension = "." + file.name.split(".").pop()?.toLowerCase();
-
-    if (!validTypes.includes(fileExtension)) {
-      setError("Please upload a valid WhatsApp chat export (.txt or .zip)");
-      return;
-    }
-
-    setSelectedFile(file);
-    setError(null);
-  };
-
-  const handleUpload = async () => {
-    if (!selectedFile) return;
-    if (!isSignedIn) {
-      router.push("/sign-up");
-      return;
-    }
-
+  const handleUpload = async (file: File) => {
     setUploadProgress("uploading");
-    setError(null);
 
-    try {
-      setTimeout(() => setUploadProgress("parsing"), 500);
-      setTimeout(() => setUploadProgress("analyzing"), 1500);
+    // Simulate progress for better UX
+    setTimeout(() => setUploadProgress("parsing"), 500);
+    setTimeout(() => setUploadProgress("analyzing"), 1500);
 
-      const response = await chatsMutations.uploadChat({ file: selectedFile });
-
-      setUploadProgress("completed");
-
-      setTimeout(() => {
-        router.push(`/chat/${response.chat_id}`);
-      }, 1000);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      setUploadProgress("error");
-      setError(err.message || "Upload failed. Please try again.");
-    }
+    return await uploadChatMutation.mutateAsync({
+      file,
+    });
   };
 
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!isSignedIn) {
-      router.push("/sign-up");
-      return;
-    }
-
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      handleFileSelect(files[0]);
-    }
-  };
-
-  const handleUploadClick = () => {
-    if (!isSignedIn) {
-      router.push("/sign-up");
-    } else {
-      fileInputRef.current?.click();
-    }
+  const theme = {
+    color: "from-primary to-accent-pink",
+    textColor: "text-primary",
   };
 
   return (
@@ -150,89 +77,17 @@ export default function HomeUploadSection() {
             </div>
 
             {/* Upload Zone */}
-            <div
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-              onClick={handleUploadClick}
-              className={`relative border-3 border-dashed rounded-2xl md:rounded-3xl p-8 md:p-12 text-center cursor-pointer transition-all duration-300 ${
-                isDragging
-                  ? "border-primary bg-primary/5 scale-[1.02]"
-                  : "border-gray-300 bg-white hover:border-primary/50 hover:bg-gray-50"
-              } shadow-lg hover:shadow-xl mb-6 md:mb-8`}
-            >
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept=".txt,.zip"
-                onChange={handleFileInputChange}
-                className="hidden"
+            <div className="mb-6 md:mb-8">
+              <UploadZone
+                theme={theme}
+                title="Upload Your Chat"
+                description="Get instant free statistics and unlock deeper AI insights"
+                onUploadComplete={handleUploadComplete}
+                onUploadError={handleUploadError}
+                uploadHandler={handleUpload}
+                variant="home"
               />
-
-              <div className="space-y-4 md:space-y-6">
-                {selectedFile ? (
-                  /* File Selected State */
-                  <div className="space-y-4">
-                    <div className="w-16 h-16 md:w-20 md:h-20 mx-auto bg-linear-to-br from-primary to-accent-pink rounded-2xl flex items-center justify-center">
-                      <FileText className="w-8 h-8 md:w-10 md:h-10 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-900 text-base md:text-lg mb-1">
-                        {selectedFile.name}
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        {(selectedFile.size / 1024).toFixed(2)} KB
-                      </p>
-                    </div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleUpload();
-                      }}
-                      className="px-6 md:px-8 py-3 md:py-4 bg-linear-to-r from-primary to-primary-hover text-white rounded-xl font-semibold hover:shadow-lg transition-all inline-flex items-center gap-2 text-sm md:text-base"
-                    >
-                      Analyze Now
-                      <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
-                    </button>
-                  </div>
-                ) : (
-                  /* Empty State */
-                  <>
-                    <div className="relative inline-block">
-                      <div className="absolute inset-0 bg-linear-to-br from-primary to-accent-pink rounded-2xl blur-xl opacity-20" />
-                      <div className="relative w-16 h-16 md:w-20 md:h-20 mx-auto bg-linear-to-br from-primary to-accent-pink rounded-2xl flex items-center justify-center">
-                        <Upload className="w-8 h-8 md:w-10 md:h-10 text-white" />
-                      </div>
-                    </div>
-
-                    <div>
-                      <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
-                        Drop your chat file here
-                      </h3>
-                      <p className="text-sm md:text-base text-gray-600">
-                        or click to browse
-                      </p>
-                    </div>
-
-                    <div className="flex items-center justify-center gap-2 md:gap-3">
-                      <span className="px-3 py-1.5 bg-gray-100 rounded-lg text-xs md:text-sm font-medium text-gray-700">
-                        .txt
-                      </span>
-                      <span className="px-3 py-1.5 bg-gray-100 rounded-lg text-xs md:text-sm font-medium text-gray-700">
-                        .zip
-                      </span>
-                    </div>
-                  </>
-                )}
-              </div>
             </div>
-
-            {/* Error Message */}
-            {error && !uploadProgress && (
-              <div className="p-4 bg-red-50 border border-red-200 rounded-xl mb-6 md:mb-8">
-                <p className="text-sm text-red-700">{error}</p>
-              </div>
-            )}
 
             {/* Features Grid - Compact */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

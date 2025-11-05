@@ -188,7 +188,7 @@ export default function SettingsPage() {
               Need help or have questions?
             </p>
             <a
-              href="mailto:support@relivchats.com"
+              href="mailto:mayankpatidar275@gmail.com"
               className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-white hover:bg-gray-50 text-gray-900 rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base transition-all shadow-sm"
             >
               Contact Support

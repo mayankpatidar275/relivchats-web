@@ -45,7 +45,7 @@ export default function WelcomeModal() {
         },
       });
     }
-  }, [user?.id, isSignedIn, isOpen, storeUser]);
+  }, [user, user?.id, isSignedIn, isOpen, storeUser]);
 
   const handleClose = () => setIsOpen(false);
   const handleGetStarted = () => {

@@ -52,7 +52,7 @@ export default function SignUpPage() {
               footerActionLink: "text-primary hover:text-primary-hover",
             },
           }}
-          redirectUrl="/dashboard?welcome=true"
+          forceRedirectUrl="/dashboard?welcome=true"
           signInUrl="/sign-in"
         />
 

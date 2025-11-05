@@ -1,37 +1,51 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Sparkles, Gift, ArrowRight, X } from "lucide-react";
+import { useUser, useAuth } from "@clerk/nextjs";
 import confetti from "canvas-confetti";
+import { Sparkles, Gift, ArrowRight, X } from "lucide-react";
+import { useStoreUserMutation } from "@/src/features/users/api";
 
 export default function WelcomeModal() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { user } = useUser();
+  const { isSignedIn } = useAuth();
+  const { mutate: storeUser, isPending } = useStoreUserMutation();
+  const syncedUserIds = useRef(new Set<string>());
 
-  // initialize from search params instead of setting state inside useEffect
-  const initialOpen = searchParams?.get("welcome") === "true";
-  const [isOpen, setIsOpen] = useState<boolean>(!!initialOpen);
+  const [isOpen, setIsOpen] = useState(searchParams?.get("welcome") === "true");
 
+  // Store user once when modal opens & signed in
   useEffect(() => {
-    if (!isOpen) return;
+    if (user && isSignedIn && isOpen && !syncedUserIds.current.has(user.id)) {
+      syncedUserIds.current.add(user.id);
 
-    // Trigger confetti
-    const t = setTimeout(() => {
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 },
+      const primaryEmail = user.emailAddresses?.[0]?.emailAddress;
+      const userData = {
+        user_id: user.id,
+        email: primaryEmail,
+        first_name: user.firstName || undefined,
+        last_name: user.lastName || undefined,
+      };
+
+      storeUser(userData, {
+        onSuccess: () => {
+          console.log("✅ User stored successfully");
+          confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+
+          // Remove welcome param from URL (side-effect only)
+          const url = new URL(window.location.href);
+          url.searchParams.delete("welcome");
+          window.history.replaceState({}, "", url.toString());
+        },
+        onError: (err) => {
+          console.error("Error storing user:", err);
+        },
       });
-    }, 300);
-
-    // Remove welcome param from URL (side-effect only)
-    const url = new URL(window.location.href);
-    url.searchParams.delete("welcome");
-    window.history.replaceState({}, "", url.toString());
-
-    return () => clearTimeout(t);
-  }, [isOpen]);
+    }
+  }, [user?.id, isSignedIn, isOpen, storeUser]);
 
   const handleClose = () => setIsOpen(false);
   const handleGetStarted = () => {
@@ -40,6 +54,15 @@ export default function WelcomeModal() {
   };
 
   if (!isOpen) return null;
+
+  // Show loading state while mutation runs
+  if (isPending) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black/50 text-white text-lg">
+        Setting up your account...
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6">

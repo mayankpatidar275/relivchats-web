@@ -4,8 +4,6 @@ import type {
   UnlockInsightsResponse,
   UploadChatRequest,
   UploadChatResponse,
-  AssignCategoryRequest,
-  Chat,
 } from "../types";
 
 export const chatsMutations = {
@@ -49,11 +47,11 @@ export const chatsMutations = {
   // },
 
   // Assign category to chat
-  assignCategory: async (data: AssignCategoryRequest): Promise<Chat> => {
-    return clientApi.patch<Chat>(`/chats/${data.chat_id}/category`, {
-      category_id: data.category_id,
-    });
-  },
+  // assignCategory: async (data: AssignCategoryRequest): Promise<Chat> => {
+  //   return clientApi.patch<Chat>(`/chats/${data.chat_id}/category`, {
+  //     category_id: data.category_id,
+  //   });
+  // },
 
   // Unlock all insights for a category
   unlockInsights: async (

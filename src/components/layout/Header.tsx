@@ -1,6 +1,7 @@
 "use client";
 
 import { PurpleLogo } from "@/src/app/assets";
+import { useBalance } from "@/src/features/credits/api/hooks";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { Coins, Settings } from "lucide-react";
 import Image from "next/image";
@@ -13,6 +14,7 @@ export default function Header() {
   const pathname = usePathname();
   const { isSignedIn } = useUser();
   const [isScrolled, setIsScrolled] = useState(false);
+  const { data: coins, isLoading, isError } = useBalance();
 
   // Handle scroll effect for header background
   useEffect(() => {
@@ -99,7 +101,12 @@ export default function Header() {
                 >
                   <Coins className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary group-hover:rotate-12 transition-transform" />
                   <span className="font-semibold text-primary text-sm sm:text-base">
-                    50
+                    {isLoading ||
+                    isError ||
+                    coins === null ||
+                    coins === undefined
+                      ? "..."
+                      : coins.balance}
                   </span>
                 </button>
 

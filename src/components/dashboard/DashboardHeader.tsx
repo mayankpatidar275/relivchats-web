@@ -6,7 +6,11 @@ import { useChats } from "@/src/features/chats/api";
 
 export default function DashboardHeader() {
   const { user } = useUser();
-  const { data: chats } = useChats();
+  const {
+    isLoading: isLoadingChats,
+    isError: isErrorChats,
+    data: chats,
+  } = useChats();
 
   const totalChats = chats?.length || 0;
   const unlockedChats = chats?.filter((c) => c.insights_unlocked).length || 0;
@@ -38,7 +42,12 @@ export default function DashboardHeader() {
             <div className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md transition-shadow">
               <div className="text-xs text-gray-600 mb-1">Total Chats</div>
               <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-pink-600 bg-clip-text text-transparent">
-                {totalChats}
+                {isLoadingChats ||
+                isErrorChats ||
+                totalChats === null ||
+                totalChats === undefined
+                  ? "..."
+                  : totalChats}
               </div>
             </div>
 
@@ -49,7 +58,12 @@ export default function DashboardHeader() {
                 Insights Unlocked
               </div>
               <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-pink-600 bg-clip-text text-transparent">
-                {unlockedChats}
+                {isLoadingChats ||
+                isErrorChats ||
+                totalChats === null ||
+                totalChats === undefined
+                  ? "..."
+                  : unlockedChats}
               </div>
             </div>
 
@@ -57,12 +71,17 @@ export default function DashboardHeader() {
             <div className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md transition-shadow col-span-2 md:col-span-1">
               <div className="text-xs text-gray-600 mb-1">Total Messages</div>
               <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-pink-600 bg-clip-text text-transparent">
-                {chats
-                  ?.reduce(
-                    (sum, chat) => sum + chat.chat_metadata.total_messages,
-                    0
-                  )
-                  .toLocaleString() || 0}
+                {isLoadingChats ||
+                isErrorChats ||
+                totalChats === null ||
+                totalChats === undefined
+                  ? "..."
+                  : chats
+                      ?.reduce(
+                        (sum, chat) => sum + chat.chat_metadata.total_messages,
+                        0
+                      )
+                      .toLocaleString() || 0}
               </div>
             </div>
           </div>

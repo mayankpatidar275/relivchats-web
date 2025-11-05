@@ -4,11 +4,7 @@ import { useAuth } from "@clerk/nextjs";
 import { queryKeys } from "@/src/lib/query/keys";
 import { chatsApi } from "./queries";
 import { chatsMutations } from "./mutations";
-import {
-  AssignCategoryRequest,
-  UnlockInsightsRequest,
-  UploadChatRequest,
-} from "../types";
+import { UnlockInsightsRequest, UploadChatRequest } from "../types";
 
 // Queries
 export const useChats = () => {
@@ -42,19 +38,19 @@ export const useUploadChat = () => {
   });
 };
 
-export const useAssignCategory = () => {
-  const queryClient = useQueryClient();
+// export const useAssignCategory = () => {
+//   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: (data: AssignCategoryRequest) =>
-      chatsMutations.assignCategory(data),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: queryKeys.chats.detail(variables.chat_id),
-      });
-    },
-  });
-};
+//   return useMutation({
+//     mutationFn: (data: AssignCategoryRequest) =>
+//       chatsMutations.assignCategory(data),
+//     onSuccess: (_, variables) => {
+//       queryClient.invalidateQueries({
+//         queryKey: queryKeys.chats.detail(variables.chat_id),
+//       });
+//     },
+//   });
+// };
 
 export const useUnlockInsights = () => {
   const queryClient = useQueryClient();

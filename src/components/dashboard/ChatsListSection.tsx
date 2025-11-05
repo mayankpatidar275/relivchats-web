@@ -110,7 +110,7 @@ export default function ChatsListSection() {
           </p>
           <button
             onClick={() => router.push("/#home-upload")}
-            className="px-6 md:px-8 py-3 bg-linear-to-r from-primary to-pink-600 text-white rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all"
+            className="px-6 md:px-8 py-3 bg-linear-to-r from-primary to-accent-pink text-white rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all"
           >
             Upload Your First Chat
           </button>

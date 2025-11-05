@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUser, useAuth } from "@clerk/nextjs";
 import confetti from "canvas-confetti";
-import { Sparkles, Gift, ArrowRight, X } from "lucide-react";
+import { Sparkles, Gift, ArrowRight, X, Loader2 } from "lucide-react";
 import { useStoreUserMutation } from "@/src/features/users/api";
 
 export default function WelcomeModal() {
@@ -16,6 +16,7 @@ export default function WelcomeModal() {
   const syncedUserIds = useRef(new Set<string>());
 
   const [isOpen, setIsOpen] = useState(searchParams?.get("welcome") === "true");
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // Store user once when modal opens & signed in
   useEffect(() => {
@@ -33,9 +34,10 @@ export default function WelcomeModal() {
       storeUser(userData, {
         onSuccess: () => {
           console.log("✅ User stored successfully");
+          setShowSuccess(true);
           confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
 
-          // Remove welcome param from URL (side-effect only)
+          // Remove welcome param from URL
           const url = new URL(window.location.href);
           url.searchParams.delete("welcome");
           window.history.replaceState({}, "", url.toString());
@@ -45,7 +47,7 @@ export default function WelcomeModal() {
         },
       });
     }
-  }, [user, user?.id, isSignedIn, isOpen, storeUser]);
+  }, [user, isSignedIn, isOpen, storeUser]);
 
   const handleClose = () => setIsOpen(false);
   const handleGetStarted = () => {
@@ -55,11 +57,34 @@ export default function WelcomeModal() {
 
   if (!isOpen) return null;
 
-  // Show loading state while mutation runs
-  if (isPending) {
+  if (!showSuccess)
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 text-white text-lg">
-        Setting up your account...
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div className="bg-white rounded-2xl p-8 mx-4 max-w-sm w-full text-center shadow-2xl">
+          <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Loading...
+          </h3>
+          <p className="text-gray-600 text-sm">
+            Getting everything ready for you...
+          </p>
+        </div>
+      </div>
+    );
+
+  // Show loading state only during initial sync
+  if (isPending && !showSuccess) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div className="bg-white rounded-2xl p-8 mx-4 max-w-sm w-full text-center shadow-2xl">
+          <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Setting up your account
+          </h3>
+          <p className="text-gray-600 text-sm">
+            Getting everything ready for you...
+          </p>
+        </div>
       </div>
     );
   }
@@ -81,11 +106,23 @@ export default function WelcomeModal() {
           <div className="relative p-6 sm:p-8 text-center">
             <div className="absolute inset-0 bg-linear-to-br from-primary/10 to-accent-pink/10" />
             <div className="relative z-10">
+              {/* Success animation */}
+              {/* {showSuccess && (
+                <div className="absolute -top-4 -right-4">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-green-500 rounded-full animate-ping" />
+                    <div className="relative w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                      <span className="text-white text-sm">✓</span>
+                    </div>
+                  </div>
+                </div>
+              )} */}
+
               {/* Icon */}
               <div className="relative inline-block mb-4 sm:mb-6">
-                <div className="absolute inset-0 bg-linear-to-br from-primary to-accent-pink rounded-full blur-2xl opacity-40 animate-pulse" />
+                <div className="absolute inset-0 bg-linear-to-br from-primary to-accent-pink rounded-full blur-2xl opacity-40" />
                 <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-linear-to-br from-primary to-accent-pink rounded-full flex items-center justify-center shadow-2xl">
-                  <Gift className="w-10 h-10 sm:w-12 sm:h-12 text-white animate-bounce" />
+                  <Gift className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
                 </div>
               </div>
 
@@ -161,16 +198,24 @@ export default function WelcomeModal() {
             <div className="flex flex-col gap-3 pt-3 sm:pt-4">
               <button
                 onClick={handleGetStarted}
-                className="w-full flex items-center justify-center gap-2 sm:gap-3 px-5 py-3 sm:px-6 sm:py-4 bg-linear-to-r from-primary to-primary-hover text-white rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg hover:shadow-xl hover:scale-105 transition-all"
+                className="w-full flex items-center justify-center gap-2 sm:gap-3 px-5 py-3 sm:px-6 sm:py-4 bg-linear-to-r from-primary to-primary-hover text-white rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg hover:shadow-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isPending}
               >
-                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
-                Upload Your First Chat
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                {isPending ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <>
+                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
+                    Upload Your First Chat
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </>
+                )}
               </button>
 
               <button
                 onClick={handleClose}
-                className="w-full px-5 py-2.5 sm:px-6 sm:py-3 text-gray-600 hover:text-gray-900 font-medium text-sm sm:text-base transition-colors"
+                className="w-full px-5 py-2.5 sm:px-6 sm:py-3 text-gray-600 hover:text-gray-900 font-medium text-sm sm:text-base transition-colors disabled:opacity-50"
+                disabled={isPending}
               >
                 I&apos;ll do it later
               </button>

@@ -108,7 +108,7 @@ export default function PricingComparison() {
               </thead>
               <tbody>
                 {displayFeatures.map((category, categoryIndex) => (
-                  <>
+                  <div key={categoryIndex}>
                     <tr key={categoryIndex} className="bg-gray-50">
                       <td
                         colSpan={4}
@@ -166,7 +166,7 @@ export default function PricingComparison() {
                         </td>
                       </tr>
                     ))}
-                  </>
+                  </div>
                 ))}
               </tbody>
             </table>

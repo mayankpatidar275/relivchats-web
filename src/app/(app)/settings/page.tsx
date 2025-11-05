@@ -49,7 +49,7 @@ export default function SettingsPage() {
       onConfirm: async () => {
         setIsDeleting(true);
         try {
-          await clientApi.delete("/users/delete-account");
+          await clientApi.delete("users/delete-account");
 
           // Sign out from Clerk (frontend)
           window.location.href = "/";

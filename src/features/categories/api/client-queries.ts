@@ -6,6 +6,6 @@ export const categoriesClientApi = {
     return clientApi.get<Category[]>("categories");
   },
   getCategoryInsights: async (categoryId: string): Promise<InsightType[]> => {
-    return clientApi.get<InsightType[]>(`/categories/${categoryId}/insights`);
+    return clientApi.get<InsightType[]>(`categories/${categoryId}/insights`);
   },
 };

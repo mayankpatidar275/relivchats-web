@@ -6,20 +6,9 @@ export default function SignUpPage() {
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          {/* <div className="inline-flex items-center gap-2 mb-6">
-            <div className="w-12 h-12 bg-linear-to-br from-primary to-accent-pink rounded-xl flex items-center justify-center">
-              <span className="text-2xl">💬</span>
-            </div>
-            <span className="text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
-              Reliv Chats
-            </span>
-          </div> */}
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Start Your Journey
           </h1>
-          {/* <p className="text-gray-600">
-            Get 50 free coins to unlock AI insights
-          </p> */}
         </div>
 
         {/* Benefits Banner */}
@@ -52,30 +41,10 @@ export default function SignUpPage() {
               footerActionLink: "text-primary hover:text-primary-hover",
             },
           }}
-          forceRedirectUrl="/dashboard?welcome=true"
+          forceRedirectUrl="/dashboard?welcome=true" // always redirect here after sign in
+          fallbackRedirectUrl="/dashboard?welcome=true" // used when there's no redirect_url in the URL
           signInUrl="/sign-in"
         />
-
-        {/* What you get */}
-        {/* <div className="mt-8 space-y-3">
-          <div className="text-sm font-semibold text-gray-900 text-center mb-4">
-            What you get:
-          </div>
-          {[
-            { icon: "🎁", text: "50 free coins instantly" },
-            { icon: "📊", text: "Unlimited free basic stats" },
-            { icon: "🔒", text: "100% private and secure" },
-            { icon: "✨", text: "AI-powered insights" },
-          ].map((item, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-100"
-            >
-              <span className="text-2xl">{item.icon}</span>
-              <span className="text-gray-700">{item.text}</span>
-            </div>
-          ))}
-        </div> */}
       </div>
     </div>
   );

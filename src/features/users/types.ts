@@ -11,3 +11,10 @@ export interface UserOut {
   created_at?: string;
   credit_balance: number;
 }
+
+export interface UserDeleteResponse {
+  success: boolean;
+  message: string;
+  deleted_at: string;
+  user_id: string;
+}

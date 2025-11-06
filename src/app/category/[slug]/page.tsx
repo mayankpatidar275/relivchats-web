@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import CategoryHero from "@/src/components/category/CategoryHero";
 import InsightTypesSection from "@/src/components/category/InsightTypesSection";
 import UploadSection from "@/src/components/category/UploadSection";
-// import HowItWorksSection from "@/src/components/category/HowItWorksSection";
 import { categoriesApi } from "@/src/features/categories/api/server-queries";
 import { toCategoryUI } from "@/src/features/categories/utils";
 

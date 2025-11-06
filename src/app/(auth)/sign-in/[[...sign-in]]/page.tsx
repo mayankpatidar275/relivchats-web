@@ -6,14 +6,6 @@ export default function SignInPage() {
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          {/* <div className="inline-flex items-center gap-2 mb-6">
-            <div className="w-12 h-12 bg-linear-to-br from-primary to-accent-pink rounded-xl flex items-center justify-center">
-              <span className="text-2xl">💬</span>
-            </div>
-            <span className="text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
-              Reliv Chats
-            </span>
-          </div> */}
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Welcome Back
           </h1>
@@ -35,7 +27,8 @@ export default function SignInPage() {
               footerActionLink: "text-primary hover:text-primary-hover",
             },
           }}
-          redirectUrl="/dashboard"
+          forceRedirectUrl="/dashboard" // always redirect here after sign in
+          fallbackRedirectUrl="/dashboard" // used when there's no redirect_url in the URL
           signUpUrl="/sign-up"
         />
 

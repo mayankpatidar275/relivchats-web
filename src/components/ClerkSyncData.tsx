@@ -40,7 +40,7 @@ export default function ClerkSyncData({
         },
       });
     }
-  }, [user?.id, isSignedIn, storeUser, router]);
+  }, [user, user?.id, isSignedIn, storeUser, router]);
 
   return <>{children}</>;
 }

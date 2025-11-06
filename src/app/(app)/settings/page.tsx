@@ -1,7 +1,7 @@
 "use client";
 
+import { useDeleteUserMutation } from "@/src/features/users/api";
 import { useConfirm } from "@/src/hooks/useConfirm";
-import { clientApi } from "@/src/lib/api";
 import { useUser } from "@clerk/nextjs";
 import {
   AlertTriangle,
@@ -17,6 +17,7 @@ export default function SettingsPage() {
   const { user } = useUser();
   const { confirm } = useConfirm();
   const [isDeleting, setIsDeleting] = useState(false);
+  const deleteUserMutation = useDeleteUserMutation();
 
   const handleDeleteAccount = async () => {
     await confirm({
@@ -49,7 +50,7 @@ export default function SettingsPage() {
       onConfirm: async () => {
         setIsDeleting(true);
         try {
-          await clientApi.delete("users/delete-account");
+          await deleteUserMutation.mutateAsync();
 
           // Sign out from Clerk (frontend)
           window.location.href = "/";

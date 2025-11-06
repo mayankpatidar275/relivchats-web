@@ -1,10 +1,10 @@
 # CONTEXT: Product Overview
 
-I am building **Reliv Chats** - a web-based chat analysis platform that provides AI-powered insights from exported chat conversations (WhatsApp - may expand to others later). Free stats are also provided by processing the text without AI.
+I am building **Reliv Chats** - a web-based chat analysis platform that provides AI-powered insights from exported chat conversations (WhatsApp - will expand to others later). Free stats are also provided by processing the text without AI.
 
 ## Product Structure
 
-- Users visit the website and select an analysis category (Romantic, Friendship, Family, Business, etc.). We have the categories to select on the home page. On selecting user goes to category page. On category page user can upload the chat. After successfull upload user get navigated to chat page. On chat page user sees the free stats of that chat and the button to unlock other chats. User can check the uploaded chats in his dashboard. User can select the category on chat page also before unlocking the insights. To unlock user will have to spend the coins. He can purchase the coin.
+- Users visit the website and select an analysis category (Romantic, Friendship, Family, Business, etc.). We have the categories to select on the home page. On selecting user goes to category page. On category page user can upload the chat. After successfull upload user get navigated to chat page. On chat page user sees the free stats of that chat and the button to unlock other chats. User can check the uploaded chats in his dashboard. User needs to select the category on chat page before unlocking the insights. To unlock user will have to spend the coins. He can purchase the coin.
 - The system provides category-specific insights (e.g., for Romantic: conflict resolution patterns, mutual understanding scores, special moments detection, response time analysis, etc.)
 - Each category has different types of insights tailored to that relationship type
 - home page will also have upload section so that user dont get confused in choosing the category. Anyways user have to choose a category before unlocking the paid insights. And free stats are independent of category.
@@ -35,27 +35,6 @@ I am building **Reliv Chats** - a web-based chat analysis platform that provides
 2. **Free tier abuse** - Most users (95%) will use free points and never convert thats why I am not providing any ai stuff for free. the stats are created using text processing.
 3. **Competition** - Many completely free alternatives exist
 4. **Sporadic usage** - Users don't analyze chats frequently (not suitable for monthly subscriptions)
-
----
-
-# PREVIOUS QUESTIONS I'VE EXPLORED
-
-1. **Website structure and user journey** - How should the homepage, upload flow, analysis selection, and results dashboard be structured?
-
-2. **Monetization strategy** - Should I use freemium, pay-per-analysis, subscription, or credit system? What's the optimal balance?
-
-3. **Free vs Paid limits** - Should I limit:
-
-   - Number of free chats per month vs lifetime?
-   - Give all insights for free chats or partial?
-   - Charge per chat or per insight separately?
-   - Use credit/coin system or direct pricing?
-
-4. **User flow optimization** - Should users select category BEFORE uploading (my current thinking) or after?
-
-5. **Cost management** - How to avoid giving too much free value while still attracting users, given that AI analysis has real API costs?
-
-6. **Pricing validation** - Is my pricing competitive compared to ChatBump and free alternatives?
 
 ---
 

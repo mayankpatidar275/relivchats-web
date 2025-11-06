@@ -23,7 +23,7 @@ export default async function SharePage({ params }: SharePageProps) {
 
     if (!response.ok) throw new Error("Chat not found");
     chat = await response.json();
-  } catch (error) {
+  } catch {
     notFound();
   }
 
@@ -162,7 +162,7 @@ export default async function SharePage({ params }: SharePageProps) {
   );
 }
 
-export function generateMetadata({ params }: SharePageProps) {
+export function generateMetadata({}: SharePageProps) {
   return {
     title: "Shared Chat Statistics | Reliv Chats",
     description: "View shared chat analysis and statistics",

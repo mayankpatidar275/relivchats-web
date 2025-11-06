@@ -15,3 +15,16 @@ export function useStoreUserMutation() {
     },
   });
 }
+export function useDeleteUserMutation() {
+  return useMutation({
+    mutationFn: () => {
+      return userMutations.deleteUser();
+    },
+    onSuccess: (data) => {
+      console.log("User deleted successfully:", data);
+    },
+    onError: (error) => {
+      console.error("Error deleting user:", error);
+    },
+  });
+}

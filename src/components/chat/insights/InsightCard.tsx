@@ -25,20 +25,22 @@ export default function InsightCard({
   const theme = useCategoryTheme(categorySlug);
 
   return (
-    <div className="bg-white rounded-2xl border-2 border-gray-100 p-6 md:p-8 hover:shadow-xl transition-all duration-300">
+    <div className="bg-white rounded-2xl border-2 border-gray-100 p-4 md:p-6 lg:p-8 hover:shadow-xl transition-all duration-300">
       {/* Header */}
-      <div className="flex items-start gap-4 mb-6">
+      <div className="flex items-start gap-3 md:gap-4 mb-4 md:mb-6">
         <div
-          className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-linear-to-br ${theme.gradient} flex items-center justify-center text-3xl md:text-4xl shrink-0`}
+          className={`w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-xl md:rounded-2xl bg-linear-to-br ${theme.gradient} flex items-center justify-center text-2xl md:text-3xl lg:text-4xl shrink-0`}
         >
           {icon || "💡"}
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
+          <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 mb-1 md:mb-2">
             {title}
           </h3>
           {description && (
-            <p className="text-sm md:text-base text-gray-600">{description}</p>
+            <p className="text-xs md:text-sm lg:text-base text-gray-600 line-clamp-2">
+              {description}
+            </p>
           )}
         </div>
       </div>

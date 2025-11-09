@@ -96,23 +96,23 @@ export default function CommunicationBasicsView({
         </div>
       </div>
 
-      {/* 3. Response Patterns */}
-      <div className="bg-white rounded-xl p-5 md:p-6 border-2 border-gray-100">
+      {/* Response Patterns - UPDATED */}
+      <div className="bg-white rounded-xl p-4 md:p-6 border-2 border-gray-100">
         <div className="flex items-center gap-2 mb-4">
-          <Zap className={`w-5 h-5 ${theme.text}`} />
-          <h4 className="font-bold text-lg md:text-xl text-gray-900">
+          <Zap className={`w-4 h-4 md:w-5 md:h-5 ${theme.text}`} />
+          <h4 className="font-bold text-base md:text-lg lg:text-xl text-gray-900">
             Response Styles
           </h4>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 gap-3 mb-4">
           {content.response_patterns.participants.map((p) => (
             <div
               key={p.name}
-              className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200"
+              className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200"
             >
               <div
-                className={`w-12 h-12 rounded-full bg-linear-to-br ${theme.gradient} flex items-center justify-center text-white font-bold shrink-0`}
+                className={`w-10 h-10 md:w-12 md:h-12 rounded-full bg-linear-to-br ${theme.gradient} flex items-center justify-center text-white text-sm md:text-base font-bold shrink-0`}
               >
                 {p.name[0]}
               </div>
@@ -129,9 +129,52 @@ export default function CommunicationBasicsView({
           ))}
         </div>
 
-        <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-          <p className="text-sm text-gray-700 leading-relaxed">
+        <div className="p-3 md:p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <p className="text-xs md:text-sm text-gray-700 leading-relaxed">
             {content.response_patterns.compatibility_note}
+          </p>
+        </div>
+      </div>
+
+      {/* Engagement Indicators - UPDATED */}
+      <div className="bg-white rounded-xl p-4 md:p-6 border-2 border-gray-100">
+        <div className="flex items-center gap-2 mb-4">
+          <Sparkles className={`w-4 h-4 md:w-5 md:h-5 ${theme.text}`} />
+          <h4 className="font-bold text-base md:text-lg lg:text-xl text-gray-900">
+            Engagement Patterns
+          </h4>
+        </div>
+
+        <div className="grid grid-cols-1 gap-3 mb-4">
+          {content.engagement_indicators.participants.map((p) => (
+            <div
+              key={p.name}
+              className="p-3 md:p-4 bg-gray-50 rounded-lg border border-gray-200"
+            >
+              <p className="font-semibold text-sm md:text-base text-gray-900 mb-3 truncate">
+                {p.name}
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs md:text-sm">
+                  <span className="text-gray-600">Questions Asked</span>
+                  <span className="font-bold text-gray-900">
+                    {p.questions_asked}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-xs md:text-sm">
+                  <span className="text-gray-600">Double Texting</span>
+                  <span className="font-bold text-gray-900">
+                    {p.double_texting_rate.toFixed(1)}%
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="p-3 md:p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <p className="text-xs md:text-sm text-gray-700 leading-relaxed">
+            {content.engagement_indicators.engagement_insight}
           </p>
         </div>
       </div>

@@ -6,8 +6,12 @@ import { useCategoryTheme } from "@/src/lib/theme";
 import { Sparkles, Loader2 } from "lucide-react";
 import InsightCard from "./insights/InsightCard";
 import CommunicationBasicsView from "./insights/views/CommunicationBasicsView";
-import { CommunicationBasicsContent } from "@/src/features/insights/types";
+import {
+  CommunicationBasicsContent,
+  EmotionalIntimacyContent,
+} from "@/src/features/insights/types";
 import InsightSkeleton from "./insights/InsightSkeleton";
+import EmotionalIntimacyView from "./insights/views/EmotionalIntimacyView";
 
 interface InsightsDisplaySectionProps {
   chatId: string;
@@ -113,16 +117,14 @@ export default function InsightsDisplaySection({
                   categorySlug={chat.category_slug}
                 />
               )}
-
-              {/* Future insight types will go here */}
-              {/* 
-              {insight.insight_type_name === "conflict_patterns" && (
-                <ConflictPatternsView 
-                  content={insight.content as ConflictPatternsContent}
+              {/* Inside the InsightCard children section, add after
+              communication_basics: */}
+              {insight.insight_type_name === "emotional_intimacy" && (
+                <EmotionalIntimacyView
+                  content={insight.content as EmotionalIntimacyContent}
                   categorySlug={chat.category_slug}
                 />
               )}
-              */}
             </InsightCard>
           ))}
         </div>

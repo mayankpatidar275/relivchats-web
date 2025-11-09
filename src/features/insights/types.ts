@@ -198,3 +198,80 @@ export interface EmotionalIntimacyContent {
     summary: string;
   };
 }
+
+// love language
+
+export interface LoveLanguageContent {
+  primary_languages: {
+    participants: Array<{
+      name: string;
+      language: string;
+      confidence: string;
+      description: string;
+      evidence: EvidenceItem[];
+    }>;
+  };
+  secondary_languages: {
+    participants: Array<{
+      name: string;
+      language: string;
+      description: string;
+      evidence: EvidenceItem[];
+    }>;
+  };
+  appreciation: {
+    participants: Array<{
+      name: string;
+      expression_style: string;
+      frequency: string;
+    }>;
+    frequency_comparison: string;
+    evidence: Array<{
+      message: string;
+      speaker: string;
+      timestamp: string;
+      appreciation_type: string;
+    }>;
+  };
+  recognition: {
+    analysis: string;
+    balance: string;
+    evidence: Array<{
+      context: string;
+      exchange: Array<{
+        message: string;
+        speaker: string;
+        timestamp: string;
+      }>;
+    }>;
+  };
+  compatibility: {
+    match_type: string;
+    analysis: string;
+    adaptation_evidence: string;
+  };
+  missing_languages: Array<{
+    language: string;
+    explanation: string;
+  }>;
+  beautiful_moments: Array<{
+    moment_title: string;
+    description: string;
+    exchange: Array<{
+      message: string;
+      speaker: string;
+      timestamp: string;
+    }>;
+  }>;
+  recommendations: Array<{
+    title: string;
+    target: string[];
+    suggestion: string;
+    why: string;
+    example_messages: string[];
+  }>;
+  overall: {
+    score: number;
+    summary: string;
+  };
+}

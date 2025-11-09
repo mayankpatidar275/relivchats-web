@@ -9,9 +9,11 @@ import CommunicationBasicsView from "./insights/views/CommunicationBasicsView";
 import {
   CommunicationBasicsContent,
   EmotionalIntimacyContent,
+  LoveLanguageContent,
 } from "@/src/features/insights/types";
 import InsightSkeleton from "./insights/InsightSkeleton";
 import EmotionalIntimacyView from "./insights/views/EmotionalIntimacyView";
+import LoveLanguageView from "./insights/views/LoveLanguageView";
 
 interface InsightsDisplaySectionProps {
   chatId: string;
@@ -122,6 +124,14 @@ export default function InsightsDisplaySection({
               {insight.insight_type_name === "emotional_intimacy" && (
                 <EmotionalIntimacyView
                   content={insight.content as EmotionalIntimacyContent}
+                  categorySlug={chat.category_slug}
+                />
+              )}
+              {/* Inside the InsightCard children section, add after
+              emotional_intimacy: */}
+              {insight.insight_type_name === "love_language" && (
+                <LoveLanguageView
+                  content={insight.content as LoveLanguageContent}
                   categorySlug={chat.category_slug}
                 />
               )}

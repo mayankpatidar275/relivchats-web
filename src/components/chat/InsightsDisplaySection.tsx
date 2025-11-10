@@ -10,12 +10,16 @@ import {
   CommunicationBasicsContent,
   ConflictResolutionContent,
   EmotionalIntimacyContent,
+  FuturePlanningContent,
   LoveLanguageContent,
+  PlayfulnessRomanceContent,
 } from "@/src/features/insights/types";
 import InsightSkeleton from "./insights/InsightSkeleton";
 import EmotionalIntimacyView from "./insights/views/EmotionalIntimacyView";
 import LoveLanguageView from "./insights/views/LoveLanguageView";
 import ConflictResolutionView from "./insights/views/ConflictResolutionView";
+import FuturePlanningView from "./insights/views/FuturePlanningView";
+import PlayfulnessRomanceView from "./insights/views/PlayfulnessRomanceView";
 
 interface InsightsDisplaySectionProps {
   chatId: string;
@@ -142,6 +146,20 @@ export default function InsightsDisplaySection({
               {insight.insight_type_name === "conflict_resolution" && (
                 <ConflictResolutionView
                   content={insight.content as ConflictResolutionContent}
+                  categorySlug={chat.category_slug}
+                />
+              )}
+              {/* Inside the InsightCard children section, add after
+              conflict_resolution: */}
+              {insight.insight_type_name === "future_planning" && (
+                <FuturePlanningView
+                  content={insight.content as FuturePlanningContent}
+                  categorySlug={chat.category_slug}
+                />
+              )}
+              {insight.insight_type_name === "playfulness_romance" && (
+                <PlayfulnessRomanceView
+                  content={insight.content as PlayfulnessRomanceContent}
                   categorySlug={chat.category_slug}
                 />
               )}

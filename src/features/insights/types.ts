@@ -363,3 +363,177 @@ export interface ConflictResolutionContent {
     summary: string;
   };
 }
+
+// Future Planning Types
+export interface FuturePlanningContent {
+  frequency: {
+    level: string;
+    assessment: string;
+  };
+  categories: Array<{
+    category: string;
+    discussed: boolean;
+    summary: string;
+    evidence?: EvidenceItem[];
+  }>;
+  alignment: {
+    overall_level: string;
+    analysis: string;
+    category_alignment: Array<{
+      category: string;
+      alignment_status: string;
+    }>;
+  };
+  planning_styles: {
+    participants: Array<{
+      name: string;
+      style: string;
+      description: string;
+      evidence?: EvidenceItem[];
+    }>;
+    compatibility: string;
+    initiator: string;
+  };
+  timelines: {
+    concrete_vs_vague: string;
+    alignment: string;
+    evidence: EvidenceItem[];
+  };
+  enthusiasm: {
+    participants: Array<{
+      name: string;
+      level: string;
+      description: string;
+    }>;
+    evidence: Array<{
+      context: string;
+      exchange: Array<{
+        message: string;
+        speaker: string;
+        timestamp: string;
+      }>;
+    }>;
+  };
+  shared_dreams: Array<{
+    dream_title: string;
+    description: string;
+    exchange: Array<{
+      message: string;
+      speaker: string;
+      timestamp: string;
+    }>;
+  }>;
+  missing_conversations: Array<{
+    topic: string;
+    why_important: string;
+  }>;
+  recommendations: Array<{
+    title: string;
+    suggestion: string;
+    conversation_starters: string[];
+  }>;
+  overall: {
+    score: number;
+    vision_status: string;
+    summary: string;
+  };
+}
+
+// Playfulness & Romance Types
+export interface PlayfulnessRomanceContent {
+  overall_playfulness: {
+    level: string;
+    assessment: string;
+  };
+  humor_styles: {
+    participants: Array<{
+      name: string;
+      humor_types: string[];
+      description: string;
+      evidence?: EvidenceItem[];
+    }>;
+    initiator: string;
+  };
+  inside_jokes: Array<{
+    joke_or_reference: string;
+    context: string;
+    evidence: EvidenceItem[];
+  }>;
+  flirtation: {
+    participants: Array<{
+      name: string;
+      frequency: string;
+      style: string;
+    }>;
+    balance: string;
+    evidence: EvidenceItem[];
+  };
+  teasing_banter: {
+    present: boolean;
+    assessment: string;
+    balance: string;
+    evidence?: Array<{
+      context: string;
+      exchange: Array<{
+        message: string;
+        speaker: string;
+        timestamp: string;
+      }>;
+    }>;
+  };
+  spontaneity: {
+    present: boolean;
+    initiator: string;
+    description: string;
+    evidence?: EvidenceItem[];
+  };
+  emoji_usage: {
+    description: string;
+    match_level: string;
+  };
+  fun_activities: {
+    discussed: boolean;
+    types: string[];
+    evidence?: EvidenceItem[];
+  };
+  mood_lifting: {
+    present: boolean;
+    description: string;
+    evidence?: Array<{
+      context: string;
+      exchange: Array<{
+        message: string;
+        speaker: string;
+        timestamp: string;
+      }>;
+    }>;
+  };
+  romance_maintenance: {
+    rating: string;
+    description: string;
+    evidence?: EvidenceItem[];
+  };
+  playfulness_gaps: Array<{
+    gap: string;
+    suggestion: string;
+  }>;
+  best_moments: Array<{
+    moment_title: string;
+    why_special: string;
+    exchange: Array<{
+      message: string;
+      speaker: string;
+      timestamp: string;
+    }>;
+  }>;
+  recommendations: Array<{
+    title: string;
+    suggestion: string;
+    examples: string[];
+  }>;
+  overall: {
+    score: number;
+    spark_status: string;
+    summary: string;
+  };
+}

@@ -39,6 +39,24 @@ export default function InsightStatusBadge({
     );
   }
 
+  // Add retry button to failed state
+  // {
+  //   status === "failed" && (
+  //     <div className="p-4 bg-red-50 border border-red-200 rounded-xl mb-6">
+  //       <div className="flex items-center gap-2 mb-2">
+  //         <XCircle className="w-4 h-4 text-red-600" />
+  //         <span className="text-sm font-semibold text-red-700">
+  //           Generation Failed
+  //         </span>
+  //       </div>
+  //       {errorMessage && (
+  //         <p className="text-xs text-red-600 mb-3">{errorMessage}</p>
+  //       )}
+  //       <RetryInsightButton insightId={insightId} onRetry={handleRetry} />
+  //     </div>
+  //   );
+  // }
+
   if (status === "completed") {
     return (
       <div className="flex items-center gap-2 p-3 bg-green-50 border border-green-200 rounded-xl mb-6">

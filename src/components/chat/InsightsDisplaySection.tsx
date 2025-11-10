@@ -3,7 +3,7 @@
 import { useChat } from "@/src/features/chats/api";
 import { useChatInsights } from "@/src/features/insights/api/hooks";
 import { useCategoryTheme } from "@/src/lib/theme";
-import { Sparkles, Loader2 } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import InsightCard from "./insights/InsightCard";
 import CommunicationBasicsView from "./insights/views/CommunicationBasicsView";
 import {
@@ -20,6 +20,8 @@ import LoveLanguageView from "./insights/views/LoveLanguageView";
 import ConflictResolutionView from "./insights/views/ConflictResolutionView";
 import FuturePlanningView from "./insights/views/FuturePlanningView";
 import PlayfulnessRomanceView from "./insights/views/PlayfulnessRomanceView";
+import InsightGenerationProgress from "./insights/InsightGenerationProgress";
+// import InsightSummaryGrid from "./insights/InsightSummaryGrid";
 
 interface InsightsDisplaySectionProps {
   chatId: string;
@@ -78,33 +80,42 @@ export default function InsightsDisplaySection({
 
           {/* Progress indicator if generating */}
           {insightsData.generation_status === "generating" && (
-            <div className="mt-6 p-4 bg-blue-50 rounded-xl border border-blue-200">
-              <div className="flex items-center justify-center gap-3 mb-2">
-                <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
-                <span className="text-sm font-semibold text-blue-700">
-                  Generating insights...
-                </span>
-              </div>
-              <div className="w-full bg-blue-200 rounded-full h-2 overflow-hidden">
-                <div
-                  className="h-full bg-blue-600 transition-all duration-500"
-                  style={{
-                    width: `${
-                      (insightsData.total_completed /
-                        insightsData.total_requested) *
-                      100
-                    }%`,
-                  }}
-                />
-              </div>
-              <p className="text-xs text-blue-600 mt-2">
-                {insightsData.total_completed} of {insightsData.total_requested}{" "}
-                complete
-              </p>
+            <div className="mb-8">
+              <InsightGenerationProgress
+                insights={insightsData.insights.map((i) => ({
+                  id: i.id,
+                  display_title: i.display_title,
+                  icon: i.icon,
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  status: i.status as any,
+                }))}
+                totalRequested={insightsData.total_requested}
+                totalCompleted={insightsData.total_completed}
+                totalFailed={insightsData.total_failed}
+              />
             </div>
           )}
         </div>
-
+        {/* {insightsData.generation_status === "completed" && (
+          <InsightSummaryGrid
+            insights={insightsData.insights.map((i) => ({
+              id: i.id,
+              icon: i.icon,
+              title: i.display_title,
+              score: i.content?.overall?.score,
+              keyFinding: extractKeyFinding(i), // Helper function
+              status: i.status as any,
+            }))}
+            categorySlug={chat.category_slug}
+            onInsightClick={(id) => {
+              // Scroll to insight
+              document.getElementById(`insight-${id}`)?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }}
+          />
+        )} */}
         {/* Insights grid */}
         <div className="grid grid-cols-1 gap-6 md:gap-8">
           {insightsData.insights.map((insight) => (

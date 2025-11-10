@@ -27,6 +27,23 @@ export default function CommunicationBasicsView({
 
   return (
     <div className="space-y-6">
+      {/* <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-4 md:p-6 border border-blue-200 mb-6">
+        <div className="flex items-start gap-3">
+          <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white shrink-0">
+            💬
+          </div>
+          <div className="flex-1">
+            <h4 className="font-bold text-sm md:text-base text-gray-900 mb-1">
+              Why This Matters
+            </h4>
+            <p className="text-xs md:text-sm text-gray-700 leading-relaxed">
+              Balanced communication is the #1 predictor of relationship
+              satisfaction. Understanding who initiates, responds, and
+              contributes helps you both feel equally heard and valued.
+            </p>
+          </div>
+        </div>
+      </div> */}
       {/* 1. Hero: Overall Health Assessment */}
       <div className="bg-linear-to-br from-white to-gray-50 rounded-2xl p-6 md:p-8 border-2 border-gray-100">
         <div className="flex flex-col items-center mb-6">

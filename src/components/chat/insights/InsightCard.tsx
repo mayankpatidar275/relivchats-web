@@ -2,6 +2,7 @@
 
 import { useCategoryTheme } from "@/src/lib/theme";
 import InsightStatusBadge from "./InsightStatusBadge";
+// import ShareInsightButton from "./ShareInsightButton";
 
 interface InsightCardProps {
   icon: string | undefined;
@@ -43,6 +44,12 @@ export default function InsightCard({
             </p>
           )}
         </div>
+        {/* {status === "completed" && (
+          <ShareInsightButton
+            insightTitle={title}
+            chatId={chatId} // Pass as prop
+          />
+        )} */}
       </div>
 
       {/* Status badge */}

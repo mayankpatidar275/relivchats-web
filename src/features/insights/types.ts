@@ -275,3 +275,91 @@ export interface LoveLanguageContent {
     summary: string;
   };
 }
+
+// conflict_resolution
+
+export interface ConflictResolutionContent {
+  conflict_presence: {
+    visible_conflicts: boolean;
+    frequency: string;
+    assessment: string;
+  };
+  conflict_triggers: Array<{
+    trigger_type: string;
+    description: string;
+    evidence?: Array<{
+      context: string;
+      exchange: Array<{
+        message: string;
+        speaker: string;
+        timestamp: string;
+      }>;
+    }>;
+  }>;
+  individual_styles: {
+    participants: Array<{
+      name: string;
+      style: string;
+      intensity: string;
+      description: string;
+      evidence?: EvidenceItem[];
+    }>;
+  };
+  stress_communication: {
+    pattern_description: string;
+    initiator: string;
+    changes: string[];
+  };
+  repair_recovery: {
+    strategies: string[];
+    initiator: string;
+    timeframe: string;
+    effectiveness: string;
+    evidence?: Array<{
+      context: string;
+      exchange: Array<{
+        message: string;
+        speaker: string;
+        timestamp: string;
+      }>;
+    }>;
+  };
+  positive_behaviors: Array<{
+    behavior: string;
+    description: string;
+    evidence?: EvidenceItem[];
+  }>;
+  destructive_patterns: {
+    present: boolean;
+    assessment: string;
+    patterns?: Array<{
+      pattern_type: string;
+      description: string;
+      severity: string;
+      evidence?: EvidenceItem[];
+    }>;
+  };
+  stress_support: {
+    analysis: string;
+    evidence: Array<{
+      context: string;
+      exchange: Array<{
+        message: string;
+        speaker: string;
+        timestamp: string;
+      }>;
+    }>;
+  };
+  recommendations: Array<{
+    title: string;
+    target: string[];
+    suggestion: string;
+    technique: string;
+    example_phrases: string[];
+  }>;
+  overall: {
+    score: number;
+    maturity_level: string;
+    summary: string;
+  };
+}

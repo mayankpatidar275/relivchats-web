@@ -4,12 +4,25 @@ import { Check, Sparkles, Zap, Crown, LucideProps } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { usePackages } from "@/src/features/credits/api/hooks";
+
+interface CreditPackage {
+  id: string;
+  name: string;
+  coins: number;
+  price_usd: string;
+  price_inr: string;
+  description?: string;
+  is_popular: boolean;
+  sort_order: number;
+}
 
 interface PricingPlan {
   id: string;
   name: string;
   coins: number;
-  price: number;
+  price_usd: string;
+  price_inr: string;
   pricePerCoin: number;
   popular?: boolean;
   badge?: string;
@@ -18,82 +31,215 @@ interface PricingPlan {
   >;
   color: string;
   gradient: string;
+  description?: string;
   features: string[];
   savings?: string;
 }
 
-const plans: PricingPlan[] = [
-  {
-    id: "starter",
-    name: "Starter",
-    coins: 200,
-    price: 2.99,
-    pricePerCoin: 0.015,
-    icon: Sparkles,
-    color: "from-blue-500 to-cyan-500",
-    gradient: "from-blue-50 to-cyan-50",
-    features: [
-      "4 Friendship/Family insights",
-      "2 Romantic/Work insights",
-      "All basic stats included",
-      "Lifetime access to insights",
-    ],
-  },
-  {
-    id: "popular",
-    name: "Popular",
-    coins: 500,
-    price: 5.99,
-    pricePerCoin: 0.012,
-    popular: true,
-    badge: "⭐ MOST POPULAR",
-    savings: "Save 20%",
-    icon: Zap,
-    color: "from-primary to-accent-pink",
-    gradient: "from-purple-50 to-pink-50",
-    features: [
-      "10 Friendship/Family insights",
-      "5 Romantic/Work insights",
-      "All basic stats included",
-      "Priority support",
-      "Lifetime access to insights",
-    ],
-  },
-  {
-    id: "pro",
-    name: "Pro",
-    coins: 1500,
-    price: 14.99,
-    pricePerCoin: 0.01,
-    badge: "Best Value",
-    savings: "Save 33%",
-    icon: Crown,
-    color: "from-amber-500 to-orange-500",
-    gradient: "from-amber-50 to-orange-50",
-    features: [
-      "30 Friendship/Family insights",
-      "15 Romantic/Work insights",
-      "All basic stats included",
-      "Priority support",
-      "Early access to new features",
-      "Lifetime access to insights",
-    ],
-  },
-];
+// Icon mapping based on package name
+const getIconForPackage = (name: string) => {
+  const lowerName = name.toLowerCase();
+  if (lowerName.includes("starter") || lowerName.includes("basic"))
+    return Sparkles;
+  if (lowerName.includes("popular") || lowerName.includes("value")) return Zap;
+  if (lowerName.includes("pro") || lowerName.includes("premium")) return Crown;
+  return Sparkles;
+};
+
+// Color schemes for different package tiers
+const getColorScheme = (index: number, isPopular: boolean) => {
+  if (isPopular) {
+    return {
+      color: "from-primary to-accent-pink",
+      gradient: "from-purple-50 to-pink-50",
+    };
+  }
+
+  const schemes = [
+    { color: "from-blue-500 to-cyan-500", gradient: "from-blue-50 to-cyan-50" },
+    {
+      color: "from-primary to-accent-pink",
+      gradient: "from-purple-50 to-pink-50",
+    },
+    {
+      color: "from-amber-500 to-orange-500",
+      gradient: "from-amber-50 to-orange-50",
+    },
+    {
+      color: "from-green-500 to-emerald-500",
+      gradient: "from-green-50 to-emerald-50",
+    },
+  ];
+
+  return schemes[index % schemes.length];
+};
+
+// Generate features based on package data
+const generateFeatures = (packageData: CreditPackage) => {
+  const baseFeatures = [
+    "All basic stats included",
+    "Lifetime access to insights",
+    "Secure payment processing",
+  ];
+
+  // Estimate insights based on coins (50 coins per basic insight, 100 per advanced)
+  const basicInsights = Math.floor(packageData.coins / 50);
+  const advancedInsights = Math.floor(packageData.coins / 100);
+
+  const insightFeatures = [];
+  if (basicInsights > 0) {
+    insightFeatures.push(`${basicInsights} Friendship/Family insights`);
+  }
+  if (advancedInsights > 0) {
+    insightFeatures.push(`${advancedInsights} Romantic/Work insights`);
+  }
+
+  // Add description as a feature if available
+  const descriptionFeature = packageData.description
+    ? [packageData.description]
+    : [];
+
+  return [...insightFeatures, ...descriptionFeature, ...baseFeatures];
+};
+
+// Calculate savings compared to starter package
+const calculateSavings = (
+  packageData: CreditPackage,
+  packages: CreditPackage[]
+) => {
+  if (packages.length < 2) return undefined;
+
+  const starterPackage =
+    packages.find((pkg) => pkg.sort_order === 1) || packages[0];
+  if (packageData.id === starterPackage.id) return undefined;
+
+  const starterPricePerCoin =
+    parseFloat(starterPackage.price_usd) / starterPackage.coins;
+  const currentPricePerCoin =
+    parseFloat(packageData.price_usd) / packageData.coins;
+
+  if (currentPricePerCoin >= starterPricePerCoin) return undefined;
+
+  const savingsPercentage = Math.round(
+    (1 - currentPricePerCoin / starterPricePerCoin) * 100
+  );
+  return `Save ${savingsPercentage}%`;
+};
 
 export default function PricingPlans() {
   const { isSignedIn } = useUser();
   const router = useRouter();
+  const { data: packages, isLoading, isError } = usePackages();
 
-  const handlePurchase = (planId: string) => {
+  const handlePurchase = (packageId: string) => {
     if (!isSignedIn) {
       router.push("/sign-up");
       return;
     }
 
     // TODO: Implement payment flow
-    alert(`Purchase ${planId} - Payment integration coming soon!`);
+    alert(`Purchase ${packageId} - Payment integration coming soon!`);
   };
+
+  // Transform backend packages to frontend plans
+  const plans: PricingPlan[] = React.useMemo(() => {
+    if (!packages) return [];
+
+    return packages
+      .sort((a, b) => a.sort_order - b.sort_order)
+      .map((pkg, index) => {
+        const priceUsd = parseFloat(pkg.price_usd);
+        const pricePerCoin = priceUsd / pkg.coins;
+        const savings = calculateSavings(pkg, packages);
+
+        // Determine badge
+        let badge: string | undefined;
+        if (pkg.is_popular) {
+          badge = "⭐ MOST POPULAR";
+        } else if (pkg.sort_order === packages.length) {
+          badge = "Best Value";
+        }
+
+        return {
+          id: pkg.id,
+          name: pkg.name,
+          coins: pkg.coins,
+          price_usd: pkg.price_usd,
+          price_inr: pkg.price_inr,
+          pricePerCoin,
+          popular: pkg.is_popular,
+          badge,
+          icon: getIconForPackage(pkg.name),
+          ...getColorScheme(index, pkg.is_popular),
+          description: pkg.description,
+          features: generateFeatures(pkg),
+          savings,
+        };
+      });
+  }, [packages]);
+
+  if (isLoading) {
+    return (
+      <section className="py-12 sm:py-16 md:py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
+          <div className="text-center mb-8 sm:mb-12 max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-full border border-primary/20 mb-4 sm:mb-6 animate-pulse">
+              <div className="w-3 h-3 bg-primary/20 rounded"></div>
+              <div className="h-3 bg-primary/20 rounded w-24"></div>
+            </div>
+            <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded w-96 mx-auto"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="rounded-2xl border-2 border-gray-200 bg-white p-8 animate-pulse"
+              >
+                <div className="w-16 h-16 bg-gray-200 rounded-xl mb-6"></div>
+                <div className="h-6 bg-gray-200 rounded w-24 mb-2"></div>
+                <div className="h-12 bg-gray-200 rounded w-32 mb-4"></div>
+                <div className="space-y-2 mb-6">
+                  {[...Array(4)].map((_, j) => (
+                    <div key={j} className="flex items-center gap-3">
+                      <div className="w-5 h-5 bg-gray-200 rounded"></div>
+                      <div className="h-4 bg-gray-200 rounded flex-1"></div>
+                    </div>
+                  ))}
+                </div>
+                <div className="h-12 bg-gray-200 rounded-xl"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (isError || !packages) {
+    return (
+      <section className="py-12 sm:py-16 md:py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 max-w-7xl text-center">
+          <div className="text-red-600 mb-4">
+            <Sparkles className="w-12 h-12 mx-auto" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Unable to Load Packages
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Please try refreshing the page or contact support if the problem
+            persists.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-dark transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-12 sm:py-16 md:py-20 bg-white">
@@ -173,7 +319,7 @@ export default function PricingPlans() {
                 {/* Coins */}
                 <div className="mb-1 sm:mb-2">
                   <span className="text-4xl sm:text-5xl font-bold text-gray-900">
-                    {plan.coins}
+                    {plan.coins.toLocaleString()}
                   </span>
                   <span className="text-gray-600 text-sm sm:text-base ml-2">
                     coins
@@ -183,7 +329,7 @@ export default function PricingPlans() {
                 {/* Price */}
                 <div className="mb-4 sm:mb-6">
                   <span className="text-2xl sm:text-3xl font-bold text-gray-900">
-                    ${plan.price}
+                    ${plan.price_usd}
                   </span>
                   <div className="text-xs sm:text-sm text-gray-600 mt-1">
                     ${plan.pricePerCoin.toFixed(3)} per coin
@@ -226,7 +372,7 @@ export default function PricingPlans() {
           })}
         </div>
 
-        {/* Value Calculator - NEW */}
+        {/* Value Calculator */}
         <div className="max-w-3xl mx-auto bg-linear-to-br from-primary-light to-accent-pink-light rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-primary/20 mb-8 sm:mb-12">
           <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 text-center">
             💡 Quick Value Guide
@@ -234,7 +380,7 @@ export default function PricingPlans() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
             <div className="bg-white rounded-xl p-3 sm:p-4 text-center">
               <div className="text-2xl sm:text-3xl font-bold text-primary mb-1">
-                50
+                300
               </div>
               <div className="text-xs sm:text-sm text-gray-600">
                 Basic category
@@ -242,7 +388,7 @@ export default function PricingPlans() {
             </div>
             <div className="bg-white rounded-xl p-3 sm:p-4 text-center">
               <div className="text-2xl sm:text-3xl font-bold text-primary mb-1">
-                100
+                400
               </div>
               <div className="text-xs sm:text-sm text-gray-600">
                 Advanced category
@@ -250,10 +396,13 @@ export default function PricingPlans() {
             </div>
             <div className="bg-white rounded-xl p-3 sm:p-4 text-center col-span-2 sm:col-span-2">
               <div className="text-2xl sm:text-3xl font-bold text-primary mb-1">
-                500 coins
+                1600 coins
+                {/* {plans[0]?.coins.toLocaleString() || "500"} coins */}
               </div>
               <div className="text-xs sm:text-sm text-gray-600">
-                = 5-10 complete analyses
+                = 4-5 complete analyses
+                {/* = {Math.floor((plans[0]?.coins || 500) / 400)}-
+                {Math.floor((plans[0]?.coins || 500) / 25)} complete analyses */}
               </div>
             </div>
           </div>

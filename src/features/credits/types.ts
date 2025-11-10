@@ -17,3 +17,14 @@ export interface TransactionHistoryResponse {
   total_count: number;
   current_balance: number;
 }
+
+export interface CreditPackageResponse {
+  id: string;
+  name: string;
+  coins: number;
+  price_usd: string;
+  price_inr: string;
+  description?: string;
+  is_popular: boolean;
+  sort_order: number;
+}

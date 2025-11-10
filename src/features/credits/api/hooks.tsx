@@ -21,3 +21,10 @@ export function useTransactions() {
     enabled: isSignedIn === true,
   });
 }
+
+export function usePackages() {
+  return useQuery({
+    queryKey: queryKeys.credits.packages(),
+    queryFn: clientCreditMethods.getPackages,
+  });
+}

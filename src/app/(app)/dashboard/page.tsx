@@ -3,11 +3,14 @@ import CreditBalanceWidget from "@/src/components/dashboard/CreditBalanceWidget"
 import DashboardHeader from "@/src/components/dashboard/DashboardHeader";
 import QuickActionsSection from "@/src/components/dashboard/QuickActionsSection";
 import WelcomeModal from "@/src/components/modals/WelcomeModal";
+import { Suspense } from "react";
 
 export default function DashboardPage() {
   return (
     <>
-      <WelcomeModal />
+      <Suspense fallback={null}>
+        <WelcomeModal />
+      </Suspense>
       <div className="min-h-screen bg-gray-50">
         <DashboardHeader />
 

@@ -47,4 +47,13 @@ export const queryKeys = {
     all: ["user"] as const,
     profile: () => [...queryKeys.user.all, "profile"] as const,
   },
+
+  // Payments
+  payments: {
+    all: ["payments"] as const,
+    orders: () => [...queryKeys.payments.all, "orders"] as const,
+    // Typed order status key: ['payments', 'orders', 'status', orderId]
+    orderStatus: (orderId: string) =>
+      [...queryKeys.payments.orders(), "status", orderId] as const,
+  },
 } as const;

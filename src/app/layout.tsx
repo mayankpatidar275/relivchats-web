@@ -6,6 +6,7 @@ import { QueryProvider } from "../lib/query";
 import ClerkClientWrapper from "../components/ClerkClientWrapper";
 import Footer from "../components/layout/Footer";
 import { ConfirmProvider } from "../hooks/useConfirm";
+import { Toaster } from "sonner";
 // import ClerkSyncData from "../components/ClerkSyncData";
 
 const geistSans = Geist({
@@ -58,6 +59,7 @@ export default function RootLayout({
             {/* </ClerkSyncData> */}
           </QueryProvider>
         </ClerkClientWrapper>
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );

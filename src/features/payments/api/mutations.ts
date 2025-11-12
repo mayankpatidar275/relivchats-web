@@ -5,6 +5,6 @@ export const paymentsMutations = {
   createPaymentOrder: async (
     data: CreateOrderRequest
   ): Promise<CreateOrderResponse> => {
-    return clientApi.post<CreateOrderResponse>("api/payments/orders", data);
+    return clientApi.post<CreateOrderResponse>("payments/orders", data);
   },
 };

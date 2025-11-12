@@ -3,6 +3,6 @@ import { OrderStatusResponse } from "../types";
 
 export const paymentsApi = {
   getOrderStatus: async (orderId: string): Promise<OrderStatusResponse> => {
-    return clientApi.get<OrderStatusResponse>(`api/payments/orders/${orderId}`);
+    return clientApi.get<OrderStatusResponse>(`payments/orders/${orderId}`);
   },
 };

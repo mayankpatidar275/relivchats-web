@@ -6,6 +6,6 @@ export const userMutations = {
     return clientApi.post<UserOut>("users/store", data);
   },
   deleteUser: async (): Promise<UserDeleteResponse> => {
-    return clientApi.post<UserDeleteResponse>("users/delete-account");
+    return clientApi.delete<UserDeleteResponse>("users/delete-account");
   },
 };

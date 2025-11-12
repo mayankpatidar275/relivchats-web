@@ -203,7 +203,7 @@ export function PaymentModal({
               </button>
 
               {/* Stripe Option */}
-              <button
+              {/* <button
                 onClick={() => setSelectedProvider("stripe")}
                 className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
                   selectedProvider === "stripe"
@@ -241,7 +241,7 @@ export function PaymentModal({
                     ✓ Recommended for International
                   </div>
                 )}
-              </button>
+              </button> */}
             </div>
           </div>
         )}

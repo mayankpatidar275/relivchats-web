@@ -2,7 +2,7 @@
 "use client";
 
 import { useCreatePaymentOrder } from "@/src/features/payments/api/hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 declare global {
@@ -24,36 +24,58 @@ export function useRazorpayCheckout({
   onError,
 }: RazorpayCheckoutProps) {
   const createOrder = useCreatePaymentOrder();
+  const [isScriptLoaded, setIsScriptLoaded] = useState(() => {
+    // Initialize with current state
+    return typeof window !== "undefined" && !!window.Razorpay;
+  });
 
-  // Load Razorpay script
+  // Load Razorpay script with proper loading detection
   useEffect(() => {
     // Check if script is already loaded
-    if (
-      document.querySelector(
-        'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
-      )
-    ) {
+    if (window.Razorpay) {
       return;
     }
 
+    // Check if script element exists
+    const existingScript = document.querySelector(
+      'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
+    );
+
+    if (existingScript) {
+      // Script exists but might not be loaded yet
+      const handleLoad = () => {
+        setIsScriptLoaded(true);
+      };
+      existingScript.addEventListener("load", handleLoad);
+      return () => {
+        existingScript.removeEventListener("load", handleLoad);
+      };
+    }
+
+    // Create and load new script
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
-    script.onerror = () => {
-      toast.error("Failed to load Razorpay. Please try again.");
-    };
-    document.body.appendChild(script);
 
-    return () => {
-      // Don't remove script on unmount as it might be needed by other components
+    script.onload = () => {
+      setIsScriptLoaded(true);
     };
+
+    script.onerror = () => {
+      toast.error("Failed to load Razorpay. Please refresh the page.");
+      setIsScriptLoaded(false);
+    };
+
+    document.body.appendChild(script);
   }, []);
 
   const initiatePurchase = async () => {
     try {
-      // Validate Razorpay script is loaded
-      if (!window.Razorpay) {
-        toast.error("Razorpay is not loaded. Please refresh and try again.");
+      // Check if script is loaded
+      if (!isScriptLoaded || !window.Razorpay) {
+        toast.error(
+          "Payment system is loading. Please wait a moment and try again."
+        );
         onError("Razorpay script not loaded");
         return;
       }
@@ -133,5 +155,6 @@ export function useRazorpayCheckout({
   return {
     initiatePurchase,
     isLoading: createOrder.isPending,
+    isScriptLoaded,
   };
 }

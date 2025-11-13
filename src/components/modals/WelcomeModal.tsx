@@ -57,20 +57,20 @@ export default function WelcomeModal() {
 
   if (!isOpen) return null;
 
-  if (!showSuccess)
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-        <div className="bg-white rounded-2xl p-8 mx-4 max-w-sm w-full text-center shadow-2xl">
-          <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            Loading...
-          </h3>
-          <p className="text-gray-600 text-sm">
-            Getting everything ready for you...
-          </p>
-        </div>
-      </div>
-    );
+  // if (!showSuccess)
+  //   return (
+  //     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+  //       <div className="bg-white rounded-2xl p-8 mx-4 max-w-sm w-full text-center shadow-2xl">
+  //         <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto mb-4" />
+  //         <h3 className="text-lg font-semibold text-gray-900 mb-2">
+  //           Loading...
+  //         </h3>
+  //         <p className="text-gray-600 text-sm">
+  //           Getting everything ready for you...
+  //         </p>
+  //       </div>
+  //     </div>
+  //   );
 
   // Show loading state only during initial sync
   if (isPending && !showSuccess) {

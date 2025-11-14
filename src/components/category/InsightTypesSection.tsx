@@ -36,13 +36,13 @@ export default function InsightTypesSection({
               {" "}
               {category.display_name}{" "}
             </span>
-            Analysis
+            AI Analysis
           </h2>
 
           {/* Description */}
-          <p className="text-base md:text-lg lg:text-xl text-gray-600">
+          {/* <p className="text-base md:text-lg lg:text-xl text-gray-600">
             AI-tailored analysis for your specific relationship type
-          </p>
+          </p> */}
         </div>
 
         {/* Insights grid */}
@@ -74,10 +74,10 @@ export default function InsightTypesSection({
 
                 {/* Cost badge */}
                 <div className="mt-4 flex items-center gap-2">
-                  <span className="text-xs text-gray-500">Cost:</span>
+                  {/* <span className="text-xs text-gray-500">Cost:</span>
                   <span className={`text-sm font-bold ${category.textColor}`}>
                     {insight.credit_cost} coins
-                  </span>
+                  </span> */}
                   {insight.is_premium && (
                     <span className="text-xs px-2 py-0.5 bg-amber-100 text-amber-700 rounded-full font-semibold">
                       Premium

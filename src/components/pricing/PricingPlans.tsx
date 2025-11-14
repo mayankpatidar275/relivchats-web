@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Sparkles, Zap, Crown, LucideProps } from "lucide-react";
+import { Sparkles, Zap, Crown, LucideProps } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -278,7 +278,7 @@ export default function PricingPlans() {
       <section className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
           {/* Section Header */}
-          <div className="text-center mb-8 sm:mb-12 max-w-3xl mx-auto">
+          {/* <div className="text-center mb-8 sm:mb-12 max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-primary/10 rounded-full border border-primary/20 mb-4 sm:mb-6">
               <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
               <span className="text-xs sm:text-sm font-semibold text-primary">
@@ -292,7 +292,7 @@ export default function PricingPlans() {
             <p className="text-sm sm:text-base md:text-lg text-gray-600">
               One-time purchase • No subscriptions • Coins never expire
             </p>
-          </div>
+          </div> */}
 
           {/* Plans Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12">
@@ -375,7 +375,7 @@ export default function PricingPlans() {
                   </div>
 
                   {/* Features */}
-                  <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
+                  {/* <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
                     {plan.features.map((feature, index) => (
                       <div
                         key={index}
@@ -387,7 +387,7 @@ export default function PricingPlans() {
                         </span>
                       </div>
                     ))}
-                  </div>
+                  </div> */}
 
                   {/* CTA Button */}
                   <button

@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import CategoryHero from "@/src/components/category/CategoryHero";
 import InsightTypesSection from "@/src/components/category/InsightTypesSection";
 import UploadSection from "@/src/components/category/UploadSection";
 import { categoriesApi } from "@/src/features/categories/api/server-queries";
@@ -24,7 +23,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <div className="min-h-screen bg-white">
-      <CategoryHero category={categoryUI} />
+      {/* <CategoryHero category={categoryUI} /> */}
       <InsightTypesSection category={categoryUI} />
       {/* Add after InsightTypesSection */}
       {/* <section className="py-12 bg-gray-50">

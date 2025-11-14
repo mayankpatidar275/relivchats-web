@@ -36,8 +36,8 @@ export default function UploadSection({ category }: UploadSectionProps) {
     setUploadProgress("uploading");
 
     // Simulate progress for better UX
-    setTimeout(() => setUploadProgress("parsing"), 500);
-    setTimeout(() => setUploadProgress("analyzing"), 1500);
+    setTimeout(() => setUploadProgress("parsing"), 1500);
+    setTimeout(() => setUploadProgress("analyzing"), 3000);
 
     return await uploadChatMutation.mutateAsync({
       file,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useChat } from "@/src/features/chats/api";
-import { ArrowLeft, Share2, Users } from "lucide-react";
+import { ArrowLeft, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface ChatHeaderProps {
@@ -40,13 +40,13 @@ export default function ChatHeader({ chatId }: ChatHeaderProps) {
           </div>
 
           {/* Right: Share button */}
-          <button
+          {/* <button
             onClick={() => router.push(`/share/${chatId}`)}
             className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors shrink-0"
           >
             <Share2 className="w-4 h-4" />
             <span className="hidden sm:inline">Share</span>
-          </button>
+          </button> */}
         </div>
       </div>
     </header>

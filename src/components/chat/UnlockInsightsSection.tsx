@@ -57,7 +57,7 @@ export default function UnlockInsightsSection({
   //   });
   // };
 
-  const totalCost = insights?.reduce((sum, i) => sum + i.credit_cost, 0) || 0;
+  // const totalCost = insights?.reduce((sum, i) => sum + i.credit_cost, 0) || 0;
   const insightCount = insights?.length || 0;
   const selectedCategory = categories?.find((c) => c.id === selectedCategoryId);
   const colors = selectedCategory
@@ -239,7 +239,7 @@ export default function UnlockInsightsSection({
               <div className="shrink-0 text-center">
                 <div className="mb-4">
                   <div className="text-4xl font-bold text-gray-900">
-                    {totalCost}
+                    {selectedCategory?.base_cost}
                   </div>
                   <div className="text-sm text-gray-600">coins</div>
                 </div>

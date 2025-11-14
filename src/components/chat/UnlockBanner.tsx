@@ -11,9 +11,9 @@ interface UnlockBannerProps {
 
 export default function UnlockBanner({
   onUnlockClick,
-  insightCount = 12,
-  cost = 100,
-}: UnlockBannerProps) {
+}: // insightCount = 12,
+// cost = 100,
+UnlockBannerProps) {
   const [dismissed, setDismissed] = useState(false);
 
   if (dismissed) return null;
@@ -28,7 +28,8 @@ export default function UnlockBanner({
             </div>
             <div className="min-w-0">
               <p className="text-sm font-semibold">
-                🔓 Unlock {insightCount} AI-Powered Insights
+                🔓 Unlock AI-Powered Insights
+                {/* 🔓 Unlock {insightCount} AI-Powered Insights */}
               </p>
               <p className="text-xs text-white/80 hidden sm:block">
                 Deep analysis, patterns & recommendations
@@ -41,8 +42,8 @@ export default function UnlockBanner({
               onClick={onUnlockClick}
               className="px-4 py-2 bg-white text-primary rounded-lg text-sm font-bold hover:bg-gray-100 transition-colors"
             >
-              <span className="hidden sm:inline">Unlock for </span>
-              {cost} coins
+              <span className="hidden sm:inline">Unlock Now</span>
+              {/* {cost} coins */}
             </button>
             <button
               onClick={() => setDismissed(true)}

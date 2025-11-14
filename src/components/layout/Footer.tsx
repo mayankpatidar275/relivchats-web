@@ -6,32 +6,48 @@ import Image from "next/image";
 import { PurpleLogo } from "@/src/app/assets";
 
 export default function Footer() {
-  // const footerLinks = {
-  //   product: [
-  //     { name: "Features", href: "/#features" },
-  //     { name: "Categories", href: "/#categories" },
-  //     { name: "Pricing", href: "/pricing" },
-  //     { name: "How It Works", href: "/#how-it-works" },
-  //   ],
-  //   company: [
-  //     { name: "About Us", href: "/about" },
-  //     { name: "Blog", href: "/blog" },
-  //     { name: "Careers", href: "/careers" },
-  //     { name: "Contact", href: "/contact" },
-  //   ],
-  //   legal: [
-  //     { name: "Privacy Policy", href: "/privacy" },
-  //     { name: "Terms of Service", href: "/terms" },
-  //     { name: "Cookie Policy", href: "/cookies" },
-  //     { name: "Refund Policy", href: "/refund" },
-  //   ],
-  //   support: [
-  //     { name: "Help Center", href: "/help" },
-  //     { name: "FAQ", href: "/faq" },
-  //     { name: "Community", href: "/community" },
-  //     { name: "Status", href: "/status" },
-  //   ],
-  // };
+  const footerLinks = {
+    // product: [
+    //   { name: "Features", href: "/#features" },
+    //   { name: "Categories", href: "/#categories" },
+    //   { name: "Pricing", href: "/pricing" },
+    //   { name: "How It Works", href: "/#how-it-works" },
+    // ],
+    // company: [
+    //   { name: "About Us", href: "/about" },
+    //   { name: "Blog", href: "/blog" },
+    //   { name: "Careers", href: "/careers" },
+    //   { name: "Contact", href: "/contact" },
+    // ],
+    legal: [
+      {
+        name: "Privacy Policy",
+        href: "https://merchant.razorpay.com/policy/OMyE4JSPYTCzjp/privacy",
+      },
+      {
+        name: "Terms and Conditions",
+        href: "https://merchant.razorpay.com/policy/OMyE4JSPYTCzjp/terms",
+      },
+      {
+        name: "Shipping Policy",
+        href: "https://merchant.razorpay.com/policy/OMyE4JSPYTCzjp/shipping",
+      },
+      {
+        name: "Cancellations and Refunds",
+        href: "https://merchant.razorpay.com/policy/OMyE4JSPYTCzjp/refund",
+      },
+      {
+        name: "Contact Us",
+        href: "https://merchant.razorpay.com/policy/OMyE4JSPYTCzjp/contact_us",
+      },
+    ],
+    // support: [
+    //   { name: "Help Center", href: "/help" },
+    //   { name: "FAQ", href: "/faq" },
+    //   { name: "Community", href: "/community" },
+    //   { name: "Status", href: "/status" },
+    // ],
+  };
 
   return (
     <footer className="relative bg-linear-to-br from-gray-50 to-white border-t border-gray-100">
@@ -150,7 +166,7 @@ export default function Footer() {
             </ul>
           </div> */}
 
-          {/* <div>
+          <div>
             <h3 className="font-bold text-gray-900 mb-4">Legal</h3>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
@@ -164,7 +180,7 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div> */}
+          </div>
         </div>
 
         {/* Bottom bar */}

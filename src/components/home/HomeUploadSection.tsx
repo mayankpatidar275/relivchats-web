@@ -32,7 +32,7 @@ export default function HomeUploadSection() {
     setUploadProgress("uploading");
 
     // Simulate progress for better UX
-    setTimeout(() => setUploadProgress("parsing"), 500);
+    setTimeout(() => setUploadProgress("parsing"), 1500);
     setTimeout(() => setUploadProgress("analyzing"), 1500);
 
     return await uploadChatMutation.mutateAsync({

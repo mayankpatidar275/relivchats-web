@@ -3,17 +3,25 @@
 import { PurpleLogo } from "@/src/app/assets";
 import { useBalance } from "@/src/features/credits/api/hooks";
 import { UserButton, useUser } from "@clerk/nextjs";
-import { Coins, Settings } from "lucide-react";
+import { Coins, Loader2, Settings } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useTransition,
+} from "react";
 
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const { isSignedIn } = useUser();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [pendingRoute, setPendingRoute] = useState<string | null>(null);
   const { data: coins, isLoading, isError } = useBalance();
 
   // Handle scroll effect for header background
@@ -21,24 +29,51 @@ export default function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    // Throttle scroll event for better performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", throttledHandleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", throttledHandleScroll);
   }, []);
 
-  // Navigation links - currently commented out but kept for future use
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const navLinks = [
-    // { name: "Home", href: "/" },
-    // { name: "Categories", href: "/#categories" },
-    // { name: "How It Works", href: "/#how-it-works" },
-    // { name: "Pricing", href: "/pricing" },
-  ];
+  // Memoized navigation handler with loading state
+  const handleNavigation = useCallback(
+    (route: string) => {
+      if (pendingRoute === route) return; // Prevent double-clicks
+
+      setPendingRoute(route);
+      startTransition(() => {
+        router.push(route);
+        // Reset pending state after navigation attempt
+        setTimeout(() => setPendingRoute(null), 1000);
+      });
+    },
+    [router, pendingRoute]
+  );
+
+  // Format balance with error handling - use useMemo instead of useCallback
+  const formattedBalance = useMemo(() => {
+    if (isLoading) return <Loader2 className="w-3 h-3 animate-spin" />;
+    if (isError) return "–";
+    if (coins?.balance === null || coins?.balance === undefined) return "0";
+    return coins.balance.toLocaleString();
+  }, [coins, isError, isLoading]);
 
   return (
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/80 backdrop-blur-xl shadow-lg border-gray-100"
+          ? "bg-white/80 backdrop-blur-xl shadow-lg border-b border-gray-100"
           : "bg-transparent"
       }`}
       role="banner"
@@ -51,17 +86,19 @@ export default function Header() {
           {/* Logo and Brand */}
           <Link
             href="/"
-            className="flex items-center gap-2 group shrink-0"
+            className="flex items-center gap-2 group shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
             aria-label="Reliv Chats AI - Home"
+            prefetch={true}
           >
             <div className="relative shrink-0">
               <Image
                 src={PurpleLogo}
-                alt="Reliv Chats AI Logo"
+                alt=""
                 className="h-7 sm:h-10 md:h-12 w-auto"
                 width={150}
                 height={50}
                 priority
+                loading="eager"
               />
             </div>
             <span className="text-base sm:text-xl md:text-2xl font-bold bg-primary bg-clip-text text-transparent whitespace-nowrap">
@@ -69,70 +106,59 @@ export default function Header() {
             </span>
           </Link>
 
-          {/* Desktop Navigation - Hidden for now but structure kept */}
-          {/* <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`relative font-medium transition-colors ${
-                  pathname === link.href
-                    ? "text-primary"
-                    : "text-gray-700 hover:text-primary"
-                }`}
-              >
-                {link.name}
-                {pathname === link.href && (
-                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-accent-pink rounded-full" />
-                )}
-              </Link>
-            ))}
-          </div> */}
-
           {/* Right side - Auth & Actions */}
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             {isSignedIn ? (
               <>
-                {/* Credit Balance - Visible on all screen sizes */}
+                {/* Credit Balance */}
                 <button
-                  onClick={() => router.push("/pricing")}
-                  className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-linear-to-r from-primary-light to-accent-pink-light rounded-full border border-primary/20 hover:shadow-lg transition-all group"
-                  aria-label="View credit balance and pricing"
+                  onClick={() => handleNavigation("/pricing")}
+                  disabled={isPending && pendingRoute === "/pricing"}
+                  className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-linear-to-r from-primary-light to-accent-pink-light rounded-full border border-primary/20 hover:shadow-lg transition-all group disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  aria-label={`Credit balance: ${
+                    coins?.balance ?? 0
+                  }. Click to view pricing`}
+                  aria-busy={isPending && pendingRoute === "/pricing"}
                 >
-                  <Coins className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary group-hover:rotate-12 transition-transform" />
-                  <span className="font-semibold text-primary text-sm sm:text-base">
-                    {isLoading ||
-                    isError ||
-                    coins === null ||
-                    coins === undefined
-                      ? "..."
-                      : coins.balance}
+                  <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex items-center justify-center shrink-0">
+                    {isPending && pendingRoute === "/pricing" ? (
+                      <Loader2 className="w-full h-full text-primary animate-spin" />
+                    ) : (
+                      <Coins className="w-full h-full text-primary group-hover:rotate-12 transition-transform" />
+                    )}
+                  </div>
+                  <span className="font-semibold text-primary text-sm sm:text-base min-w-[2ch] text-center">
+                    {formattedBalance}
                   </span>
                 </button>
 
                 {/* Dashboard Button - Desktop only */}
                 <button
-                  onClick={() => router.push("/dashboard")}
-                  className="hidden sm:block px-5 py-2 bg-linear-to-r from-primary to-primary-hover text-white rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all"
-                  // className={`hidden sm:flex items-center px-4 md:px-5 py-2 rounded-full font-medium transition-all ${
-                  //   pathname === "/dashboard"
-                  //     ? "bg-linear-to-r from-primary to-primary-hover text-white shadow-lg"
-                  //     : "text-gray-700 hover:bg-gray-100"
-                  // }`}
+                  onClick={() => handleNavigation("/dashboard")}
+                  disabled={isPending && pendingRoute === "/dashboard"}
+                  className="hidden sm:flex items-center justify-center gap-2 px-5 py-2 bg-linear-to-r from-primary to-primary-hover text-white rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 min-w-[120px]"
                   aria-label="Go to dashboard"
                   aria-current={pathname === "/dashboard" ? "page" : undefined}
+                  aria-busy={isPending && pendingRoute === "/dashboard"}
                 >
-                  Dashboard
+                  {isPending && pendingRoute === "/dashboard" ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin shrink-0" />
+                      <span></span>
+                    </>
+                  ) : (
+                    <span>Dashboard</span>
+                  )}
                 </button>
 
                 {/* User Profile Button */}
-                <div className="flex items-center">
+                <div className="flex items-center shrink-0">
                   <UserButton
                     afterSignOutUrl="/"
                     appearance={{
                       elements: {
                         avatarBox:
-                          "w-8 h-8 sm:w-10 sm:h-10 ring-2 ring-primary/20 hover:ring-primary transition-all cursor-pointer",
+                          "w-8 h-8 sm:w-10 sm:h-10 ring-2 ring-primary/20 hover:ring-primary transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
                         userButtonPopoverCard: "shadow-xl",
                         userButtonPopoverActions: "py-2",
                       },
@@ -143,12 +169,12 @@ export default function Header() {
                       <UserButton.Action
                         label="Dashboard"
                         labelIcon={<Coins className="w-4 h-4" />}
-                        onClick={() => router.push("/dashboard")}
+                        onClick={() => handleNavigation("/dashboard")}
                       />
                       <UserButton.Action
                         label="Settings"
                         labelIcon={<Settings className="w-4 h-4" />}
-                        onClick={() => router.push("/settings")}
+                        onClick={() => handleNavigation("/settings")}
                       />
                     </UserButton.MenuItems>
                   </UserButton>
@@ -158,89 +184,25 @@ export default function Header() {
               <>
                 {/* Sign In Button */}
                 <button
-                  onClick={() => router.push("/sign-in")}
-                  className="px-3 sm:px-5 py-1.5 sm:py-2 text-sm sm:text-base text-gray-700 font-medium hover:text-primary transition-colors"
+                  onClick={() => handleNavigation("/sign-in")}
+                  disabled={isPending && pendingRoute === "/sign-in"}
+                  className="flex items-center justify-center gap-2 px-3 sm:px-5 py-1.5 sm:py-2 text-sm sm:text-base text-gray-700 font-medium hover:text-primary transition-colors disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg min-w-20 sm:min-w-[100px]"
                   aria-label="Sign in to your account"
+                  aria-busy={isPending && pendingRoute === "/sign-in"}
                 >
-                  Sign In
+                  {isPending && pendingRoute === "/sign-in" ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin shrink-0" />
+                      <span className="hidden sm:inline"></span>
+                    </>
+                  ) : (
+                    <span>Sign In</span>
+                  )}
                 </button>
-
-                {/* Get Started Button - Uncomment when needed */}
-                {/* <button
-                  onClick={() => router.push("/signup")}
-                  className="px-4 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-primary to-primary-hover text-white rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all flex items-center gap-2 text-sm sm:text-base"
-                  aria-label="Get started for free"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  <span className="hidden sm:inline">Get Started</span>
-                  <span className="sm:hidden">Start</span>
-                </button> */}
               </>
             )}
-
-            {/* Mobile Menu Button - Commented out since no nav items currently */}
-            {/* {navLinks.length > 0 && (
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 text-gray-700 hover:text-primary transition-colors"
-                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-                aria-expanded={isMobileMenuOpen}
-              >
-                {isMobileMenuOpen ? (
-                  <X className="w-6 h-6" />
-                ) : (
-                  <Menu className="w-6 h-6" />
-                )}
-              </button>
-            )} */}
           </div>
         </div>
-
-        {/* Mobile Menu - Commented out but kept for future use */}
-        {/* {isMobileMenuOpen && navLinks.length > 0 && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-xl">
-            <div className="container mx-auto px-6 py-6 space-y-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block py-2 text-lg font-medium transition-colors ${
-                    pathname === link.href ? "text-primary" : "text-gray-700"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
-
-              {isSignedIn ? (
-                <div className="pt-4 border-t border-gray-200 space-y-3">
-                  <button
-                    onClick={() => {
-                      router.push("/dashboard");
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-primary-hover text-white rounded-xl font-semibold"
-                  >
-                    Dashboard
-                  </button>
-                </div>
-              ) : (
-                <div className="pt-4 border-t border-gray-200 space-y-3">
-                  <button
-                    onClick={() => {
-                      router.push("/sign-in");
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="w-full px-6 py-3 text-gray-700 font-medium border-2 border-gray-200 rounded-xl hover:border-primary transition-colors"
-                  >
-                    Sign In
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        )} */}
       </nav>
     </header>
   );

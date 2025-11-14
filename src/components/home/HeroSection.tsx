@@ -129,7 +129,7 @@ export default function HeroSection() {
                 </div>
                 <div className="text-left">
                   <div className="text-lg md:text-2xl font-bold text-gray-900">
-                    25+
+                    5+
                   </div>
                   <div className="text-xs md:text-sm text-gray-600">
                     AI Insights

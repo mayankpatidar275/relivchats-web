@@ -117,7 +117,7 @@ export default function TestimonialsSection() {
         <div className="flex items-center justify-center gap-6 md:gap-12 flex-wrap">
           <div className="text-center">
             <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
-              10+
+              597+
             </div>
             <div className="text-xs md:text-sm text-gray-600">
               Chats Analyzed
@@ -135,7 +135,7 @@ export default function TestimonialsSection() {
           <div className="h-10 w-px bg-gray-200" />
           <div className="text-center">
             <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
-              5+
+              500+
             </div>
             <div className="text-xs md:text-sm text-gray-600">Happy Users</div>
           </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCategoryTheme } from "@/src/lib/theme";
-import InsightStatusBadge from "./InsightStatusBadge";
+// import InsightStatusBadge from "./InsightStatusBadge";
 // import ShareInsightButton from "./ShareInsightButton";
 
 interface InsightCardProps {
@@ -19,6 +19,7 @@ export default function InsightCard({
   title,
   description,
   status,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   errorMessage,
   children,
   categorySlug,
@@ -53,7 +54,7 @@ export default function InsightCard({
       </div>
 
       {/* Status badge */}
-      <InsightStatusBadge status={status} errorMessage={errorMessage} />
+      {/* <InsightStatusBadge status={status} errorMessage={errorMessage} /> */}
 
       {/* Content */}
       {status === "completed" && <div className="mt-6">{children}</div>}

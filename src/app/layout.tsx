@@ -7,7 +7,8 @@ import ClerkClientWrapper from "../components/ClerkClientWrapper";
 import Footer from "../components/layout/Footer";
 import { ConfirmProvider } from "../hooks/useConfirm";
 import { Toaster } from "sonner";
-// import ClerkSyncData from "../components/ClerkSyncData";
+import ClerkSyncData from "../components/ClerkSyncData";
+import { UserSyncProvider } from "../lib/context/UserSyncContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,13 +51,15 @@ export default function RootLayout({
       >
         <ClerkClientWrapper>
           <QueryProvider>
-            {/* <ClerkSyncData> */}
-            <ConfirmProvider>
-              <Header />
-              <main className="min-h-[60vh]">{children}</main>
-              <Footer />
-            </ConfirmProvider>
-            {/* </ClerkSyncData> */}
+            <UserSyncProvider>
+              <ClerkSyncData>
+                <ConfirmProvider>
+                  <Header />
+                  <main className="min-h-[60vh]">{children}</main>
+                  <Footer />
+                </ConfirmProvider>
+              </ClerkSyncData>
+            </UserSyncProvider>
           </QueryProvider>
         </ClerkClientWrapper>
         <Toaster position="top-right" richColors />

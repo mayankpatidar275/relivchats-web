@@ -4,6 +4,9 @@ import { useEffect, useRef } from "react";
 import { useStoreUserMutation } from "../features/users/api";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { useUserSync } from "@/src/lib/context/UserSyncContext";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/src/lib/query/keys";
 
 export default function ClerkSyncData({
   children,
@@ -13,7 +16,9 @@ export default function ClerkSyncData({
   const { isSignedIn } = useAuth();
   const { user } = useUser();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { mutate: storeUser } = useStoreUserMutation();
+  const { markSynced } = useUserSync();
 
   const syncedUserIds = useRef(new Set<string>());
 
@@ -32,6 +37,15 @@ export default function ClerkSyncData({
       storeUser(userData, {
         onSuccess: (data) => {
           console.log("User stored successfully:", data);
+
+          // Optimistically set balance in cache to avoid loading state
+          queryClient.setQueryData(queryKeys.credits.balance(), {
+            user_id: data.user_id,
+            balance: data.credit_balance ?? 50,
+          });
+
+          // Mark user as synced so dependent queries can run
+          markSynced();
         },
         onError: (error) => {
           console.error("Error storing user:", error);
@@ -40,7 +54,7 @@ export default function ClerkSyncData({
         },
       });
     }
-  }, [user, user?.id, isSignedIn, storeUser, router]);
+  }, [user, user?.id, isSignedIn, storeUser, router, markSynced, queryClient]);
 
   return <>{children}</>;
 }

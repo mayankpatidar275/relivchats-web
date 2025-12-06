@@ -6,6 +6,9 @@ import { useUser, useAuth } from "@clerk/nextjs";
 import confetti from "canvas-confetti";
 import { Sparkles, Gift, ArrowRight, X, Loader2 } from "lucide-react";
 import { useStoreUserMutation } from "@/src/features/users/api";
+import { useUserSync } from "@/src/lib/context/UserSyncContext";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/src/lib/query/keys";
 
 export default function WelcomeModal() {
   const router = useRouter();
@@ -13,6 +16,8 @@ export default function WelcomeModal() {
   const { user } = useUser();
   const { isSignedIn } = useAuth();
   const { mutate: storeUser, isPending } = useStoreUserMutation();
+  const { markSynced } = useUserSync();
+  const queryClient = useQueryClient();
   const syncedUserIds = useRef(new Set<string>());
 
   const [isOpen, setIsOpen] = useState(searchParams?.get("welcome") === "true");
@@ -32,8 +37,18 @@ export default function WelcomeModal() {
       };
 
       storeUser(userData, {
-        onSuccess: () => {
+        onSuccess: (data) => {
           console.log("✅ User stored successfully");
+
+          // Optimistically set balance in cache
+          queryClient.setQueryData(queryKeys.credits.balance(), {
+            user_id: data.user_id,
+            balance: data.credit_balance ?? 50,
+          });
+
+          // Mark user as synced
+          markSynced();
+
           setShowSuccess(true);
           confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
 
@@ -47,7 +62,7 @@ export default function WelcomeModal() {
         },
       });
     }
-  }, [user, isSignedIn, isOpen, storeUser]);
+  }, [user, isSignedIn, isOpen, storeUser, markSynced, queryClient]);
 
   const handleClose = () => setIsOpen(false);
   const handleGetStarted = () => {

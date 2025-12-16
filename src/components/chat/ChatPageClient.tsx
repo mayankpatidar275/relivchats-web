@@ -58,8 +58,9 @@ export default function ChatPageClient({ chatId }: Props) {
         onModeChange={setSelectedMode}
       />
 
-      {/* Unlock Banner (only if not unlocked) */}
-      {!chat.insights_unlocked && (
+      {/* Unlock Banner (only if insights not started) */}
+      {(!chat.insights_generation_status ||
+        chat.insights_generation_status === "not_started") && (
         <UnlockBanner
           onUnlockClick={scrollToUnlock}
           insightCount={12}
@@ -99,18 +100,19 @@ export default function ChatPageClient({ chatId }: Props) {
         />
       </main>
 
-      {/* Unlock Section (if not unlocked) */}
-      {!chat.insights_unlocked ? (
+      {/* Show unlock section only if generation hasn't started */}
+      {!chat.insights_generation_status ||
+      chat.insights_generation_status === "not_started" ? (
         <div ref={unlockSectionRef}>
           <UnlockInsightsSection
             chatId={chatId}
             onUnlockSuccess={() => {
-              // keep it simple — refetching could be implemented with your query client
-              window.location.reload();
+              // No-op - mutation handles cache invalidation and polling starts automatically
             }}
           />
         </div>
       ) : (
+        // Show insights section if generation has started (generating, completed, etc.)
         <InsightsDisplaySection chatId={chatId} />
       )}
     </div>

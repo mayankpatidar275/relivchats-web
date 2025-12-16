@@ -8,6 +8,7 @@ import { getCategoryColors } from "@/src/features/categories/utils";
 import { useUnlockInsights } from "@/src/features/chats/api";
 import { Check, Lock, Sparkles, Zap } from "lucide-react";
 import { useRef, useState } from "react";
+import { toast } from "sonner";
 
 interface UnlockInsightsSectionProps {
   chatId: string;
@@ -31,7 +32,7 @@ export default function UnlockInsightsSection({
 
   const handleUnlock = async () => {
     if (!selectedCategoryId) {
-      alert("Please select a category first");
+      toast.error("Please select a category first");
       return;
     }
 
@@ -41,10 +42,15 @@ export default function UnlockInsightsSection({
         chat_id: chatId,
         category_id: selectedCategoryId,
       });
+      toast.success("Insights unlocked! Analysis starting...");
       onUnlockSuccess?.();
     } catch (error) {
       console.error("Failed to unlock insights:", error);
-      alert("Failed to unlock insights. Please try again.");
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Failed to unlock insights. Please try again.";
+      toast.error(message);
     } finally {
       setIsUnlocking(false);
     }

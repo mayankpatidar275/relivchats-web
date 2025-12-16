@@ -22,6 +22,30 @@ export const useChat = (chatId: string) => {
     queryKey: queryKeys.chats.detail(chatId),
     queryFn: () => chatsApi.getChat(chatId),
     enabled: !!chatId,
+    refetchInterval: (query) => {
+      const data = query.state.data;
+
+      console.log("[useChat] refetchInterval called", {
+        chatId,
+        hasData: !!data,
+        insights_generation_status: data?.insights_generation_status,
+      });
+
+      // Don't poll if no data yet
+      if (!data) {
+        console.log("[useChat] No data, returning false");
+        return false;
+      }
+
+      // Poll every 3 seconds if insights are being generated
+      const isGenerating =
+        data.insights_generation_status === "generating" ||
+        data.insights_generation_status === "queued";
+
+      console.log("[useChat] isGenerating:", isGenerating, "- returning:", isGenerating ? 3000 : false);
+
+      return isGenerating ? 3000 : false; // 3 seconds
+    },
   });
 };
 
@@ -59,9 +83,13 @@ export const useUnlockInsights = () => {
     mutationFn: (data: UnlockInsightsRequest) =>
       chatsMutations.unlockInsights(data),
     onSuccess: (_, variables) => {
-      // Invalidate insights for this chat
+      // Invalidate chat detail to update insights_unlocked flag
       queryClient.invalidateQueries({
         queryKey: queryKeys.chats.detail(variables.chat_id),
+      });
+      // Invalidate insights to trigger refetch and start polling
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.chats.insights(variables.chat_id),
       });
       // Invalidate credit balance
       queryClient.invalidateQueries({

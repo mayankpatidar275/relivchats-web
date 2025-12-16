@@ -9,7 +9,9 @@ export interface Chat {
   category_id?: string;
   category_slug?: string;
   category_name?: string;
-  insights_unlocked: boolean;
+  insights_unlocked: boolean; // Derived from insights_generation_status == "completed"
+  insights_generation_status?: string; // "not_started" | "queued" | "generating" | "completed" | "partial_failure" | "failed"
+  insights_unlocked_at?: string;
   created_at: string;
   status: string;
   vector_status: string;

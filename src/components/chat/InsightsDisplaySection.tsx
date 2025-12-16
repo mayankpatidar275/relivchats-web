@@ -21,6 +21,7 @@ import ConflictResolutionView from "./insights/views/ConflictResolutionView";
 import FuturePlanningView from "./insights/views/FuturePlanningView";
 import PlayfulnessRomanceView from "./insights/views/PlayfulnessRomanceView";
 import InsightGenerationProgress from "./insights/InsightGenerationProgress";
+import InsightPlaceholderCard from "./insights/InsightPlaceholderCard";
 // import InsightSummaryGrid from "./insights/InsightSummaryGrid";
 
 interface InsightsDisplaySectionProps {
@@ -34,8 +35,26 @@ export default function InsightsDisplaySection({
   const { data: insightsData, isLoading } = useChatInsights(chatId);
   const theme = useCategoryTheme(chat?.category_slug);
 
-  // Only show if insights are unlocked
-  if (!chat || !chat.insights_unlocked) {
+  console.log("[InsightsDisplaySection] Render check:", {
+    hasChat: !!chat,
+    insights_unlocked: chat?.insights_unlocked,
+    insights_generation_status: chat?.insights_generation_status,
+    hasInsightsData: !!insightsData,
+    isLoading,
+  });
+
+  // Only show if insights are unlocked OR generation has started
+  // (generation starting means they paid for it, even if backend didn't update the flag)
+  const shouldShow =
+    chat &&
+    (chat.insights_unlocked ||
+      (chat.insights_generation_status &&
+        chat.insights_generation_status !== "not_started"));
+
+  if (!shouldShow) {
+    console.log(
+      "[InsightsDisplaySection] Returning null - insights not unlocked or generation not started"
+    );
     return null;
   }
 
@@ -78,8 +97,8 @@ export default function InsightsDisplaySection({
             Deep insights powered by advanced AI analysis of your conversations
           </p>
 
-          {/* Progress indicator if generating */}
-          {insightsData.generation_status === "generating" && (
+          {/* Unified progress/status indicator for all states */}
+          {insightsData.generation_status !== "not_started" && (
             <div className="mb-8">
               <InsightGenerationProgress
                 insights={insightsData.insights.map((i) => ({
@@ -92,6 +111,8 @@ export default function InsightsDisplaySection({
                 totalRequested={insightsData.total_requested}
                 totalCompleted={insightsData.total_completed}
                 totalFailed={insightsData.total_failed}
+                generationStatus={insightsData.generation_status as "queued" | "generating" | "completed" | "failed"}
+                completedAt={insightsData.unlocked_at}
               />
             </div>
           )}
@@ -118,80 +139,81 @@ export default function InsightsDisplaySection({
         )} */}
         {/* Insights grid */}
         <div className="grid grid-cols-1 gap-6 md:gap-8">
-          {insightsData.insights.map((insight) => (
-            <InsightCard
-              key={insight.id}
-              icon={insight.icon}
-              title={insight.display_title}
-              description={insight.description}
-              status={insight.status}
-              // errorMessage={insight.error_message || undefined}
-              errorMessage={"something went wrong"}
-              categorySlug={chat.category_slug}
-            >
-              {/* Render insight type specific views */}
-              {insight.insight_type_name === "communication_basics" && (
-                <CommunicationBasicsView
-                  content={insight.content as CommunicationBasicsContent}
+          {insightsData.insights.map((insight) => {
+            // Completed insights: Show full card with content
+            if (insight.status === "completed") {
+              return (
+                <InsightCard
+                  key={insight.id}
+                  icon={insight.icon}
+                  title={insight.display_title}
+                  description={insight.description}
+                  status={insight.status}
                   categorySlug={chat.category_slug}
-                />
-              )}
-              {/* Inside the InsightCard children section, add after
+                >
+                  {/* Render insight type specific views */}
+                  {insight.insight_type_name === "communication_basics" && (
+                    <CommunicationBasicsView
+                      content={insight.content as CommunicationBasicsContent}
+                      categorySlug={chat.category_slug}
+                    />
+                  )}
+                  {/* Inside the InsightCard children section, add after
               communication_basics: */}
-              {insight.insight_type_name === "emotional_intimacy" && (
-                <EmotionalIntimacyView
-                  content={insight.content as EmotionalIntimacyContent}
-                  categorySlug={chat.category_slug}
-                />
-              )}
-              {/* Inside the InsightCard children section, add after
+                  {insight.insight_type_name === "emotional_intimacy" && (
+                    <EmotionalIntimacyView
+                      content={insight.content as EmotionalIntimacyContent}
+                      categorySlug={chat.category_slug}
+                    />
+                  )}
+                  {/* Inside the InsightCard children section, add after
               emotional_intimacy: */}
-              {insight.insight_type_name === "love_language" && (
-                <LoveLanguageView
-                  content={insight.content as LoveLanguageContent}
-                  categorySlug={chat.category_slug}
-                />
-              )}
-              {/* Inside the InsightCard children section, add after
+                  {insight.insight_type_name === "love_language" && (
+                    <LoveLanguageView
+                      content={insight.content as LoveLanguageContent}
+                      categorySlug={chat.category_slug}
+                    />
+                  )}
+                  {/* Inside the InsightCard children section, add after
               love_language: */}
-              {insight.insight_type_name === "conflict_resolution" && (
-                <ConflictResolutionView
-                  content={insight.content as ConflictResolutionContent}
-                  categorySlug={chat.category_slug}
-                />
-              )}
-              {/* Inside the InsightCard children section, add after
+                  {insight.insight_type_name === "conflict_resolution" && (
+                    <ConflictResolutionView
+                      content={insight.content as ConflictResolutionContent}
+                      categorySlug={chat.category_slug}
+                    />
+                  )}
+                  {/* Inside the InsightCard children section, add after
               conflict_resolution: */}
-              {insight.insight_type_name === "future_planning" && (
-                <FuturePlanningView
-                  content={insight.content as FuturePlanningContent}
-                  categorySlug={chat.category_slug}
-                />
-              )}
-              {insight.insight_type_name === "playfulness_romance" && (
-                <PlayfulnessRomanceView
-                  content={insight.content as PlayfulnessRomanceContent}
-                  categorySlug={chat.category_slug}
-                />
-              )}
-            </InsightCard>
-          ))}
+                  {insight.insight_type_name === "future_planning" && (
+                    <FuturePlanningView
+                      content={insight.content as FuturePlanningContent}
+                      categorySlug={chat.category_slug}
+                    />
+                  )}
+                  {insight.insight_type_name === "playfulness_romance" && (
+                    <PlayfulnessRomanceView
+                      content={insight.content as PlayfulnessRomanceContent}
+                      categorySlug={chat.category_slug}
+                    />
+                  )}
+                </InsightCard>
+              );
+            }
+
+            // Pending/Generating/Failed insights: Show placeholder card
+            return (
+              <InsightPlaceholderCard
+                key={insight.id}
+                icon={insight.icon}
+                title={insight.display_title}
+                description={insight.description}
+                status={insight.status as "generating" | "pending" | "failed"}
+                categorySlug={chat.category_slug}
+              />
+            );
+          })}
         </div>
 
-        {/* Generation metadata footer (optional) */}
-        {insightsData.generation_status === "completed" && (
-          <div className="mt-8 text-center">
-            <p className="text-sm text-gray-500">
-              Analysis completed on{" "}
-              {insightsData.unlocked_at &&
-                new Date(insightsData.unlocked_at).toLocaleDateString("en-US", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-            </p>
-          </div>
-        )}
       </div>
     </section>
   );

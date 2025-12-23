@@ -73,7 +73,7 @@ export default function IntimacyScoreCard({
       <div className="flex flex-col items-center">
         {/* Score circle - keep as is */}
         <div className="relative w-32 h-32 md:w-40 md:h-40 mb-6">
-          <svg className="w-full h-full transform -rotate-90">
+          <svg viewBox="0 0 100 100" className="w-full h-full transform -rotate-90">
             <defs>
               <linearGradient
                 id="intimacy-gradient"

@@ -98,7 +98,7 @@ export default function InsightsDisplaySection({
           </p>
 
           {/* Unified progress/status indicator for all states */}
-          {insightsData.generation_status !== "not_started" && (
+          {/* {insightsData.generation_status !== "not_started" && (
             <div className="mb-8">
               <InsightGenerationProgress
                 insights={insightsData.insights.map((i) => ({
@@ -115,7 +115,7 @@ export default function InsightsDisplaySection({
                 completedAt={insightsData.unlocked_at}
               />
             </div>
-          )}
+          )} */}
         </div>
         {/* {insightsData.generation_status === "completed" && (
           <InsightSummaryGrid
@@ -213,7 +213,6 @@ export default function InsightsDisplaySection({
             );
           })}
         </div>
-
       </div>
     </section>
   );

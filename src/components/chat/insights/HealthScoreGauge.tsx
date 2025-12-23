@@ -46,7 +46,7 @@ export default function HealthScoreGauge({
       {/* Circular gauge */}
       <div className="relative w-32 h-32 md:w-40 md:h-40 mb-4">
         {/* Background circle */}
-        <svg className="w-full h-full transform -rotate-90">
+        <svg viewBox="0 0 100 100" className="w-full h-full transform -rotate-90">
           <defs>
             <linearGradient
               id={`gradient-${rating}`}

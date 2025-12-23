@@ -84,7 +84,7 @@ export default function InsightCard({
       </div>
 
       {/* Expand/Collapse footer hint (only when collapsed) */}
-      {!isExpanded && (
+      {/* {!isExpanded && (
         <div className="px-4 md:px-6 lg:px-8 pb-4 md:pb-6 border-t border-gray-100 pt-4">
           <div className="flex items-center justify-center gap-2 text-gray-400">
             <div className="flex-1 h-px bg-gray-200" />
@@ -92,7 +92,7 @@ export default function InsightCard({
             <div className="flex-1 h-px bg-gray-200" />
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

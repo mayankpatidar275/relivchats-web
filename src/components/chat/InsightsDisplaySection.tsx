@@ -2,10 +2,6 @@
 
 import { useChat } from "@/src/features/chats/api";
 import { useChatInsights } from "@/src/features/insights/api/hooks";
-import { useCategoryTheme } from "@/src/lib/theme";
-import { Sparkles } from "lucide-react";
-import InsightCard from "./insights/InsightCard";
-import CommunicationBasicsView from "./insights/views/CommunicationBasicsView";
 import {
   CommunicationBasicsContent,
   ConflictResolutionContent,
@@ -14,14 +10,16 @@ import {
   LoveLanguageContent,
   PlayfulnessRomanceContent,
 } from "@/src/features/insights/types";
-import InsightSkeleton from "./insights/InsightSkeleton";
-import EmotionalIntimacyView from "./insights/views/EmotionalIntimacyView";
-import LoveLanguageView from "./insights/views/LoveLanguageView";
-import ConflictResolutionView from "./insights/views/ConflictResolutionView";
-import FuturePlanningView from "./insights/views/FuturePlanningView";
-import PlayfulnessRomanceView from "./insights/views/PlayfulnessRomanceView";
-import InsightGenerationProgress from "./insights/InsightGenerationProgress";
+// import { useCategoryTheme } from "@/src/lib/theme";
+import InsightCard from "./insights/InsightCard";
 import InsightPlaceholderCard from "./insights/InsightPlaceholderCard";
+import InsightSkeleton from "./insights/InsightSkeleton";
+import CommunicationBasicsView from "./insights/views/CommunicationBasicsView";
+import ConflictResolutionView from "./insights/views/ConflictResolutionView";
+import EmotionalIntimacyView from "./insights/views/EmotionalIntimacyView";
+import FuturePlanningView from "./insights/views/FuturePlanningView";
+import LoveLanguageView from "./insights/views/LoveLanguageView";
+import PlayfulnessRomanceView from "./insights/views/PlayfulnessRomanceView";
 // import InsightSummaryGrid from "./insights/InsightSummaryGrid";
 
 interface InsightsDisplaySectionProps {
@@ -33,7 +31,7 @@ export default function InsightsDisplaySection({
 }: InsightsDisplaySectionProps) {
   const { data: chat } = useChat(chatId);
   const { data: insightsData, isLoading } = useChatInsights(chatId);
-  const theme = useCategoryTheme(chat?.category_slug);
+  // const theme = useCategoryTheme(chat?.category_slug);
 
   console.log("[InsightsDisplaySection] Render check:", {
     hasChat: !!chat,
@@ -78,23 +76,12 @@ export default function InsightsDisplaySection({
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4 md:px-6 max-w-7xl">
         {/* Section header */}
-        <div className="text-center max-w-3xl mx-auto mb-8 md:mb-12">
-          <div
-            className={`inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full ${
-              theme.bg
-            } border-2 ${theme.text.replace("text-", "border-")} mb-4 md:mb-6`}
-          >
-            <Sparkles className={`w-4 h-4 ${theme.text}`} />
-            <span className={`text-xs md:text-sm font-semibold ${theme.text}`}>
-              AI Insights Unlocked
-            </span>
-          </div>
-
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 md:mb-4">
-            Your {chat.category_name || "Relationship"} Analysis
+        <div className="mb-8 md:mb-10">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+            {chat.category_name || "Relationship"} Insights
           </h2>
-          <p className="text-base md:text-lg text-gray-600">
-            Deep insights powered by advanced AI analysis of your conversations
+          <p className="text-sm md:text-base text-gray-600">
+            Analysis based on your conversation
           </p>
 
           {/* Unified progress/status indicator for all states */}

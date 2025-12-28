@@ -276,7 +276,16 @@ export interface LoveLanguageContent {
   };
 }
 
-// conflict_resolution
+// conflict_resolution - Finalized Schema with Nested Evidence
+
+export interface ConflictEvidence {
+  context: string;
+  exchange: Array<{
+    speaker: string;
+    message: string;
+    timestamp: string;
+  }>;
+}
 
 export interface ConflictResolutionContent {
   conflict_presence: {
@@ -287,14 +296,7 @@ export interface ConflictResolutionContent {
   conflict_triggers: Array<{
     trigger_type: string;
     description: string;
-    evidence?: Array<{
-      context: string;
-      exchange: Array<{
-        message: string;
-        speaker: string;
-        timestamp: string;
-      }>;
-    }>;
+    evidence: ConflictEvidence[];
   }>;
   individual_styles: {
     participants: Array<{
@@ -302,7 +304,7 @@ export interface ConflictResolutionContent {
       style: string;
       intensity: string;
       description: string;
-      evidence?: EvidenceItem[];
+      evidence: ConflictEvidence[];
     }>;
   };
   stress_communication: {
@@ -315,19 +317,12 @@ export interface ConflictResolutionContent {
     initiator: string;
     timeframe: string;
     effectiveness: string;
-    evidence?: Array<{
-      context: string;
-      exchange: Array<{
-        message: string;
-        speaker: string;
-        timestamp: string;
-      }>;
-    }>;
+    evidence: ConflictEvidence[];
   };
   positive_behaviors: Array<{
     behavior: string;
     description: string;
-    evidence?: EvidenceItem[];
+    evidence: ConflictEvidence[];
   }>;
   destructive_patterns: {
     present: boolean;
@@ -336,30 +331,21 @@ export interface ConflictResolutionContent {
       pattern_type: string;
       description: string;
       severity: string;
-      evidence?: EvidenceItem[];
+      evidence: ConflictEvidence[];
     }>;
   };
   stress_support: {
     analysis: string;
-    evidence: Array<{
-      context: string;
-      exchange: Array<{
-        message: string;
-        speaker: string;
-        timestamp: string;
-      }>;
-    }>;
+    evidence: ConflictEvidence[];
   };
   recommendations: Array<{
     title: string;
     target: string[];
     suggestion: string;
-    technique: string;
     example_phrases: string[];
   }>;
   overall: {
     score: number;
-    maturity_level: string;
     summary: string;
   };
 }

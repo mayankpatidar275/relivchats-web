@@ -1,6 +1,6 @@
 "use client";
 
-import { ConflictResolutionContent } from "@/src/features/insights/types";
+import { ConflictResolutionContent, ConflictEvidence } from "@/src/features/insights/types";
 import { useCategoryTheme } from "@/src/lib/theme";
 import {
   Shield,
@@ -14,12 +14,31 @@ import {
 } from "lucide-react";
 import MaturityScoreCard from "../MaturityScoreCard";
 import ConflictStyleBadge from "../ConflictStyleBadge";
-import ConversationExchange from "../ConversationExchange";
-import EvidencePanel from "../EvidencePanel";
 
 interface ConflictResolutionViewProps {
   content: ConflictResolutionContent;
   categorySlug?: string;
+}
+
+// Helper component to render evidence items
+function EvidenceItem({ evidence }: { evidence: ConflictEvidence }) {
+  return (
+    <div className="p-3 bg-white rounded-lg border border-gray-200">
+      {evidence.context && (
+        <p className="text-xs text-gray-600 mb-2 italic">
+          {evidence.context}
+        </p>
+      )}
+      <div className="space-y-1">
+        {evidence.exchange.map((msg, idx) => (
+          <div key={idx} className="text-xs md:text-sm">
+            <span className="font-semibold text-gray-900">{msg.speaker}:</span>{" "}
+            <span className="text-gray-700">{msg.message}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default function ConflictResolutionView({
@@ -33,7 +52,6 @@ export default function ConflictResolutionView({
       {/* 1. Overall Maturity Score */}
       <MaturityScoreCard
         score={content.overall.score}
-        maturityLevel={content.overall.maturity_level}
         summary={content.overall.summary}
       />
 
@@ -109,13 +127,11 @@ export default function ConflictResolutionView({
 
                 {trigger.evidence && trigger.evidence.length > 0 && (
                   <div className="mt-3 space-y-2">
-                    {trigger.evidence.map((ev, evIdx) => (
-                      <ConversationExchange
-                        key={evIdx}
-                        context={ev.context}
-                        exchange={ev.exchange}
-                        categorySlug={categorySlug}
-                      />
+                    <p className="text-xs font-semibold text-orange-700 uppercase mb-2">
+                      Evidence
+                    </p>
+                    {trigger.evidence.map((ev, exIdx) => (
+                      <EvidenceItem key={exIdx} evidence={ev} />
                     ))}
                   </div>
                 )}
@@ -163,10 +179,14 @@ export default function ConflictResolutionView({
               </p>
 
               {p.evidence && p.evidence.length > 0 && (
-                <EvidencePanel
-                  evidence={p.evidence}
-                  categorySlug={categorySlug}
-                />
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold text-gray-600 uppercase">
+                    Evidence
+                  </p>
+                  {p.evidence.map((ev, exIdx) => (
+                    <EvidenceItem key={exIdx} evidence={ev} />
+                  ))}
+                </div>
               )}
             </div>
           ))}
@@ -279,12 +299,7 @@ export default function ConflictResolutionView({
                 Repair in Action
               </p>
               {content.repair_recovery.evidence.map((ev, idx) => (
-                <ConversationExchange
-                  key={idx}
-                  context={ev.context}
-                  exchange={ev.exchange}
-                  categorySlug={categorySlug}
-                />
+                <EvidenceItem key={idx} evidence={ev} />
               ))}
             </div>
           )}
@@ -318,11 +333,13 @@ export default function ConflictResolutionView({
               </div>
 
               {behavior.evidence && behavior.evidence.length > 0 && (
-                <div className="mt-3">
-                  <EvidencePanel
-                    evidence={behavior.evidence}
-                    categorySlug={categorySlug}
-                  />
+                <div className="mt-3 space-y-2">
+                  <p className="text-xs font-semibold text-green-700 uppercase">
+                    Evidence
+                  </p>
+                  {behavior.evidence.map((ev, exIdx) => (
+                    <EvidenceItem key={exIdx} evidence={ev} />
+                  ))}
                 </div>
               )}
             </div>
@@ -392,10 +409,14 @@ export default function ConflictResolutionView({
                   </p>
 
                   {pattern.evidence && pattern.evidence.length > 0 && (
-                    <EvidencePanel
-                      evidence={pattern.evidence}
-                      categorySlug={categorySlug}
-                    />
+                    <div className="space-y-2">
+                      <p className="text-xs font-semibold text-gray-700 uppercase">
+                        Evidence
+                      </p>
+                      {pattern.evidence.map((ev, exIdx) => (
+                        <EvidenceItem key={exIdx} evidence={ev} />
+                      ))}
+                    </div>
                   )}
                 </div>
               ))}
@@ -421,15 +442,10 @@ export default function ConflictResolutionView({
         {content.stress_support.evidence.length > 0 && (
           <div className="space-y-3">
             <p className="text-xs font-semibold text-gray-600 uppercase">
-              Support Examples
+              Support Evidence
             </p>
             {content.stress_support.evidence.map((ev, idx) => (
-              <ConversationExchange
-                key={idx}
-                context={ev.context}
-                exchange={ev.exchange}
-                categorySlug={categorySlug}
-              />
+              <EvidenceItem key={idx} evidence={ev} />
             ))}
           </div>
         )}
@@ -485,16 +501,6 @@ export default function ConflictResolutionView({
                   </p>
                   <p className="text-sm text-gray-800 leading-relaxed">
                     {rec.suggestion}
-                  </p>
-                </div>
-
-                {/* Technique */}
-                <div className="p-3 bg-white rounded-lg border border-gray-200">
-                  <p className="text-xs font-semibold text-gray-700 uppercase mb-2">
-                    🛠️ Technique
-                  </p>
-                  <p className="text-sm text-gray-700 leading-relaxed">
-                    {rec.technique}
                   </p>
                 </div>
 

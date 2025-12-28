@@ -2,23 +2,18 @@
 
 interface MaturityScoreCardProps {
   score: number;
-  maturityLevel: string;
   summary: string;
 }
 
 export default function MaturityScoreCard({
   score,
-  maturityLevel,
   summary,
 }: MaturityScoreCardProps) {
   const percentage = (score / 10) * 100;
-  const normalizedLevel = maturityLevel.toLowerCase();
 
+  // Derive maturity level from score
   const getConfig = () => {
-    if (
-      normalizedLevel.includes("high") ||
-      normalizedLevel.includes("mature")
-    ) {
+    if (score >= 8) {
       return {
         color: "text-green-600",
         gradient: "from-green-500 to-emerald-500",
@@ -26,10 +21,7 @@ export default function MaturityScoreCard({
         label: "Highly Mature",
       };
     }
-    if (
-      normalizedLevel.includes("developing") ||
-      normalizedLevel.includes("growing")
-    ) {
+    if (score <= 4) {
       return {
         color: "text-blue-600",
         gradient: "from-blue-500 to-cyan-500",
@@ -41,7 +33,7 @@ export default function MaturityScoreCard({
       color: "text-amber-600",
       gradient: "from-amber-500 to-orange-500",
       icon: "⚡",
-      label: "Needs Work",
+      label: "Healthy Progress",
     };
   };
 

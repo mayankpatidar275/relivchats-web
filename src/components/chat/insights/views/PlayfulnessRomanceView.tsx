@@ -201,29 +201,18 @@ export default function PlayfulnessRomanceView({
         </div>
 
         {content.flirtation.evidence.length > 0 && (
-          <div>
-            <p className="text-xs font-semibold text-gray-600 uppercase mb-3">
+          <div className="space-y-3">
+            <p className="text-xs font-semibold text-gray-600 uppercase">
               Flirty Moments
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {content.flirtation.evidence.map((ev, idx) => (
-                <div
-                  key={idx}
-                  className="bg-linear-to-br from-pink-50 to-red-50 rounded-lg p-3 border border-pink-200"
-                >
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <span className="text-xs font-semibold text-gray-900 truncate">
-                      {ev.speaker}
-                    </span>
-                    <span className="text-lg shrink-0">😘</span>
-                  </div>
-                  <p className="text-sm text-gray-800 leading-relaxed mb-1">
-                    {ev.message}
-                  </p>
-                  <span className="text-xs text-gray-500">{ev.timestamp}</span>
-                </div>
-              ))}
-            </div>
+            {content.flirtation.evidence.map((ev, idx) => (
+              <ConversationExchange
+                key={idx}
+                context={ev.context}
+                exchange={ev.exchange}
+                categorySlug={categorySlug}
+              />
+            ))}
           </div>
         )}
       </div>

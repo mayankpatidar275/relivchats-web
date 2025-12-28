@@ -201,31 +201,18 @@ export default function EmotionalIntimacyView({
 
         {/* Affection evidence */}
         {content.affection.evidence.length > 0 && (
-          <div>
-            <p className="text-xs font-semibold text-gray-600 uppercase mb-3">
+          <div className="space-y-3">
+            <p className="text-xs font-semibold text-gray-600 uppercase">
               Sweet Moments
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {content.affection.evidence.map((ev, idx) => (
-                <div
-                  key={idx}
-                  className="bg-linear-to-br from-pink-50 to-purple-50 rounded-lg p-3 border border-pink-200"
-                >
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <span className="text-xs font-semibold text-gray-900 truncate">
-                      {ev.speaker}
-                    </span>
-                    <span className="text-xs px-2 py-0.5 bg-pink-200 text-pink-700 rounded-full shrink-0">
-                      {ev.affection_type}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-800 leading-relaxed mb-1">
-                    {ev.message}
-                  </p>
-                  <span className="text-xs text-gray-500">{ev.timestamp}</span>
-                </div>
-              ))}
-            </div>
+            {content.affection.evidence.map((ev, idx) => (
+              <ConversationExchange
+                key={idx}
+                context={ev.context}
+                exchange={ev.exchange}
+                categorySlug={categorySlug}
+              />
+            ))}
           </div>
         )}
       </div>

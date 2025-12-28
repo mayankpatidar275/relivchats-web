@@ -104,10 +104,12 @@ export interface AffectionParticipant {
 }
 
 export interface AffectionEvidence {
-  message: string;
-  speaker: string;
-  timestamp: string;
-  affection_type: string;
+  context: string;
+  exchange: Array<{
+    message: string;
+    speaker: string;
+    timestamp: string;
+  }>;
 }
 
 export interface ConflictEvidence {
@@ -155,10 +157,12 @@ export interface EmotionalIntimacyContent {
     }>;
     comparison: string;
     evidence: Array<{
-      message: string;
-      speaker: string;
-      timestamp: string;
-      affection_type: string;
+      context: string;
+      exchange: Array<{
+        message: string;
+        speaker: string;
+        timestamp: string;
+      }>;
     }>;
   };
   checkins: {
@@ -227,10 +231,12 @@ export interface LoveLanguageContent {
     }>;
     frequency_comparison: string;
     evidence: Array<{
-      message: string;
-      speaker: string;
-      timestamp: string;
-      appreciation_type: string;
+      context: string;
+      exchange: Array<{
+        message: string;
+        speaker: string;
+        timestamp: string;
+      }>;
     }>;
   };
   recognition: {
@@ -452,7 +458,14 @@ export interface PlayfulnessRomanceContent {
       style: string;
     }>;
     balance: string;
-    evidence: EvidenceItem[];
+    evidence: Array<{
+      context: string;
+      exchange: Array<{
+        message: string;
+        speaker: string;
+        timestamp: string;
+      }>;
+    }>;
   };
   teasing_banter: {
     present: boolean;

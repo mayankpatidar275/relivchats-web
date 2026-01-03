@@ -81,7 +81,8 @@ export default function HeroSection() {
             {/* Description */}
             <p className="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
               Upload, analyze, and discover hidden patterns in your
-              conversations with AI-powered insights.
+              conversations.
+              {/* with AI-powered insights. */}
             </p>
 
             {/* CTA Buttons */}
@@ -97,12 +98,12 @@ export default function HeroSection() {
                 {/* <div className="absolute inset-0 bg-linear-to-r from-primary-hover to-primary-deep opacity-0 group-hover:opacity-100 transition-opacity" /> */}
               </button>
 
-              <button
+              {/* <button
                 onClick={handleHow}
                 className="px-6 md:px-8 py-3 md:py-4 bg-white text-gray-900 rounded-xl md:rounded-2xl font-semibold text-base md:text-lg border-2 border-gray-200 hover:border-primary hover:shadow-md transition-all duration-300 flex items-center justify-center gap-2"
               >
                 See How It Works
-              </button>
+              </button> */}
             </div>
 
             {/* Stats */}
@@ -153,77 +154,250 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right visual - Chat bubbles mockup */}
-          <div className="relative hidden lg:block">
-            <div className="relative w-full h-[500px]">
-              {/* Chat bubble 1 */}
-              <div className="absolute top-0 right-20 max-w-xs animate-float">
-                <div className="bg-white rounded-3xl rounded-tr-sm p-6 shadow-2xl border border-gray-100">
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary to-accent-pink" />
-                    <div>
-                      <div className="font-semibold text-gray-900">Sarah</div>
-                      <div className="text-xs text-gray-500">2:34 PM</div>
+          {/* Right visual - Floating preview cards (Desktop and tablet only) */}
+          <div className="relative hidden md:block">
+            <div className="relative w-full h-[500px] flex items-center justify-center">
+              {/* Left floating card - FREE insights */}
+              <div className="absolute left-8 top-1/2 -translate-y-1/2 -rotate-6 hover:rotate-0 transition-transform duration-500 z-20">
+                <div className="w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+                  {/* Header */}
+                  <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-white font-bold text-sm">
+                        Chat Statistics
+                      </span>
+                      <span className="px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white font-semibold">
+                        FREE
+                      </span>
                     </div>
                   </div>
-                  <p className="text-gray-700">
-                    Can&apos;t wait to see you tonight! 💕
-                  </p>
-                </div>
-              </div>
 
-              {/* Chat bubble 2 */}
-              <div
-                className="absolute top-32 left-0 max-w-xs animate-float"
-                style={{ animationDelay: "1s" }}
-              >
-                <div className="bg-linear-to-br from-primary to-primary-hover rounded-3xl rounded-tl-sm p-6 shadow-2xl">
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-white" />
+                  {/* Content */}
+                  <div className="p-5 space-y-4">
+                    {/* Stats grid */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="bg-blue-50 rounded-xl p-3">
+                        <div className="text-2xl font-bold text-blue-600">
+                          2,847
+                        </div>
+                        <div className="text-xs text-gray-600 mt-1">
+                          Total Messages
+                        </div>
+                      </div>
+                      <div className="bg-cyan-50 rounded-xl p-3">
+                        <div className="text-2xl font-bold text-cyan-600">
+                          18,432
+                        </div>
+                        <div className="text-xs text-gray-600 mt-1">
+                          Total Words
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Top emojis */}
                     <div>
-                      <div className="font-semibold text-white">You</div>
-                      <div className="text-xs text-white/70">2:35 PM</div>
+                      <div className="text-xs font-semibold text-gray-700 mb-2">
+                        Top Emojis
+                      </div>
+                      <div className="flex gap-2">
+                        <div className="flex items-center gap-1 bg-gray-50 rounded-lg px-3 py-2">
+                          <span className="text-lg">❤️</span>
+                          <span className="text-xs font-semibold text-gray-600">
+                            342
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1 bg-gray-50 rounded-lg px-3 py-2">
+                          <span className="text-lg">😊</span>
+                          <span className="text-xs font-semibold text-gray-600">
+                            256
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1 bg-gray-50 rounded-lg px-3 py-2">
+                          <span className="text-lg">😂</span>
+                          <span className="text-xs font-semibold text-gray-600">
+                            198
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Mini chart placeholder */}
+                    <div>
+                      <div className="text-xs font-semibold text-gray-700 mb-2">
+                        Activity Pattern
+                      </div>
+                      <div className="flex items-end gap-1 h-16">
+                        {[40, 65, 45, 80, 70, 55, 90].map((height, i) => (
+                          <div
+                            key={i}
+                            className="flex-1 bg-gradient-to-t from-blue-500 to-cyan-400 rounded-t"
+                            style={{ height: `${height}%` }}
+                          />
+                        ))}
+                      </div>
                     </div>
                   </div>
-                  <p className="text-white">
-                    Me too! Planning something special ✨
-                  </p>
                 </div>
               </div>
 
-              {/* AI Insight card */}
-              <div
-                className="absolute bottom-0 right-0 max-w-sm animate-float"
-                style={{ animationDelay: "2s" }}
-              >
-                <div className="bg-linear-to-br from-white to-primary-light rounded-3xl p-6 shadow-2xl border border-primary/20 backdrop-blur-sm">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Brain className="w-5 h-5 text-primary" />
-                    <span className="font-semibold text-gray-900">
-                      AI Insight
-                    </span>
+              {/* Right floating card - PAID AI insights */}
+              <div className="absolute right-8 top-1/2 -translate-y-1/2 rotate-6 hover:rotate-0 transition-transform duration-500 z-20">
+                <div className="w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+                  {/* Header with gradient */}
+                  <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-5">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <Heart className="w-5 h-5 text-white" />
+                        <span className="text-white font-bold text-sm">
+                          Emotional Intimacy
+                        </span>
+                      </div>
+                      <Sparkles className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="text-5xl font-bold text-white mb-1">
+                      8/10
+                    </div>
+                    <div className="text-white/90 text-xs font-medium">
+                      Deeply Connected
+                    </div>
                   </div>
-                  <p className="text-sm text-gray-700 leading-relaxed">
-                    Your conversations show{" "}
-                    <span className="font-semibold text-primary">
-                      high emotional connection
-                    </span>{" "}
-                    with frequent use of positive emojis and future planning.
-                  </p>
-                  <div className="mt-4 flex gap-2">
-                    <div className="flex-1 h-2 bg-primary rounded-full" />
-                    <div className="flex-1 h-2 bg-primary/50 rounded-full" />
-                    <div className="flex-1 h-2 bg-gray-200 rounded-full" />
+
+                  {/* Content */}
+                  <div className="p-5">
+                    <div className="bg-purple-50 rounded-xl p-3 mb-4">
+                      <p className="text-xs text-gray-700 leading-relaxed">
+                        Strong emotional bond with balanced vulnerability and
+                        mutual support throughout your conversations.
+                      </p>
+                    </div>
+
+                    {/* Insights list */}
+                    <div className="space-y-2 text-xs text-gray-600">
+                      <div className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600" />
+                        Vulnerability patterns
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600" />
+                        Support dynamics
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600" />
+                        Affection expression
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600" />
+                        + 2 more insights
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Floating sparkles */}
-              <Sparkles className="absolute top-10 left-20 w-6 h-6 text-primary animate-pulse-glow" />
-              <Sparkles
-                className="absolute bottom-20 right-40 w-5 h-5 text-accent-pink animate-pulse-glow"
+              {/* Floating decorations */}
+              <Sparkles className="absolute top-12 left-1/2 w-6 h-6 text-purple-400 animate-float" />
+              <Heart
+                className="absolute bottom-16 left-1/3 w-8 h-8 text-pink-300 opacity-20 animate-float"
                 style={{ animationDelay: "1s" }}
               />
+              <Brain
+                className="absolute top-1/4 right-1/3 w-7 h-7 text-primary opacity-20 animate-float"
+                style={{ animationDelay: "2s" }}
+              />
+
+              {/* Background glow */}
+              <div className="absolute inset-0 -z-10 overflow-hidden">
+                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-300 rounded-full blur-3xl opacity-15 animate-pulse-glow" />
+                <div
+                  className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-300 rounded-full blur-3xl opacity-15 animate-pulse-glow"
+                  style={{ animationDelay: "1.5s" }}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile preview card - FREE insights */}
+          <div className="lg:hidden mt-12">
+            <div className="max-w-sm mx-auto">
+              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                {/* Header */}
+                <div className="bg-linear-to-r from-blue-500 to-cyan-500 p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-white font-bold text-sm">
+                      Chat Statistics
+                    </span>
+                    <span className="px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white font-semibold">
+                      FREE
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-5 space-y-4">
+                  {/* Stats grid */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-blue-50 rounded-xl p-3">
+                      <div className="text-2xl font-bold text-blue-600">
+                        2,847
+                      </div>
+                      <div className="text-xs text-gray-600 mt-1">
+                        Total Messages
+                      </div>
+                    </div>
+                    <div className="bg-cyan-50 rounded-xl p-3">
+                      <div className="text-2xl font-bold text-cyan-600">
+                        18,432
+                      </div>
+                      <div className="text-xs text-gray-600 mt-1">
+                        Total Words
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Top emojis */}
+                  <div>
+                    <div className="text-xs font-semibold text-gray-700 mb-2">
+                      Top Emojis
+                    </div>
+                    <div className="flex gap-2">
+                      <div className="flex items-center gap-1 bg-gray-50 rounded-lg px-3 py-2">
+                        <span className="text-lg">❤️</span>
+                        <span className="text-xs font-semibold text-gray-600">
+                          342
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1 bg-gray-50 rounded-lg px-3 py-2">
+                        <span className="text-lg">😊</span>
+                        <span className="text-xs font-semibold text-gray-600">
+                          256
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1 bg-gray-50 rounded-lg px-3 py-2">
+                        <span className="text-lg">😂</span>
+                        <span className="text-xs font-semibold text-gray-600">
+                          198
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Mini chart */}
+                  <div>
+                    <div className="text-xs font-semibold text-gray-700 mb-2">
+                      Activity Pattern
+                    </div>
+                    <div className="flex items-end gap-1 h-16">
+                      {[40, 65, 45, 80, 70, 55, 90].map((height, i) => (
+                        <div
+                          key={i}
+                          className="flex-1 bg-linear-to-t from-blue-500 to-cyan-400 rounded-t"
+                          style={{ height: `${height}%` }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

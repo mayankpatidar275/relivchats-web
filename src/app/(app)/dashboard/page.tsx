@@ -1,7 +1,7 @@
 import ChatsListSection from "@/src/components/dashboard/ChatsListSection";
 import CreditBalanceWidget from "@/src/components/dashboard/CreditBalanceWidget";
 import DashboardHeader from "@/src/components/dashboard/DashboardHeader";
-import QuickActionsSection from "@/src/components/dashboard/QuickActionsSection";
+// import QuickActionsSection from "@/src/components/dashboard/QuickActionsSection";
 import WelcomeModal from "@/src/components/modals/WelcomeModal";
 import { Suspense } from "react";
 
@@ -26,7 +26,7 @@ export default function DashboardPage() {
             {/* Sidebar - Takes 1 column on desktop, stacks on top on mobile */}
             <div className="space-y-4 order-1 lg:order-2">
               <CreditBalanceWidget />
-              <QuickActionsSection />
+              {/* <QuickActionsSection /> */}
             </div>
           </div>
         </div>

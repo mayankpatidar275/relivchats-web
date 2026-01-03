@@ -63,9 +63,9 @@ export default function TestimonialsSection() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 md:mb-4">
             What Our Users Say
           </h2>
-          <p className="text-base md:text-lg lg:text-xl text-gray-600">
+          {/* <p className="text-base md:text-lg lg:text-xl text-gray-600">
             Real stories from people who discovered deeper connections
-          </p>
+          </p> */}
         </div>
 
         {/* Testimonials Grid - Responsive */}
@@ -124,7 +124,7 @@ export default function TestimonialsSection() {
             </div>
           </div>
           <div className="h-10 w-px bg-gray-200" />
-          <div className="text-center">
+          {/* <div className="text-center">
             <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
               4.9/5
             </div>
@@ -132,7 +132,7 @@ export default function TestimonialsSection() {
               Average Rating
             </div>
           </div>
-          <div className="h-10 w-px bg-gray-200" />
+          <div className="h-10 w-px bg-gray-200" /> */}
           <div className="text-center">
             <div className="text-2xl md:text-3xl font-bold bg-linear-to-r from-primary to-accent-pink bg-clip-text text-transparent">
               500+

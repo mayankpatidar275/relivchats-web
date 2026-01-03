@@ -406,7 +406,7 @@ export default function PricingPlans() {
           </div>
 
           {/* Value Calculator */}
-          <div className="max-w-3xl mx-auto bg-linear-to-br from-primary-light to-accent-pink-light rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-primary/20 mb-8 sm:mb-12">
+          {/* <div className="max-w-3xl mx-auto bg-linear-to-br from-primary-light to-accent-pink-light rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-primary/20 mb-8 sm:mb-12">
             <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 text-center">
               💡 Quick Value Guide
             </h3>
@@ -430,19 +430,16 @@ export default function PricingPlans() {
               <div className="bg-white rounded-xl p-3 sm:p-4 text-center col-span-2 sm:col-span-2">
                 <div className="text-2xl sm:text-3xl font-bold text-primary mb-1">
                   1600 coins
-                  {/* {plans[0]?.coins.toLocaleString() || "500"} coins */}
                 </div>
                 <div className="text-xs sm:text-sm text-gray-600">
                   = 4-5 complete analyses
-                  {/* = {Math.floor((plans[0]?.coins || 500) / 400)}-
-                {Math.floor((plans[0]?.coins || 500) / 25)} complete analyses */}
                 </div>
               </div>
             </div>
             <p className="text-xs sm:text-sm text-gray-600 text-center mt-4">
               Mix and match categories as you like • No restrictions
             </p>
-          </div>
+          </div> */}
 
           {/* Trust Badges */}
           <div className="flex items-center justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap text-xs sm:text-sm text-gray-600">

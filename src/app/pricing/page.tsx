@@ -1,5 +1,5 @@
 // import PricingComparison from "@/src/components/pricing/PricingComparison";
-import PricingFAQ from "@/src/components/pricing/PricingFAQ";
+// import PricingFAQ from "@/src/components/pricing/PricingFAQ";
 import PricingHero from "@/src/components/pricing/PricingHero";
 import PricingPlans from "@/src/components/pricing/PricingPlans";
 
@@ -9,7 +9,7 @@ export default function PricingPage() {
       <PricingHero />
       <PricingPlans />
       {/* <PricingComparison /> */}
-      <PricingFAQ />
+      {/* <PricingFAQ /> */}
     </div>
   );
 }

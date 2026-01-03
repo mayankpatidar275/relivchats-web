@@ -11,3 +11,4 @@ https://freedium-mirror.cfd/https://medium.com/data-science/7-months-of-a-relati
 https://www.analyticsvidhya.com/blog/2023/02/whatsapp-chat-analysis-end-to-end-data-analysis-project-with-deployment/
 https://www.chattier.ai/pricing
 https://www.scribd.com/document/761056830/Dating
+https://www.reddit.com/r/SaaS/comments/1i80y3v/your_hero_section_is_trash_and_thats_okay_well/

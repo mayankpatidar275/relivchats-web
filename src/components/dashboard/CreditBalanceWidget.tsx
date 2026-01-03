@@ -44,7 +44,7 @@ export default function CreditBalanceWidget() {
             </div>
           </div>
           {/* TODO: use actual value for 50 and 100 or remove */}
-          <div className="text-sm text-white/80 mb-4">
+          {/* <div className="text-sm text-white/80 mb-4">
             ≈{" "}
             {isLoadingBalance ||
             isErrorBalance ||
@@ -60,7 +60,7 @@ export default function CreditBalanceWidget() {
               ? "..."
               : Math.floor(coins.balance / 100)}{" "}
             romantic insights
-          </div>
+          </div> */}
 
           <button
             onClick={() => router.push("/pricing")}

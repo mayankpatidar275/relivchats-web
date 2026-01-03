@@ -30,8 +30,7 @@ export default function PricingHero() {
 
         {/* Description - More concise */}
         <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto mb-6 sm:mb-8">
-          AI-powered relationship insights. Pay only for what you use, no
-          subscriptions.
+          AI-powered relationship insights. Pay only for what you use.
         </p>
 
         {/* Stats - Horizontal scroll on mobile */}

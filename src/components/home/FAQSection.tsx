@@ -60,9 +60,9 @@ export default function FAQSection() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 md:mb-4">
             FAQ
           </h2>
-          <p className="text-base md:text-lg lg:text-xl text-gray-600">
+          {/* <p className="text-base md:text-lg lg:text-xl text-gray-600">
             Quick answers to common questions
-          </p>
+          </p> */}
         </div>
 
         {/* FAQ Items - Compact */}

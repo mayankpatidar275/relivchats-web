@@ -30,7 +30,7 @@ export default function HowItWorksSection() {
       icon: Zap,
       title: "Choose Category",
       description:
-        "Select (Romantic, Friendship, Family, or Work) to unlock tailored AI insights.",
+        "Select (Romantic, Friendship, Family, or Work) - Not needed for now.",
       color: "from-amber-500 to-orange-500",
       image: "🎯",
     },

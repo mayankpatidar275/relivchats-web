@@ -15,20 +15,20 @@ export default function TopContentSection({
 }: TopContentSectionProps) {
   const getTopWords = () => {
     if (selectedMode === "all" || selectedMode === "compare") {
-      return metadata.top_words.slice(0, 8);
+      return metadata.top_words.slice(0, 20);
     }
 
     const userStats = metadata.user_stats[selectedMode];
-    return userStats?.top_words.slice(0, 8) || [];
+    return userStats?.top_words.slice(0, 20) || [];
   };
 
   const getTopEmojis = () => {
     if (selectedMode === "all" || selectedMode === "compare") {
-      return metadata.top_emojis.slice(0, 8);
+      return metadata.top_emojis.slice(0, 15);
     }
 
     const userStats = metadata.user_stats[selectedMode];
-    return userStats?.top_emojis.slice(0, 8) || [];
+    return userStats?.top_emojis.slice(0, 15) || [];
   };
 
   const topWords = getTopWords();

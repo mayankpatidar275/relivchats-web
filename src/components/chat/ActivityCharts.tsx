@@ -26,10 +26,16 @@ export default function ActivityCharts({
   const [isExpanded, setIsExpanded] = useState(false);
   const [chartType, setChartType] = useState<"hourly" | "daily">("hourly");
 
+  const formatHour = (hour: number) => {
+    const period = hour >= 12 ? "PM" : "AM";
+    const displayHour = hour % 12 || 12;
+    return `${displayHour}${period}`;
+  };
+
   const getHourlyData = () => {
     if (selectedMode === "all" || selectedMode === "compare") {
       return metadata.hourly_distribution.map((count, hour) => ({
-        hour: `${hour}:00`,
+        hour: formatHour(hour),
         messages: count,
       }));
     }
@@ -38,7 +44,7 @@ export default function ActivityCharts({
     if (!userStats) return [];
 
     return userStats.hourly_distribution.map((count, hour) => ({
-      hour: `${hour}:00`,
+      hour: formatHour(hour),
       messages: count,
     }));
   };
@@ -162,7 +168,7 @@ export default function ActivityCharts({
             <p className="text-sm text-gray-700">
               <strong>Peak {chartType === "hourly" ? "Hour" : "Day"}:</strong>{" "}
               {chartType === "hourly"
-                ? `${metadata.busiest_hour}:00 (${
+                ? `${formatHour(metadata.busiest_hour)} (${
                     metadata.hourly_distribution[metadata.busiest_hour]
                   } messages)`
                 : `${metadata.busiest_day} (${

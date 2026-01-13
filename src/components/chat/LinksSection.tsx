@@ -26,6 +26,15 @@ export default function LinksSection({ metadata }: LinksSectionProps) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const links = (metadata as any).links || [];
 
+  // Calculate per-user link counts
+  const userLinkCounts = links.reduce(
+    (acc: Record<string, number>, link: { user: string; url: string; timestamp: string }) => {
+      acc[link.user] = (acc[link.user] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+
   const handleCopy = async (url: string) => {
     try {
       await navigator.clipboard.writeText(url);
@@ -50,13 +59,25 @@ export default function LinksSection({ metadata }: LinksSectionProps) {
       {/* Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
+        className="w-full flex items-col justify-between p-4 hover:bg-gray-50 transition-colors"
       >
-        <div className="flex items-center gap-2">
-          <Link2 className="w-5 h-5 text-green-600" />
-          <h3 className="text-lg font-bold text-gray-900">
-            Shared Links ({metadata.links_shared_count})
-          </h3>
+        <div className="flex flex-col items-start gap-1">
+          <div className="flex items-center gap-2">
+            <Link2 className="w-5 h-5 text-green-600" />
+            <h3 className="text-lg font-bold text-gray-900">
+              Shared Links ({metadata.links_shared_count})
+            </h3>
+          </div>
+          {Object.keys(userLinkCounts).length > 0 && (
+            <div className="flex gap-2 ml-7 text-xs text-gray-600">
+              {Object.entries(userLinkCounts).map(([user, count], idx) => (
+                <span key={user}>
+                  {user}: {String(count)}
+                  {idx < Object.keys(userLinkCounts).length - 1 && " •"}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
         {isExpanded ? (
           <ChevronUp className="w-5 h-5 text-gray-600" />

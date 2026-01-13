@@ -12,6 +12,7 @@ import HeroStatsGrid from "@/src/components/chat/HeroStatsGrid";
 import ParticipantBreakdown from "@/src/components/chat/ParticipantBreakdown";
 import ActivityCharts from "@/src/components/chat/ActivityCharts";
 import TopContentSection from "@/src/components/chat/TopContentSection";
+import HeadToHeadComparison from "@/src/components/chat/HeadToHeadComparison";
 import LinksSection from "@/src/components/chat/LinksSection";
 import LongestMessagesSection from "@/src/components/chat/LongestMessagesSection";
 import UnlockInsightsSection from "@/src/components/chat/UnlockInsightsSection";
@@ -90,6 +91,11 @@ export default function ChatPageClient({ chatId }: Props) {
         <TopContentSection
           metadata={chat.chat_metadata}
           selectedMode={selectedMode}
+        />
+
+        <HeadToHeadComparison
+          metadata={chat.chat_metadata}
+          participants={chat.participants}
         />
 
         <LinksSection metadata={chat.chat_metadata} />

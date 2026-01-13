@@ -42,7 +42,7 @@ export default function HeadToHeadComparison({
     >();
 
     user1Items.forEach((item) => {
-      const key = type === "words" ? item.word : item.emoji;
+      const key = "word" in item ? item.word : item.emoji;
       itemMap.set(key, {
         user1Count: item.count,
         user2Count: 0,
@@ -50,7 +50,7 @@ export default function HeadToHeadComparison({
     });
 
     user2Items.forEach((item) => {
-      const key = type === "words" ? item.word : item.emoji;
+      const key = "word" in item ? item.word : item.emoji;
       const existing = itemMap.get(key);
       if (existing) {
         existing.user2Count = item.count;
@@ -147,7 +147,7 @@ export default function HeadToHeadComparison({
             <div key={item.key} className="flex items-center gap-2">
               {/* Left bar (participant 1) */}
               <div className="flex-1 flex items-center justify-end gap-1.5">
-                <span className="text-[10px] text-gray-600 min-w-[24px] text-right">
+                <span className="text-[10px] text-gray-600 min-w-6 text-right">
                   {item.user1Count}×
                 </span>
                 <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden flex justify-end">
@@ -159,7 +159,7 @@ export default function HeadToHeadComparison({
               </div>
 
               {/* Center item label */}
-              <div className="min-w-[60px] text-center">
+              <div className="min-w-15 text-center">
                 {showWords ? (
                   <span className="text-xs font-semibold text-gray-900">
                     {item.key}
@@ -177,7 +177,7 @@ export default function HeadToHeadComparison({
                     style={{ width: `${user2Percentage}%` }}
                   />
                 </div>
-                <span className="text-[10px] text-gray-600 min-w-[24px] text-left">
+                <span className="text-[10px] text-gray-600 min-w-6 text-left">
                   {item.user2Count}×
                 </span>
               </div>

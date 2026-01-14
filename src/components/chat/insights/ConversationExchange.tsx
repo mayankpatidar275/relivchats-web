@@ -36,7 +36,7 @@ export default function ConversationExchange({
 
       {/* Message exchange */}
       <div className="space-y-3">
-        {exchange.map((msg, idx) => (
+        {exchange?.map((msg, idx) => (
           <div
             key={idx}
             className="flex items-start gap-3 animate-in fade-in slide-in-from-left-4"

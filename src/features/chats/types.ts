@@ -29,6 +29,7 @@ export interface ChatMetadata {
   };
   total_days: number;
   messages_per_day_avg: number;
+  messages_by_date: Record<string, number>; // ISO date string -> message count
   deleted_messages_count: number;
   media_shared_count: number;
   links_shared_count: number;
@@ -66,6 +67,7 @@ export interface UserStats {
     word_count: number;
     char_count: number;
     timestamp: string;
+    message?: string;
   };
 }
 

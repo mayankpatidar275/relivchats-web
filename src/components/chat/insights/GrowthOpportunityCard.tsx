@@ -24,7 +24,7 @@ export default function GrowthOpportunityCard({
     <div
       className={`p-4 md:p-5 rounded-xl border-2 ${
         theme.bg
-      } ${theme.text.replace("text-", "border-")} bg-opacity-10`}
+      } ${theme.text.replace("text-", "border-")} bg-opacity-10 min-w-0`}
     >
       {/* Header */}
       <div className="flex items-start gap-3 mb-4">
@@ -34,7 +34,7 @@ export default function GrowthOpportunityCard({
           <Target className={`w-5 h-5 md:w-6 md:h-6 ${theme.text}`} />
         </div>
         <div className="flex-1 min-w-0">
-          <h5 className="font-bold text-base md:text-lg text-gray-900 mb-2">
+          <h5 className="font-bold text-base md:text-lg text-gray-900 mb-2 wrap-break-word">
             {opportunity.opportunity_title}
           </h5>
           {/* Target participants */}
@@ -53,39 +53,39 @@ export default function GrowthOpportunityCard({
       </div>
 
       {/* Content sections */}
-      <div className="space-y-4">
+      <div className="space-y-4 min-w-0">
         {/* Suggestion */}
-        <div className="p-3 bg-white rounded-lg border border-gray-200">
+        <div className="p-3 bg-white rounded-lg border border-gray-200 min-w-0">
           <div className="flex items-start gap-2 mb-2">
             <Sparkles className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />
             <p className="text-xs font-semibold text-gray-700 uppercase">
               Suggestion
             </p>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">
+          <p className="text-sm text-gray-800 leading-relaxed wrap-break-word">
             {opportunity.suggestion}
           </p>
         </div>
 
         {/* Why it helps */}
-        <div className="p-3 bg-white rounded-lg border border-gray-200">
+        <div className="p-3 bg-white rounded-lg border border-gray-200 min-w-0">
           <p className="text-xs font-semibold text-gray-700 uppercase mb-2">
             💡 Why This Helps
           </p>
-          <p className="text-sm text-gray-700 leading-relaxed">
+          <p className="text-sm text-gray-700 leading-relaxed wrap-break-word">
             {opportunity.why_it_helps}
           </p>
         </div>
 
         {/* Conversation starter */}
-        <div className="p-4 bg-linear-to-br from-pink-50 to-purple-50 rounded-lg border-2 border-pink-200">
+        <div className="p-4 bg-linear-to-br from-pink-50 to-purple-50 rounded-lg border-2 border-pink-200 min-w-0">
           <div className="flex items-start gap-2 mb-2">
             <MessageCircle className="w-4 h-4 text-pink-600 shrink-0 mt-0.5" />
             <p className="text-xs font-semibold text-pink-700 uppercase">
               Try Saying
             </p>
           </div>
-          <p className="text-sm italic text-gray-800 leading-relaxed">
+          <p className="text-sm italic text-gray-800 leading-relaxed wrap-break-word">
             &quot;{opportunity.conversation_starter}&quot;
           </p>
         </div>

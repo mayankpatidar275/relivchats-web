@@ -19,8 +19,8 @@ export default function RecommendationCard({
     <div
       className={`p-5 rounded-xl border-2 ${theme.bg} ${theme.text.replace(
         "text-",
-        "border-"
-      )} bg-opacity-10`}
+        "border-",
+      )} bg-opacity-10 min-w-0`}
     >
       {/* Header */}
       <div className="flex items-start gap-3 mb-3">
@@ -29,8 +29,8 @@ export default function RecommendationCard({
         >
           <Lightbulb className={`w-5 h-5 ${theme.text}`} />
         </div>
-        <div className="flex-1">
-          <h5 className="font-bold text-gray-900 mb-1">
+        <div className="flex-1 min-w-0">
+          <h5 className="font-bold text-gray-900 mb-1 wrap-break-word">
             {recommendation.recommendation_title}
           </h5>
           {/* Target participants */}
@@ -49,32 +49,32 @@ export default function RecommendationCard({
       </div>
 
       {/* Content */}
-      <div className="space-y-3">
+      <div className="space-y-3 min-w-0">
         {/* Suggestion */}
-        <div>
+        <div className="min-w-0">
           <p className="text-sm font-medium text-gray-900 mb-1">
             💬 Suggestion:
           </p>
-          <p className="text-sm text-gray-700 leading-relaxed">
+          <p className="text-sm text-gray-700 leading-relaxed wrap-break-word">
             {recommendation.suggestion}
           </p>
         </div>
 
         {/* Why it helps */}
-        <div>
+        <div className="min-w-0">
           <p className="text-sm font-medium text-gray-900 mb-1">✨ Why:</p>
-          <p className="text-sm text-gray-600 leading-relaxed">
+          <p className="text-sm text-gray-600 leading-relaxed wrap-break-word">
             {recommendation.why_it_helps}
           </p>
         </div>
 
         {/* Example if present */}
         {recommendation.example && (
-          <div className="pt-3 border-t border-gray-200">
+          <div className="pt-3 border-t border-gray-200 min-w-0">
             <p className="text-xs font-medium text-gray-700 mb-1">
               Try saying:
             </p>
-            <p className="text-sm italic text-gray-600 bg-white p-2 rounded-lg">
+            <p className="text-sm italic text-gray-600 bg-white p-2 rounded-lg wrap-break-word">
               &quot;{recommendation.example}&quot;
             </p>
           </div>

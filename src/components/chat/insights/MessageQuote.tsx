@@ -20,7 +20,7 @@ export default function MessageQuote({
   const theme = useCategoryTheme(categorySlug);
 
   return (
-    <div className="bg-gray-50 rounded-xl p-4 border border-gray-200 hover:border-gray-300 transition-colors">
+    <div className="bg-gray-50 rounded-xl p-4 border border-gray-200 hover:border-gray-300 transition-colors min-w-0">
       {/* Header with speaker and time */}
       <div className="flex items-start justify-between gap-2 mb-2">
         <span

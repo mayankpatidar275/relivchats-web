@@ -6,6 +6,8 @@ import {
 } from "@/src/features/categories/api";
 import { getCategoryColors } from "@/src/features/categories/utils";
 import { useUnlockInsights } from "@/src/features/chats/api";
+import { useBalance } from "@/src/features/credits/api/hooks";
+
 import { Check, Lock, Sparkles, Zap } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
@@ -20,19 +22,40 @@ export default function UnlockInsightsSection({
   onUnlockSuccess,
 }: UnlockInsightsSectionProps) {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
-    null
+    null,
   );
   const [isUnlocking, setIsUnlocking] = useState(false);
   const unlockMutation = useUnlockInsights();
 
   const { data: categories } = useCategories();
   const { data: insights } = useCategoryInsights(selectedCategoryId || "");
+  const { data: balance } = useBalance();
 
   const unlockSectionRef = useRef<HTMLDivElement>(null);
 
   const handleUnlock = async () => {
     if (!selectedCategoryId) {
       toast.error("Please select a category first");
+      return;
+    }
+
+    // Get selected category details for cost validation
+    const selectedCategory = categories?.find(
+      (c) => c.id === selectedCategoryId,
+    );
+    if (!selectedCategory) {
+      toast.error("Category not found");
+      return;
+    }
+
+    // Check if user has enough coins
+    const userBalance = balance?.balance ?? 0;
+    const costRequired = selectedCategory.base_cost;
+
+    if (userBalance < costRequired) {
+      toast.error(
+        `Insufficient coins. You need ${costRequired} coins but only have ${userBalance}. Please purchase more coins.`,
+      );
       return;
     }
 
@@ -109,7 +132,7 @@ export default function UnlockInsightsSection({
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategoryId(category.id)}
-                    className={`shrink-0 w-[140px] p-4 rounded-xl border-2 transition-all ${
+                    className={`shrink-0 w-35 p-4 rounded-xl border-2 transition-all ${
                       isSelected
                         ? `${catColors.borderColor} bg-white shadow-lg`
                         : "border-gray-200 bg-white hover:border-gray-300"

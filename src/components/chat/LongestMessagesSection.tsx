@@ -91,7 +91,16 @@ export default function LongestMessagesSection({
                           characters
                         </span>
                       </div>
-                      <div className="text-xs text-gray-500">
+
+                      {message.message && (
+                        <div className="mt-2 p-3 bg-white rounded-lg border border-gray-200 min-w-0">
+                          <p className="text-sm text-gray-700 leading-relaxed italic wrap-break-word">
+                            &quot;{message.message}&quot;
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="text-xs text-gray-500 mt-2">
                         Sent on {formatDate(message.timestamp)}
                       </div>
                     </div>

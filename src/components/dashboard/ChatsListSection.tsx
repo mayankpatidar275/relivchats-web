@@ -9,7 +9,6 @@ import {
   Calendar,
   Users,
   Trash2,
-  Eye,
   Lock,
   CheckCircle,
   // Upload,
@@ -131,7 +130,8 @@ export default function ChatsListSection() {
             return (
               <div
                 key={chat.chat_id}
-                className="bg-white rounded-xl md:rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all p-4 md:p-6"
+                onClick={() => router.push(`/chat/${chat.chat_id}`)}
+                className="bg-white rounded-xl md:rounded-2xl border border-gray-200 hover:border-primary hover:shadow-lg transition-all p-4 md:p-6 cursor-pointer"
               >
                 {/* Mobile Layout */}
                 <div className="flex flex-col gap-3">
@@ -160,26 +160,18 @@ export default function ChatsListSection() {
                       </div>
                     )}
 
-                    {/* Action Buttons - Mobile */}
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => router.push(`/chat/${chat.chat_id}`)}
-                        className="p-2 bg-linear-to-r from-primary to-primary-hover text-white rounded-lg hover:shadow-md transition-all"
-                        aria-label="View chat"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() =>
-                          handleDelete(chat.chat_id, chat.filename)
-                        }
-                        disabled={deleteMutation.isPending}
-                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-all disabled:opacity-50"
-                        aria-label="Delete chat"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
+                    {/* Action Button - Delete only */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(chat.chat_id, chat.filename);
+                      }}
+                      disabled={deleteMutation.isPending}
+                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-all disabled:opacity-50"
+                      aria-label="Delete chat"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
 
                   {/* Filename */}

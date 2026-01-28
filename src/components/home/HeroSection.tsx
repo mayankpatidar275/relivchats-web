@@ -154,14 +154,14 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right visual - Floating preview cards (Desktop and tablet only) */}
-          <div className="relative hidden md:block">
-            <div className="relative w-full h-[500px] flex items-center justify-center">
+          {/* Right visual - Floating preview cards (Large screens only) */}
+          <div className="relative hidden lg:block">
+            <div className="relative w-full h-125 flex items-center justify-center">
               {/* Left floating card - FREE insights */}
               <div className="absolute left-8 top-1/2 -translate-y-1/2 -rotate-6 hover:rotate-0 transition-transform duration-500 z-20">
                 <div className="w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
                   {/* Header */}
-                  <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-4">
+                  <div className="bg-linear-to-r from-blue-500 to-cyan-500 p-4">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-white font-bold text-sm">
                         Chat Statistics
@@ -230,7 +230,7 @@ export default function HeroSection() {
                         {[40, 65, 45, 80, 70, 55, 90].map((height, i) => (
                           <div
                             key={i}
-                            className="flex-1 bg-gradient-to-t from-blue-500 to-cyan-400 rounded-t"
+                            className="flex-1 bg-linear-to-t from-blue-500 to-cyan-400 rounded-t"
                             style={{ height: `${height}%` }}
                           />
                         ))}
@@ -244,7 +244,7 @@ export default function HeroSection() {
               <div className="absolute right-8 top-1/2 -translate-y-1/2 rotate-6 hover:rotate-0 transition-transform duration-500 z-20">
                 <div className="w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
                   {/* Header with gradient */}
-                  <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-5">
+                  <div className="bg-linear-to-r from-purple-600 to-pink-600 p-5">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
                         <Heart className="w-5 h-5 text-white" />
@@ -274,19 +274,19 @@ export default function HeroSection() {
                     {/* Insights list */}
                     <div className="space-y-2 text-xs text-gray-600">
                       <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-linear-to-r from-purple-600 to-pink-600" />
                         Vulnerability patterns
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-linear-to-r from-purple-600 to-pink-600" />
                         Support dynamics
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-linear-to-r from-purple-600 to-pink-600" />
                         Affection expression
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-linear-to-r from-purple-600 to-pink-600" />
                         + 2 more insights
                       </div>
                     </div>

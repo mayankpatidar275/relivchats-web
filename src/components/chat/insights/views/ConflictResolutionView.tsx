@@ -1,6 +1,9 @@
 "use client";
 
-import { ConflictResolutionContent, ConflictEvidence } from "@/src/features/insights/types";
+import {
+  ConflictResolutionContent,
+  ConflictEvidence,
+} from "@/src/features/insights/types";
 import { useCategoryTheme } from "@/src/lib/theme";
 import {
   Shield,
@@ -25,9 +28,7 @@ function EvidenceItem({ evidence }: { evidence: ConflictEvidence }) {
   return (
     <div className="p-3 bg-white rounded-lg border border-gray-200">
       {evidence.context && (
-        <p className="text-xs text-gray-600 mb-2 italic">
-          {evidence.context}
-        </p>
+        <p className="text-xs text-gray-600 mb-2 italic">{evidence.context}</p>
       )}
       <div className="space-y-1">
         {evidence.exchange.map((msg, idx) => (
@@ -384,8 +385,8 @@ export default function ConflictResolutionView({
                     pattern.severity.toLowerCase().includes("high")
                       ? "bg-red-100 border-red-300"
                       : pattern.severity.toLowerCase().includes("moderate")
-                      ? "bg-orange-100 border-orange-300"
-                      : "bg-yellow-100 border-yellow-300"
+                        ? "bg-orange-100 border-orange-300"
+                        : "bg-yellow-100 border-yellow-300"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
@@ -397,8 +398,8 @@ export default function ConflictResolutionView({
                         pattern.severity.toLowerCase().includes("high")
                           ? "bg-red-200 text-red-800"
                           : pattern.severity.toLowerCase().includes("moderate")
-                          ? "bg-orange-200 text-orange-800"
-                          : "bg-yellow-200 text-yellow-800"
+                            ? "bg-orange-200 text-orange-800"
+                            : "bg-yellow-200 text-yellow-800"
                       }`}
                     >
                       {pattern.severity}
@@ -506,17 +507,17 @@ export default function ConflictResolutionView({
 
                 {/* Example phrases */}
                 {rec.example_phrases.length > 0 && (
-                  <div className="p-4 bg-linear-to-br from-green-50 to-blue-50 rounded-lg border-2 border-green-200">
+                  <div className="p-4 bg-linear-to-br from-green-50 to-blue-50 rounded-lg border-2 border-green-200 min-w-0">
                     <p className="text-xs font-semibold text-green-700 uppercase mb-3">
                       💬 Try These Phrases
                     </p>
-                    <div className="space-y-2">
+                    <div className="space-y-2 min-w-0">
                       {rec.example_phrases.map((phrase, phIdx) => (
                         <div
                           key={phIdx}
-                          className="p-3 bg-white rounded-lg border border-green-200"
+                          className="p-3 bg-white rounded-lg border border-green-200 min-w-0"
                         >
-                          <p className="text-sm italic text-gray-800 leading-relaxed">
+                          <p className="text-sm italic text-gray-800 leading-relaxed wrap-break-word">
                             &quot;{phrase}&quot;
                           </p>
                         </div>

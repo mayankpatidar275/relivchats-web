@@ -9,7 +9,10 @@ export default function AlignmentBadge({
   status,
   size = "md",
 }: AlignmentBadgeProps) {
-  const normalized = status.toLowerCase();
+  if (!status) {
+    return null;
+  }
+  const normalized = status?.toLowerCase().replace(/_/g, " ");
 
   const getConfig = () => {
     if (
@@ -51,12 +54,15 @@ export default function AlignmentBadge({
   const sizeClasses =
     size === "sm" ? "text-xs px-2 py-1" : "text-sm px-3 py-1.5";
 
+  // Format display text: replace underscores with spaces and capitalize
+  const displayText = status.replace(/_/g, " ");
+
   return (
     <span
       className={`inline-flex items-center gap-1.5 rounded-full font-semibold border ${config.bg} ${config.text} ${config.border} ${sizeClasses}`}
     >
       <span>{config.icon}</span>
-      <span className="capitalize">{status}</span>
+      <span className="capitalize">{displayText}</span>
     </span>
   );
 }

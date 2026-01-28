@@ -32,11 +32,11 @@ export default function InsightCard({
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
   return (
-    <div className="bg-white rounded-2xl border-2 border-gray-100 hover:shadow-xl transition-all duration-300">
+    <div className="bg-white rounded-2xl border-2 border-gray-100 hover:shadow-xl transition-all duration-300 min-w-0">
       {/* Clickable Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-start gap-3 md:gap-4 p-4 md:p-6 lg:p-8 text-left hover:bg-gray-50 transition-colors rounded-t-2xl"
+        className="w-full flex items-start gap-3 md:gap-4 p-4 md:p-6 lg:p-8 text-left hover:bg-gray-50 transition-colors rounded-t-2xl min-w-0"
         aria-expanded={isExpanded}
         aria-label={isExpanded ? `Collapse ${title}` : `Expand ${title}`}
       >
@@ -46,11 +46,11 @@ export default function InsightCard({
           {icon || "💡"}
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 mb-1 md:mb-2">
+          <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 mb-1 md:mb-2 wrap-break-word">
             {title}
           </h3>
           {description && (
-            <p className="text-xs md:text-sm lg:text-base text-gray-600 line-clamp-2">
+            <p className="text-xs md:text-sm lg:text-base text-gray-600 wrap-break-word">
               {description}
             </p>
           )}
@@ -69,19 +69,13 @@ export default function InsightCard({
       </button>
 
       {/* Collapsible Content */}
-      <div
-        className={`overflow-hidden transition-all duration-500 ease-in-out ${
-          isExpanded ? "max-h-[10000px] opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        {status === "completed" && (
-          <div className="px-4 md:px-6 lg:px-8 pb-4 md:pb-6 lg:pb-8 pt-2">
-            {/* Divider */}
-            <div className="border-t border-gray-200 mb-6" />
-            {children}
-          </div>
-        )}
-      </div>
+      {isExpanded && status === "completed" && (
+        <div className="px-4 md:px-6 lg:px-8 pb-4 md:pb-6 lg:pb-8 pt-2 min-w-0">
+          {/* Divider */}
+          <div className="border-t border-gray-200 mb-6" />
+          <div className="min-w-0">{children}</div>
+        </div>
+      )}
 
       {/* Expand/Collapse footer hint (only when collapsed) */}
       {/* {!isExpanded && (

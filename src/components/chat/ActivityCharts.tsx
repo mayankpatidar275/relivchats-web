@@ -1,6 +1,5 @@
 "use client";
 
-import { ParticipantMode } from "./ParticipantFilter";
 import { useState } from "react";
 import { ChevronDown, ChevronUp, BarChart3 } from "lucide-react";
 import {
@@ -18,13 +17,9 @@ import { ChatMetadata } from "@/src/features/chats/types";
 
 interface ActivityChartsProps {
   metadata: ChatMetadata;
-  selectedMode: ParticipantMode;
 }
 
-export default function ActivityCharts({
-  metadata,
-  selectedMode,
-}: ActivityChartsProps) {
+export default function ActivityCharts({ metadata }: ActivityChartsProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [chartType, setChartType] = useState<"hourly" | "daily" | "timeline">(
     "hourly"
@@ -36,18 +31,9 @@ export default function ActivityCharts({
     return `${displayHour}${period}`;
   };
 
+  // Always show aggregate data
   const getHourlyData = () => {
-    if (selectedMode === "all" || selectedMode === "compare") {
-      return metadata.hourly_distribution.map((count, hour) => ({
-        hour: formatHour(hour),
-        messages: count,
-      }));
-    }
-
-    const userStats = metadata.user_stats[selectedMode];
-    if (!userStats) return [];
-
-    return userStats.hourly_distribution.map((count, hour) => ({
+    return metadata.hourly_distribution.map((count, hour) => ({
       hour: formatHour(hour),
       messages: count,
     }));
@@ -64,15 +50,6 @@ export default function ActivityCharts({
       "Sunday",
     ];
 
-    if (selectedMode === "all" || selectedMode === "compare") {
-      return days.map((day) => ({
-        day: day.slice(0, 3),
-        messages: metadata.daily_distribution[day] || 0,
-      }));
-    }
-
-    // For individual user, we don't have daily distribution, so aggregate from hourly
-    // This is a limitation - you might want to add daily_distribution to UserStats
     return days.map((day) => ({
       day: day.slice(0, 3),
       messages: metadata.daily_distribution[day] || 0,

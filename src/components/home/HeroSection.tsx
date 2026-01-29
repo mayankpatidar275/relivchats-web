@@ -317,7 +317,7 @@ export default function HeroSection() {
           </div>
 
           {/* Mobile preview card - FREE insights */}
-          <div className="lg:hidden mt-12">
+          <div className="hidden mt-12">
             <div className="max-w-sm mx-auto">
               <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
                 {/* Header */}

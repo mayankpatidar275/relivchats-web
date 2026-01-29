@@ -1,15 +1,14 @@
 // src/components/chat/ChatPageClient.tsx
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { useChat } from "@/src/features/chats/api";
 import ChatHeader from "@/src/components/chat/ChatHeader";
-import ParticipantFilter, {
-  ParticipantMode,
-} from "@/src/components/chat/ParticipantFilter";
 import UnlockBanner from "@/src/components/chat/UnlockBanner";
 import HeroStatsGrid from "@/src/components/chat/HeroStatsGrid";
+import CardsPreviewSection from "@/src/components/chat/CardsPreviewSection";
 import ParticipantBreakdown from "@/src/components/chat/ParticipantBreakdown";
+import ParticipantComparison from "@/src/components/chat/ParticipantComparison";
 import ActivityCharts from "@/src/components/chat/ActivityCharts";
 import TopContentSection from "@/src/components/chat/TopContentSection";
 import HeadToHeadComparison from "@/src/components/chat/HeadToHeadComparison";
@@ -23,7 +22,6 @@ interface Props {
 }
 
 export default function ChatPageClient({ chatId }: Props) {
-  const [selectedMode, setSelectedMode] = useState<ParticipantMode>("all");
   const unlockSectionRef = useRef<HTMLDivElement | null>(null);
 
   // useChat now gets a stable chatId prop directly
@@ -52,13 +50,6 @@ export default function ChatPageClient({ chatId }: Props) {
       {/* Sticky Header */}
       <ChatHeader chatId={chatId} />
 
-      {/* Sticky Participant Filter */}
-      <ParticipantFilter
-        participants={chat.participants}
-        selectedMode={selectedMode}
-        onModeChange={setSelectedMode}
-      />
-
       {/* Unlock Banner (only if insights not started) */}
       {(!chat.insights_generation_status ||
         chat.insights_generation_status === "not_started") && (
@@ -71,27 +62,23 @@ export default function ChatPageClient({ chatId }: Props) {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 max-w-7xl space-y-6">
-        <HeroStatsGrid
-          metadata={chat.chat_metadata}
-          selectedMode={selectedMode}
-        />
+        <HeroStatsGrid metadata={chat.chat_metadata} />
+
+        <CardsPreviewSection chatId={chatId} metadata={chat.chat_metadata} />
 
         <ParticipantBreakdown
           metadata={chat.chat_metadata}
           participants={chat.participants}
-          selectedMode={selectedMode}
-          onSwitchToCompare={() => setSelectedMode("compare")}
         />
 
-        <ActivityCharts
+        <ParticipantComparison
           metadata={chat.chat_metadata}
-          selectedMode={selectedMode}
+          participants={chat.participants}
         />
 
-        <TopContentSection
-          metadata={chat.chat_metadata}
-          selectedMode={selectedMode}
-        />
+        <ActivityCharts metadata={chat.chat_metadata} />
+
+        <TopContentSection metadata={chat.chat_metadata} />
 
         <HeadToHeadComparison
           metadata={chat.chat_metadata}

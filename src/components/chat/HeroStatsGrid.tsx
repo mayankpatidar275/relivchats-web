@@ -1,42 +1,20 @@
 "use client";
 
 import { MessageSquare, Calendar, TrendingUp, Clock } from "lucide-react";
-import { ParticipantMode } from "./ParticipantFilter";
 import { ChatMetadata } from "@/src/features/chats/types";
 
 interface HeroStatsGridProps {
   metadata: ChatMetadata;
-  selectedMode: ParticipantMode;
 }
 
-export default function HeroStatsGrid({
-  metadata,
-  selectedMode,
-}: HeroStatsGridProps) {
-  const getStatsForMode = () => {
-    if (selectedMode === "all" || selectedMode === "compare") {
-      return {
-        messages: metadata.total_messages,
-        days: metadata.total_days,
-        avgPerDay: metadata.messages_per_day_avg,
-        peakHour: metadata.busiest_hour,
-      };
-    }
-
-    // Individual participant
-    const userStats = metadata.user_stats[selectedMode];
-    if (!userStats) return null;
-
-    return {
-      messages: userStats.message_count,
-      days: metadata.total_days,
-      avgPerDay: (userStats.message_count / metadata.total_days).toFixed(2),
-      peakHour: userStats.busiest_hour,
-    };
+export default function HeroStatsGrid({ metadata }: HeroStatsGridProps) {
+  // Always show aggregate stats
+  const stats = {
+    messages: metadata.total_messages,
+    days: metadata.total_days,
+    avgPerDay: metadata.messages_per_day_avg,
+    peakHour: metadata.busiest_hour,
   };
-
-  const stats = getStatsForMode();
-  if (!stats) return null;
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);

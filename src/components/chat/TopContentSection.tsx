@@ -1,38 +1,16 @@
 "use client";
 
 import { ChatMetadata } from "@/src/features/chats/types";
-import { ParticipantMode } from "./ParticipantFilter";
 import { Hash, Smile } from "lucide-react";
 
 interface TopContentSectionProps {
   metadata: ChatMetadata;
-  selectedMode: ParticipantMode;
 }
 
-export default function TopContentSection({
-  metadata,
-  selectedMode,
-}: TopContentSectionProps) {
-  const getTopWords = () => {
-    if (selectedMode === "all" || selectedMode === "compare") {
-      return metadata.top_words.slice(0, 20);
-    }
-
-    const userStats = metadata.user_stats[selectedMode];
-    return userStats?.top_words.slice(0, 20) || [];
-  };
-
-  const getTopEmojis = () => {
-    if (selectedMode === "all" || selectedMode === "compare") {
-      return metadata.top_emojis.slice(0, 15);
-    }
-
-    const userStats = metadata.user_stats[selectedMode];
-    return userStats?.top_emojis.slice(0, 15) || [];
-  };
-
-  const topWords = getTopWords();
-  const topEmojis = getTopEmojis();
+export default function TopContentSection({ metadata }: TopContentSectionProps) {
+  // Always show aggregate data
+  const topWords = metadata.top_words.slice(0, 20);
+  const topEmojis = metadata.top_emojis.slice(0, 15);
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6">

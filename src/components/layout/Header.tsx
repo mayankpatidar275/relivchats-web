@@ -58,7 +58,7 @@ export default function Header() {
         setTimeout(() => setPendingRoute(null), 1000);
       });
     },
-    [router, pendingRoute]
+    [router, pendingRoute],
   );
 
   // Format balance with error handling - use useMemo instead of useCallback
@@ -79,10 +79,10 @@ export default function Header() {
       role="banner"
     >
       <nav
-        className="container mx-auto px-4 sm:px-6 py-3 sm:py-4 max-w-7xl"
+        className="container mx-auto px-4 sm:px-6 max-w-7xl"
         aria-label="Main navigation"
       >
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between gap-4 h-15">
           {/* Logo and Brand */}
           <Link
             href="/"
@@ -136,7 +136,7 @@ export default function Header() {
                 <button
                   onClick={() => handleNavigation("/dashboard")}
                   disabled={isPending && pendingRoute === "/dashboard"}
-                  className="hidden sm:flex items-center justify-center gap-2 px-5 py-2 bg-linear-to-r from-primary to-primary-hover text-white rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 min-w-[120px]"
+                  className="hidden sm:flex items-center justify-center gap-2 px-5 py-2 bg-linear-to-r from-primary to-primary-hover text-white rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 min-w-30"
                   aria-label="Go to dashboard"
                   aria-current={pathname === "/dashboard" ? "page" : undefined}
                   aria-busy={isPending && pendingRoute === "/dashboard"}
@@ -186,7 +186,7 @@ export default function Header() {
                 <button
                   onClick={() => handleNavigation("/sign-in")}
                   disabled={isPending && pendingRoute === "/sign-in"}
-                  className="flex items-center justify-center gap-2 px-3 sm:px-5 py-1.5 sm:py-2 text-sm sm:text-base text-gray-700 font-medium hover:text-primary transition-colors disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg min-w-20 sm:min-w-[100px]"
+                  className="flex items-center justify-center gap-2 px-3 sm:px-5 py-1.5 sm:py-2 text-sm sm:text-base text-gray-700 font-medium hover:text-primary transition-colors disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg min-w-20 sm:min-w-25"
                   aria-label="Sign in to your account"
                   aria-busy={isPending && pendingRoute === "/sign-in"}
                 >

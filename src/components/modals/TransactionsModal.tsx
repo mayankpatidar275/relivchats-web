@@ -2,7 +2,7 @@
 
 import { useTransactions } from "@/src/features/credits/api/hooks";
 import { X, Coins, TrendingUp, Loader2, AlertCircle } from "lucide-react";
-import { useState } from "react";
+import { useEffect } from "react";
 
 interface TransactionsModalProps {
   isOpen: boolean;
@@ -13,12 +13,35 @@ export default function TransactionsModal({
   isOpen,
   onClose,
 }: TransactionsModalProps) {
-  const [page] = useState(1);
   const {
     data: transactions,
     isLoading,
     isError,
-  } = useTransactions(page, 50); // Fetch more transactions for the modal
+  } = useTransactions();
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isOpen, onClose]);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -143,17 +166,12 @@ export default function TransactionsModal({
                       <p className="text-sm font-medium text-gray-900 truncate mb-0.5">
                         {transaction.description}
                       </p>
-                      <div className="flex items-center gap-2">
-                        <p className="text-xs text-gray-500">
-                          {formatDate(transaction.created_at)}
-                        </p>
-                        <span
-                          className="text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                          title={formatFullDate(transaction.created_at)}
-                        >
-                          • {formatFullDate(transaction.created_at)}
-                        </span>
-                      </div>
+                      <p
+                        className="text-xs text-gray-500"
+                        title={formatFullDate(transaction.created_at)}
+                      >
+                        {formatDate(transaction.created_at)}
+                      </p>
                     </div>
                   </div>
                   <span
@@ -170,15 +188,6 @@ export default function TransactionsModal({
           )}
         </div>
 
-        {/* Footer - could add pagination here if needed */}
-        {transactions && transactions.total_count > 50 && (
-          <div className="p-4 border-t border-gray-200 bg-gray-50">
-            <p className="text-xs text-center text-gray-500">
-              Showing {Math.min(50, transactions.total_count)} of{" "}
-              {transactions.total_count} transactions
-            </p>
-          </div>
-        )}
       </div>
     </div>
   );

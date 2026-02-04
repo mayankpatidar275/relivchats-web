@@ -132,7 +132,7 @@ const formatDate = (dateStr: string) => {
   const date = new Date(dateStr);
   const now = new Date();
   const diffDays = Math.floor(
-    (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24)
+    (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24),
   );
 
   if (diffDays === 0) return "Today";

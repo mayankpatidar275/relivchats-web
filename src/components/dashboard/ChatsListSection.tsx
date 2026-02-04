@@ -2,7 +2,7 @@
 
 import { useChats, useDeleteChat } from "@/src/features/chats/api";
 import { useConfirm } from "@/src/hooks/useConfirm";
-import { formatDate } from "@/src/lib/utils";
+import { formatDateRange, formatDate } from "@/src/lib/utils";
 import { getCategoryColors } from "@/src/features/categories/utils";
 import {
   MessageCircle,
@@ -11,6 +11,7 @@ import {
   Trash2,
   Lock,
   CheckCircle,
+  Clock,
   // Upload,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -179,37 +180,50 @@ export default function ChatsListSection() {
                     {chat.filename}
                   </h3>
 
-                  {/* Stats Row */}
+                  {/* Conversation Stats - Primary Info */}
                   <div className="flex flex-wrap items-center gap-3 text-xs md:text-sm text-gray-600">
                     <div className="flex items-center gap-1">
                       <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                      <span>{formatDate(chat.created_at)}</span>
+                      <span>
+                        {formatDateRange(
+                          chat.chat_metadata.date_range.start,
+                          chat.chat_metadata.date_range.end
+                        )}
+                      </span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Users className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                      <span>{chat.participants.length}</span>
+                      <span>{chat.participants.length} participants</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <MessageCircle className="w-3.5 h-3.5 md:w-4 md:h-4" />
                       <span>
-                        {chat.chat_metadata.total_messages.toLocaleString()}
+                        {chat.chat_metadata.total_messages.toLocaleString()}{" "}
+                        messages
                       </span>
                     </div>
                   </div>
 
-                  {/* Status Badge */}
-                  <div className="flex items-center gap-2">
-                    {chat.insights_unlocked ? (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 bg-linear-to-r from-purple-50 to-pink-50 border border-purple-200 text-purple-700 rounded-full text-xs font-medium">
-                        <CheckCircle className="w-3 h-3" />
-                        Insights Unlocked
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 bg-amber-50 border border-amber-200 text-amber-700 rounded-full text-xs font-medium">
-                        <Lock className="w-3 h-3" />
-                        Free Stats Only
-                      </span>
-                    )}
+                  {/* Status Badge & Upload Date */}
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      {chat.insights_unlocked ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-linear-to-r from-purple-50 to-pink-50 border border-purple-200 text-purple-700 rounded-full text-xs font-medium">
+                          <CheckCircle className="w-3 h-3" />
+                          Insights Unlocked
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-amber-50 border border-amber-200 text-amber-700 rounded-full text-xs font-medium">
+                          <Lock className="w-3 h-3" />
+                          Free Stats Only
+                        </span>
+                      )}
+                    </div>
+                    {/* Upload date - subtle, secondary */}
+                    <div className="flex items-center gap-1 text-xs text-gray-400">
+                      <Clock className="w-3 h-3" />
+                      <span>{formatDate(chat.created_at)}</span>
+                    </div>
                   </div>
                 </div>
 

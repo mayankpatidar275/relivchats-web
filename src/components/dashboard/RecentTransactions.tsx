@@ -1,7 +1,12 @@
+"use client";
+
 import { useTransactions } from "@/src/features/credits/api/hooks";
 import { ArrowRight, Coins, TrendingUp } from "lucide-react";
+import { useState } from "react";
+import TransactionsModal from "../modals/TransactionsModal";
 
 export default function RecentTransactions() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     data: transactions,
     isLoading: isLoadingTransactions,
@@ -55,7 +60,11 @@ export default function RecentTransactions() {
       <div className="flex items-center justify-between mb-3">
         <h4 className="text-sm font-bold text-gray-900">Recent Activity</h4>
         {transactions.total_count > 3 && (
-          <button className="text-xs text-primary hover:text-purple-700 font-medium flex items-center gap-1">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="text-xs text-primary hover:text-purple-700 font-medium flex items-center gap-1 transition-colors"
+            aria-label="View all transactions"
+          >
             View All
             <ArrowRight className="w-3 h-3" />
           </button>
@@ -110,6 +119,11 @@ export default function RecentTransactions() {
           </div>
         )}
       </div>
+
+      <TransactionsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

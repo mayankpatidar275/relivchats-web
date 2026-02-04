@@ -9,6 +9,7 @@ import { useUnlockInsights } from "@/src/features/chats/api";
 import { useBalance } from "@/src/features/credits/api/hooks";
 
 import { Check, Lock, Sparkles, Zap } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -26,6 +27,7 @@ export default function UnlockInsightsSection({
   );
   const [isUnlocking, setIsUnlocking] = useState(false);
   const unlockMutation = useUnlockInsights();
+  const router = useRouter();
 
   const { data: categories } = useCategories();
   const { data: insights } = useCategoryInsights(selectedCategoryId || "");
@@ -54,8 +56,9 @@ export default function UnlockInsightsSection({
 
     if (userBalance < costRequired) {
       toast.error(
-        `Insufficient coins. You need ${costRequired} coins but only have ${userBalance}. Please purchase more coins.`,
+        `Insufficient coins. You need ${costRequired} but only have ${userBalance}.`,
       );
+      router.push("/pricing");
       return;
     }
 

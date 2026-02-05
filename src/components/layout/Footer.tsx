@@ -22,23 +22,27 @@ export default function Footer() {
     legal: [
       {
         name: "Privacy Policy",
-        href: "https://merchant.razorpay.com/policy/OMyE4JSPYTCzjp/privacy",
+        href: "/privacy",
       },
       {
-        name: "Terms and Conditions",
-        href: "https://merchant.razorpay.com/policy/OMyE4JSPYTCzjp/terms",
+        name: "Terms of Service",
+        href: "/terms",
       },
       {
-        name: "Shipping Policy",
-        href: "https://merchant.razorpay.com/policy/OMyE4JSPYTCzjp/shipping",
+        name: "Refund Policy",
+        href: "/refunds",
       },
       {
-        name: "Cancellations and Refunds",
-        href: "https://merchant.razorpay.com/policy/OMyE4JSPYTCzjp/refund",
+        name: "Cookie Policy",
+        href: "/cookies",
+      },
+      {
+        name: "Delivery Policy",
+        href: "/shipping",
       },
       {
         name: "Contact Us",
-        href: "https://merchant.razorpay.com/policy/OMyE4JSPYTCzjp/contact_us",
+        href: "/contact",
       },
     ],
     // support: [

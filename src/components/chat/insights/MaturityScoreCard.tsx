@@ -3,11 +3,13 @@
 interface MaturityScoreCardProps {
   score: number;
   summary: string;
+  frequency?: string; // Optional frequency badge (e.g., "frequent", "occasional", "rare")
 }
 
 export default function MaturityScoreCard({
   score,
   summary,
+  frequency,
 }: MaturityScoreCardProps) {
   const percentage = (score / 10) * 100;
 
@@ -102,6 +104,15 @@ export default function MaturityScoreCard({
           <span className="text-lg font-bold text-gray-900">
             {config.label}
           </span>
+
+          {/* Frequency Badge */}
+          {frequency && (
+            <div className="mt-2">
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                Frequency: {frequency}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Summary */}

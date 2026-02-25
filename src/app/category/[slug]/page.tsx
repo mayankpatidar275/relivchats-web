@@ -11,7 +11,7 @@ interface CategoryPageProps {
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { slug } = await params;
+  const { slug } = params;
 
   // Fetch categories server-side
   let categories;
@@ -92,7 +92,7 @@ export async function generateStaticParams() {
 
 // Generate metadata
 export async function generateMetadata({ params }: CategoryPageProps) {
-  const { slug } = await params;
+  const { slug } = params;
 
   try {
     const categories = await categoriesApi.getCategories();

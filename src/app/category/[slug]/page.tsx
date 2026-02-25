@@ -14,7 +14,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const { slug } = await params;
 
   // Fetch categories server-side
-  const categories = await categoriesApi.getCategories();
+  let categories;
+  try {
+    categories = await categoriesApi.getCategories();
+  } catch {
+    notFound();
+  }
   const category = categories.find((cat) => cat.name === slug);
 
   if (!category) notFound();
@@ -69,25 +74,37 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   );
 }
 
+// Allow dynamic rendering for slugs not pre-rendered at build time
+export const dynamicParams = true;
+
 // Generate static params from API
 export async function generateStaticParams() {
-  const categories = await categoriesApi.getCategories();
-  return categories.map((category) => ({
-    slug: category.name, // name is the slug
-  }));
+  try {
+    const categories = await categoriesApi.getCategories();
+    return categories.map((category) => ({
+      slug: category.name, // name is the slug
+    }));
+  } catch {
+    // Backend not available at build time — pages will render on first request
+    return [];
+  }
 }
 
 // Generate metadata
 export async function generateMetadata({ params }: CategoryPageProps) {
   const { slug } = await params;
 
-  const categories = await categoriesApi.getCategories();
-  const category = categories.find((cat) => cat.name === slug);
+  try {
+    const categories = await categoriesApi.getCategories();
+    const category = categories.find((cat) => cat.name === slug);
 
-  if (!category) return { title: "Category Not Found" };
+    if (!category) return { title: "Category Not Found" };
 
-  return {
-    title: `${category.display_name} Chat Analysis | Reliv Chats`,
-    description: category.description,
-  };
+    return {
+      title: `${category.display_name} Chat Analysis | Reliv Chats`,
+      description: category.description,
+    };
+  } catch {
+    return { title: "Category Not Found" };
+  }
 }

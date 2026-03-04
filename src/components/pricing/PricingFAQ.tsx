@@ -99,7 +99,7 @@ export default function PricingFAQ() {
             Have more questions?
           </p>
           <a
-            href="mailto:support@relivchats.com"
+            href="mailto:mayankpatidar275@gmail.com"
             className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-xl font-semibold text-sm sm:text-base transition-all"
           >
             Contact Support

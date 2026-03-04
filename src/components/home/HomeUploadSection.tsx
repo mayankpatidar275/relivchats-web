@@ -11,7 +11,7 @@ import UploadZone, { UploadProgress } from "../upload/UploadZone";
 export default function HomeUploadSection() {
   const router = useRouter();
   const [uploadProgress, setUploadProgress] = useState<UploadProgress | null>(
-    null
+    null,
   );
   const [error, setError] = useState<string | null>(null);
   const uploadChatMutation = useUploadChat();
@@ -114,7 +114,7 @@ export default function HomeUploadSection() {
                     100% Private
                   </h4>
                   <p className="text-xs text-gray-600">
-                    Your data stays secure and encrypted
+                    Your data stays secure
                   </p>
                 </div>
               </div>

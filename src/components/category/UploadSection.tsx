@@ -113,7 +113,7 @@ export default function UploadSection({ category }: UploadSectionProps) {
                   100% Private
                 </h4>
                 <p className="text-xs sm:text-sm text-gray-600">
-                  Encrypted and never shared
+                  Private and never shared
                 </p>
               </div>
 

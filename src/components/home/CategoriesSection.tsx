@@ -119,7 +119,7 @@ export default function CategoriesSection() {
                 100% Private & Secure
               </h3>
               <p className="text-sm text-gray-600">
-                Your chats are encrypted and never shared. We respect your
+                Your chats are private and never shared. We respect your
                 privacy completely.
               </p>
             </div>

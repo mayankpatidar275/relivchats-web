@@ -18,7 +18,7 @@ const faqs: FAQItem[] = [
   {
     question: "Is my chat data private and secure?",
     answer:
-      "Yes! Your chats are encrypted and stored securely. We never share your data with third parties. Message content is only used for AI analysis and remains completely private. You can delete your data anytime.",
+      "Yes! Your chats are stored securely and kept completely private. We never share your data with third parties. Message content is only used for AI analysis and remains completely private. You can delete your data anytime.",
   },
   {
     question: "What's included in the free stats?",
@@ -117,7 +117,7 @@ export default function FAQSection() {
             Still have questions?
           </p>
           <a
-            href="mailto:support@relivchats.com"
+            href="mailto:mayankpatidar275@gmail.com"
             className="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-xl font-semibold transition-all text-sm md:text-base"
           >
             Contact Support

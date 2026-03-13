@@ -23,16 +23,18 @@ export default function ConversationExchange({
 
   return (
     <div className="bg-white rounded-xl border-2 border-gray-100 p-4 md:p-5">
-      {/* Context header */}
-      <div className="flex items-start gap-2 mb-4 pb-3 border-b border-gray-200">
-        <span className="text-lg">💬</span>
-        <div className="flex-1">
-          <p className="text-xs font-semibold text-gray-600 uppercase mb-1">
-            Context
-          </p>
-          <p className="text-sm text-gray-800 font-medium">{context}</p>
+      {/* Context header — only shown when context is non-empty */}
+      {context && context.trim() && (
+        <div className="flex items-start gap-2 mb-4 pb-3 border-b border-gray-200">
+          <span className="text-lg">💬</span>
+          <div className="flex-1">
+            <p className="text-xs font-semibold text-gray-600 uppercase mb-1">
+              Context
+            </p>
+            <p className="text-sm text-gray-800 font-medium">{context}</p>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Message exchange */}
       <div className="space-y-3">

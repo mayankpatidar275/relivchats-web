@@ -3,9 +3,21 @@
 import { Sparkles, Zap, Crown, LucideProps } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { usePackages } from "@/src/features/credits/api/hooks";
 import { PaymentModal } from "./PaymentModal";
+
+// Detect if user is in India based on timezone
+function useIsIndianUser(): boolean {
+  return useMemo(() => {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      return tz.includes("Asia/Kolkata") || tz.includes("Asia/Calcutta");
+    } catch {
+      return false;
+    }
+  }, []);
+}
 
 interface CreditPackage {
   id: string;
@@ -35,6 +47,8 @@ interface PricingPlan {
   description?: string;
   features: string[];
   savings?: string;
+  original_price_usd?: string; // Strikethrough price (what it would cost at starter rate)
+  original_price_inr?: string;
 }
 
 // Icon mapping based on package name
@@ -107,30 +121,42 @@ const generateFeatures = (packageData: CreditPackage) => {
 const calculateSavings = (
   packageData: CreditPackage,
   packages: CreditPackage[]
-) => {
+): { label: string; original_price_usd: string; original_price_inr: string } | undefined => {
   if (packages.length < 2) return undefined;
 
   const starterPackage =
     packages.find((pkg) => pkg.sort_order === 1) || packages[0];
   if (packageData.id === starterPackage.id) return undefined;
 
-  const starterPricePerCoin =
+  const starterPricePerCoinUsd =
     parseFloat(starterPackage.price_usd) / starterPackage.coins;
+  const starterPricePerCoinInr =
+    parseFloat(starterPackage.price_inr) / starterPackage.coins;
   const currentPricePerCoin =
     parseFloat(packageData.price_usd) / packageData.coins;
 
-  if (currentPricePerCoin >= starterPricePerCoin) return undefined;
+  if (currentPricePerCoin >= starterPricePerCoinUsd) return undefined;
 
   const savingsPercentage = Math.round(
-    (1 - currentPricePerCoin / starterPricePerCoin) * 100
+    (1 - currentPricePerCoin / starterPricePerCoinUsd) * 100
   );
-  return `Save ${savingsPercentage}%`;
+
+  // What this package would cost at the starter rate
+  const originalUsd = (starterPricePerCoinUsd * packageData.coins).toFixed(2);
+  const originalInr = Math.round(starterPricePerCoinInr * packageData.coins).toString();
+
+  return {
+    label: `Save ${savingsPercentage}%`,
+    original_price_usd: originalUsd,
+    original_price_inr: originalInr,
+  };
 };
 
 export default function PricingPlans() {
   const { isSignedIn } = useUser();
   const router = useRouter();
   const { data: packages, isLoading, isError } = usePackages();
+  const isIndianUser = useIsIndianUser();
 
   const [selectedPackage, setSelectedPackage] = useState<{
     id: string;
@@ -182,7 +208,7 @@ export default function PricingPlans() {
       .map((pkg, index) => {
         const priceUsd = parseFloat(pkg.price_usd);
         const pricePerCoin = priceUsd / pkg.coins;
-        const savings = calculateSavings(pkg, packages);
+        const savingsData = calculateSavings(pkg, packages);
 
         // Determine badge
         let badge: string | undefined;
@@ -205,7 +231,9 @@ export default function PricingPlans() {
           ...getColorScheme(index, pkg.is_popular),
           description: pkg.description,
           features: generateFeatures(pkg),
-          savings,
+          savings: savingsData?.label,
+          original_price_usd: savingsData?.original_price_usd,
+          original_price_inr: savingsData?.original_price_inr,
         };
       });
   }, [packages]);
@@ -361,11 +389,21 @@ export default function PricingPlans() {
 
                   {/* Price */}
                   <div className="mb-4 sm:mb-6">
+                    {/* Strikethrough original price */}
+                    {plan.savings && (isIndianUser ? plan.original_price_inr : plan.original_price_usd) && (
+                      <div className="text-sm text-gray-400 line-through mb-0.5">
+                        {isIndianUser
+                          ? `₹${plan.original_price_inr}`
+                          : `$${plan.original_price_usd}`}
+                      </div>
+                    )}
                     <span className="text-2xl sm:text-3xl font-bold text-gray-900">
-                      ${plan.price_usd}
+                      {isIndianUser ? `₹${plan.price_inr}` : `$${plan.price_usd}`}
                     </span>
                     <div className="text-xs sm:text-sm text-gray-600 mt-1">
-                      ${plan.pricePerCoin.toFixed(3)} per coin
+                      {isIndianUser
+                        ? `₹${(parseFloat(plan.price_inr) / plan.coins).toFixed(2)} per coin`
+                        : `$${plan.pricePerCoin.toFixed(3)} per coin`}
                     </div>
                     {plan.savings && (
                       <div className="text-xs sm:text-sm text-green-600 font-semibold mt-0.5">

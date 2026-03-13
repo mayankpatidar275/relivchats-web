@@ -648,31 +648,23 @@ export const MostActiveDayCard = forwardRef<
   { metadata: ChatMetadata }
 >(({ metadata }, ref) => {
   const busiestDay = useMemo(() => {
-    const days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
+    // daily_distribution keys are string day names e.g. "Monday", "Tuesday"
     const dayData = metadata.daily_distribution || {};
-    let maxDay = 0;
+    let maxDayName = metadata.busiest_day || "Monday";
     let maxCount = 0;
 
     Object.entries(dayData).forEach(([day, count]) => {
       if (count > maxCount) {
         maxCount = count;
-        maxDay = parseInt(day);
+        maxDayName = day;
       }
     });
 
     return {
-      name: days[maxDay] || "Unknown",
+      name: maxDayName,
       count: maxCount,
     };
-  }, [metadata.daily_distribution]);
+  }, [metadata.daily_distribution, metadata.busiest_day]);
 
   return (
     <div ref={ref}>

@@ -21,6 +21,8 @@ export default function ConversationExchange({
 }: ConversationExchangeProps) {
   const theme = useCategoryTheme(categorySlug);
 
+  if (!exchange || exchange.length === 0) return null;
+
   return (
     <div className="bg-white rounded-xl border-2 border-gray-100 p-4 md:p-5">
       {/* Context header — only shown when context is non-empty */}

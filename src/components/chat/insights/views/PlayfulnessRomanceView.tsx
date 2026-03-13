@@ -219,13 +219,17 @@ export default function PlayfulnessRomanceView({
             </p>
           </div>
 
-          {content.flirtation.evidence &&
-            content.flirtation.evidence.length > 0 && (
+          {(() => {
+            const flirtyItems = (content.flirtation.evidence ?? []).filter(
+              (ev) => ev.exchange && ev.exchange.length > 0
+            );
+            if (flirtyItems.length === 0) return null;
+            return (
               <div className="space-y-3">
                 <p className="text-xs font-semibold text-gray-600 uppercase">
                   Flirty Moments
                 </p>
-                {content.flirtation.evidence.map((ev, idx) => (
+                {flirtyItems.map((ev, idx) => (
                   <ConversationExchange
                     key={idx}
                     context={ev.context}
@@ -234,7 +238,8 @@ export default function PlayfulnessRomanceView({
                   />
                 ))}
               </div>
-            )}
+            );
+          })()}
         </div>
       )}
 

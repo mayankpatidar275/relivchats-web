@@ -11,6 +11,15 @@ import {
   FuturePlanningContent,
   LoveLanguageContent,
   PlayfulnessRomanceContent,
+  FriendshipTrustLoyaltyContent,
+  FriendshipSupportDynamicsContent,
+  FriendshipVitalityContent,
+  FamilyDynamicsContent,
+  FamilyEmotionalClimateContent,
+  FamilyConflictPatternsContent,
+  WorkplaceCommunicationContent,
+  WorkplaceCollaborationContent,
+  WorkplaceRelationshipHealthContent,
 } from "@/src/features/insights/types";
 import InsightSkeleton from "./insights/InsightSkeleton";
 import CommunicationBasicsView from "./insights/views/CommunicationBasicsView";
@@ -19,6 +28,15 @@ import EmotionalIntimacyView from "./insights/views/EmotionalIntimacyView";
 import FuturePlanningView from "./insights/views/FuturePlanningView";
 import LoveLanguageView from "./insights/views/LoveLanguageView";
 import PlayfulnessRomanceView from "./insights/views/PlayfulnessRomanceView";
+import FriendshipTrustLoyaltyView from "./insights/views/FriendshipTrustLoyaltyView";
+import FriendshipSupportDynamicsView from "./insights/views/FriendshipSupportDynamicsView";
+import FriendshipVitalityView from "./insights/views/FriendshipVitalityView";
+import FamilyDynamicsView from "./insights/views/FamilyDynamicsView";
+import FamilyEmotionalClimateView from "./insights/views/FamilyEmotionalClimateView";
+import FamilyConflictPatternsView from "./insights/views/FamilyConflictPatternsView";
+import WorkplaceCommunicationView from "./insights/views/WorkplaceCommunicationView";
+import WorkplaceCollaborationView from "./insights/views/WorkplaceCollaborationView";
+import WorkplaceRelationshipHealthView from "./insights/views/WorkplaceRelationshipHealthView";
 
 interface InsightsDisplaySectionProps {
   chatId: string;
@@ -201,6 +219,72 @@ export default function InsightsDisplaySection({
         return (
           <PlayfulnessRomanceView
             content={activeInsight.content as PlayfulnessRomanceContent}
+            categorySlug={chat.category_slug}
+          />
+        );
+      // Friendship
+      case "friendship_trust_loyalty":
+        return (
+          <FriendshipTrustLoyaltyView
+            content={activeInsight.content as FriendshipTrustLoyaltyContent}
+            categorySlug={chat.category_slug}
+          />
+        );
+      case "friendship_support_dynamics":
+        return (
+          <FriendshipSupportDynamicsView
+            content={activeInsight.content as FriendshipSupportDynamicsContent}
+            categorySlug={chat.category_slug}
+          />
+        );
+      case "friendship_vitality":
+        return (
+          <FriendshipVitalityView
+            content={activeInsight.content as FriendshipVitalityContent}
+            categorySlug={chat.category_slug}
+          />
+        );
+      // Family
+      case "family_dynamics":
+        return (
+          <FamilyDynamicsView
+            content={activeInsight.content as FamilyDynamicsContent}
+            categorySlug={chat.category_slug}
+          />
+        );
+      case "family_emotional_climate":
+        return (
+          <FamilyEmotionalClimateView
+            content={activeInsight.content as FamilyEmotionalClimateContent}
+            categorySlug={chat.category_slug}
+          />
+        );
+      case "family_conflict_patterns":
+        return (
+          <FamilyConflictPatternsView
+            content={activeInsight.content as FamilyConflictPatternsContent}
+            categorySlug={chat.category_slug}
+          />
+        );
+      // Workplace
+      case "workplace_communication":
+        return (
+          <WorkplaceCommunicationView
+            content={activeInsight.content as WorkplaceCommunicationContent}
+            categorySlug={chat.category_slug}
+          />
+        );
+      case "workplace_collaboration":
+        return (
+          <WorkplaceCollaborationView
+            content={activeInsight.content as WorkplaceCollaborationContent}
+            categorySlug={chat.category_slug}
+          />
+        );
+      case "workplace_relationship_health":
+        return (
+          <WorkplaceRelationshipHealthView
+            content={activeInsight.content as WorkplaceRelationshipHealthContent}
             categorySlug={chat.category_slug}
           />
         );

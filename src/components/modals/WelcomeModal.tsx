@@ -182,7 +182,7 @@ export default function WelcomeModal() {
                 {
                   icon: "🎯",
                   title: "Choose a Category",
-                  description: "Romantic, Friendship, Family, or Work",
+                  description: "Romantic, Friendship, Family, or Workplace",
                 },
                 {
                   icon: "✨",

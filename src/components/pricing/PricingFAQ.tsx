@@ -7,7 +7,7 @@ const faqs = [
   {
     question: "How do coins work?",
     answer:
-      "Coins are used to unlock AI insights. Friendship/Family insights cost 50 coins per chat, while Romantic/Work insights cost 100 coins. Coins never expire and you can use them anytime.",
+      "Coins are used to unlock AI insights. All categories — Romantic, Friendship, Family, and Workplace — cost 400 coins per chat. Coins never expire and you can use them anytime.",
   },
   // {
   //   question: "Do I need a subscription?",

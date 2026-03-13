@@ -48,8 +48,21 @@ export const categoryThemes: Record<string, CategoryTheme> = {
     borderHover: "hover:border-green-400",
     accent: "#22c55e",
   },
+  workplace: {
+    name: "workplace",
+    gradient: "from-purple-500 to-indigo-500",
+    gradientFrom: "#a855f7",
+    gradientTo: "#6366f1",
+    text: "text-primary",
+    bg: "bg-purple-50",
+    bgLight: "bg-purple-100",
+    border: "border-purple-200",
+    borderHover: "hover:border-purple-400",
+    accent: "#a855f7",
+  },
+  // alias for legacy slug
   work: {
-    name: "work",
+    name: "workplace",
     gradient: "from-purple-500 to-indigo-500",
     gradientFrom: "#a855f7",
     gradientTo: "#6366f1",

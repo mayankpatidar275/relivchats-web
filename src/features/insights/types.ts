@@ -431,6 +431,512 @@ export interface FuturePlanningContent {
   };
 }
 
+// ─── FRIENDSHIP INSIGHT TYPES ──────────────────────────────────────────────
+
+export interface FriendshipTrustLoyaltyContent {
+  reliability_patterns: {
+    participants: Array<{
+      name: string;
+      reliability_rating: string;
+      description: string;
+      evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+    }>;
+    assessment: string;
+  };
+  showing_up: {
+    analysis: string;
+    initiator: string;
+    evidence: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  promise_keeping: {
+    assessment: string;
+    patterns_observed: string[];
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  confidentiality: {
+    assessment: string;
+    sensitive_content_present: boolean;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  consistency: {
+    rating: string;
+    initiator_balance: string;
+    description: string;
+  };
+  loyalty_signals: {
+    present: boolean;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  trust_gaps: {
+    present: boolean;
+    assessment: string;
+    gaps?: Array<{
+      gap_type: string;
+      description: string;
+      evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+    }>;
+  };
+  recommendations: Array<{
+    title: string;
+    target: string[];
+    suggestion: string;
+    example_phrases: string[];
+  }>;
+  overall: {
+    score: number;
+    trust_status: string;
+    summary: string;
+  };
+}
+
+export interface FriendshipSupportDynamicsContent {
+  support_presence: {
+    level: string;
+    assessment: string;
+  };
+  support_styles: {
+    participants: Array<{
+      name: string;
+      style: string;
+      description: string;
+      evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+    }>;
+  };
+  reciprocity: {
+    balance_rating: string;
+    analysis: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  emotional_availability: {
+    analysis: string;
+    evidence: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  checking_in: {
+    present: boolean;
+    initiator: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  hard_times_moments: Array<{
+    situation: string;
+    response_quality: string;
+    exchange: Array<{ speaker: string; message: string; timestamp: string }>;
+  }>;
+  friendship_strengths: Array<{
+    strength: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  }>;
+  growth_areas: Array<{
+    area: string;
+    description: string;
+  }>;
+  recommendations: Array<{
+    title: string;
+    target: string[];
+    suggestion: string;
+    example_phrases: string[];
+  }>;
+  overall: {
+    score: number;
+    bond_status: string;
+    summary: string;
+  };
+}
+
+export interface FriendshipVitalityContent {
+  energy_level: {
+    rating: string;
+    assessment: string;
+  };
+  humor_banter: {
+    participants: Array<{
+      name: string;
+      humor_style: string;
+      description: string;
+      evidence?: Array<{ message: string; speaker: string; timestamp: string }>;
+    }>;
+    initiator: string;
+  };
+  inside_references: Array<{
+    reference: string;
+    context: string;
+    evidence?: Array<{ message: string; speaker: string; timestamp: string }>;
+  }>;
+  shared_activities: {
+    discussed: boolean;
+    activity_types: string[];
+    follow_through_assessment: string;
+    evidence?: Array<{ message: string; speaker: string; timestamp: string; context?: string }>;
+  };
+  initiation_balance: {
+    rating: string;
+    description: string;
+    primary_initiator: string;
+  };
+  conversation_depth: {
+    rating: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  enthusiasm: {
+    participants: Array<{ name: string; level: string; description: string }>;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  best_moments: Array<{
+    moment_title: string;
+    why_special: string;
+    exchange: Array<{ speaker: string; message: string; timestamp: string }>;
+  }>;
+  vitality_gaps: Array<{ gap: string; suggestion: string }>;
+  recommendations: Array<{ title: string; suggestion: string; examples: string[] }>;
+  overall: {
+    score: number;
+    friendship_status: string;
+    summary: string;
+  };
+}
+
+// ─── FAMILY INSIGHT TYPES ────────────────────────────────────────────────────
+
+export interface FamilyDynamicsContent {
+  visible_roles: {
+    participants: Array<{
+      name: string;
+      roles: string[];
+      description: string;
+      evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+    }>;
+  };
+  decision_making: {
+    primary_decision_maker: string;
+    style: string;
+    analysis: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  communication_hierarchy: {
+    rating: string;
+    analysis: string;
+  };
+  expectation_patterns: {
+    present: boolean;
+    description: string;
+    expectations?: Array<{
+      expectation_type: string;
+      directed_at: string;
+      description: string;
+      evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+    }>;
+  };
+  autonomy_space: {
+    rating: string;
+    analysis: string;
+  };
+  family_strengths: Array<{
+    strength: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  }>;
+  patterns_to_reflect: Array<{
+    pattern: string;
+    description: string;
+    reflection_prompt: string;
+  }>;
+  recommendations: Array<{
+    title: string;
+    target: string[];
+    suggestion: string;
+    example_phrases: string[];
+  }>;
+  overall: {
+    score: number;
+    dynamics_status: string;
+    summary: string;
+  };
+}
+
+export interface FamilyEmotionalClimateContent {
+  overall_warmth: {
+    rating: string;
+    assessment: string;
+  };
+  affection_expression: {
+    participants: Array<{
+      name: string;
+      expression_style: string;
+      description: string;
+      evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+    }>;
+  };
+  emotional_openness: {
+    participants: Array<{
+      name: string;
+      openness_style: string;
+      description: string;
+      evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+    }>;
+  };
+  vulnerability_moments: {
+    present: boolean;
+    response_quality: string;
+    description: string;
+    moments?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  warmth_appreciation: {
+    present: boolean;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  emotional_avoidance: {
+    present: boolean;
+    description: string;
+    avoided_areas?: string[];
+  };
+  positive_emotional_moments: Array<{
+    moment_title: string;
+    why_meaningful: string;
+    exchange: Array<{ speaker: string; message: string; timestamp: string }>;
+  }>;
+  growth_opportunities: Array<{ opportunity: string; description: string }>;
+  recommendations: Array<{
+    title: string;
+    target: string[];
+    suggestion: string;
+    example_phrases: string[];
+  }>;
+  overall: {
+    score: number;
+    climate_status: string;
+    summary: string;
+  };
+}
+
+export interface FamilyConflictPatternsContent {
+  conflict_presence: {
+    level: string;
+    expression_style: string;
+    assessment: string;
+  };
+  family_specific_patterns: Array<{
+    pattern_name: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  }>;
+  individual_styles: {
+    participants: Array<{
+      name: string;
+      style: string;
+      description: string;
+      evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+    }>;
+  };
+  tension_topics: Array<{
+    topic: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  }>;
+  conflict_resolution: {
+    approach: string;
+    effectiveness: string;
+    description: string;
+  };
+  positive_conflict_behaviors: Array<{
+    behavior: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  }>;
+  patterns_to_address: Array<{
+    pattern: string;
+    description: string;
+    reflection_prompt: string;
+  }>;
+  recommendations: Array<{
+    title: string;
+    target: string[];
+    suggestion: string;
+    example_phrases: string[];
+  }>;
+  overall: {
+    score: number;
+    conflict_health: string;
+    summary: string;
+  };
+}
+
+// ─── WORKPLACE INSIGHT TYPES ─────────────────────────────────────────────────
+
+export interface WorkplaceCommunicationContent {
+  overall_quality: {
+    rating: string;
+    assessment: string;
+  };
+  clarity_directness: {
+    participants: Array<{
+      name: string;
+      clarity_rating: string;
+      description: string;
+      evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+    }>;
+  };
+  tone_professionalism: {
+    overall_tone: string;
+    assessment: string;
+    participants: Array<{
+      name: string;
+      tone_description: string;
+      evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+    }>;
+  };
+  responsiveness: {
+    rating: string;
+    analysis: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  information_flow: {
+    style: string;
+    proactive_participant: string;
+    analysis: string;
+  };
+  conciseness: {
+    assessment: string;
+    description: string;
+  };
+  communication_strengths: Array<{
+    strength: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  }>;
+  communication_gaps: Array<{
+    gap: string;
+    description: string;
+    impact: string;
+  }>;
+  recommendations: Array<{
+    title: string;
+    target: string[];
+    suggestion: string;
+    example_phrases: string[];
+  }>;
+  overall: {
+    score: number;
+    effectiveness_status: string;
+    summary: string;
+  };
+}
+
+export interface WorkplaceCollaborationContent {
+  task_ownership: {
+    participants: Array<{
+      name: string;
+      ownership_style: string;
+      description: string;
+      evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+    }>;
+  };
+  follow_through: {
+    rating: string;
+    analysis: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  decision_making: {
+    style: string;
+    primary_decision_maker: string;
+    analysis: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  blocker_communication: {
+    rating: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  workload_balance: {
+    rating: string;
+    analysis: string;
+    primary_driver: string;
+  };
+  coordination_quality: {
+    assessment: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  collaboration_strengths: Array<{
+    strength: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  }>;
+  accountability_gaps: Array<{
+    gap: string;
+    description: string;
+    suggestion: string;
+  }>;
+  recommendations: Array<{
+    title: string;
+    target: string[];
+    suggestion: string;
+    example_phrases: string[];
+  }>;
+  overall: {
+    score: number;
+    collaboration_status: string;
+    summary: string;
+  };
+}
+
+export interface WorkplaceRelationshipHealthContent {
+  overall_quality: {
+    rating: string;
+    assessment: string;
+  };
+  mutual_respect: {
+    rating: string;
+    analysis: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  psychological_safety: {
+    rating: string;
+    analysis: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  power_dynamics: {
+    assessment: string;
+    description: string;
+  };
+  positive_reinforcement: {
+    level: string;
+    primary_giver: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  stress_signals: {
+    present: boolean;
+    description: string;
+    signals?: string[];
+  };
+  interpersonal_rapport: {
+    rating: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  };
+  relationship_strengths: Array<{
+    strength: string;
+    description: string;
+    evidence?: Array<{ context: string; exchange: Array<{ speaker: string; message: string; timestamp: string }> }>;
+  }>;
+  areas_to_strengthen: Array<{ area: string; description: string }>;
+  recommendations: Array<{
+    title: string;
+    target: string[];
+    suggestion: string;
+    example_phrases: string[];
+  }>;
+  overall: {
+    score: number;
+    health_status: string;
+    summary: string;
+  };
+}
+
 // Playfulness & Romance Types
 export interface PlayfulnessRomanceContent {
   overall_playfulness: {

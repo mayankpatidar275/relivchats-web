@@ -64,7 +64,7 @@ const colorMap: Record<
     badgeBg: "bg-green-100",
     badgeText: "text-green-700",
   },
-  work: {
+  workplace: {
     color: "from-purple-500 to-indigo-500",
     gradient: "from-purple-50 to-indigo-50",
     bg: "bg-purple-50",
@@ -90,3 +90,6 @@ export function getCategoryColors(categorySlug: string) {
   const colors = colorMap[categorySlug] || colorMap.romantic;
   return colors;
 }
+
+// work is an alias for workplace (backwards compat for any legacy slugs)
+colorMap.work = colorMap.workplace;

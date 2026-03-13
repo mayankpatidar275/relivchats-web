@@ -35,13 +35,25 @@ export default function PricingComparison() {
       category: "AI Insights",
       items: [
         {
-          name: "Friendship/Family insights",
-          starter: "4 chats",
-          popular: "10 chats",
-          pro: "30 chats",
+          name: "Romantic insights",
+          starter: "2 chats",
+          popular: "5 chats",
+          pro: "15 chats",
         },
         {
-          name: "Romantic/Work insights",
+          name: "Friendship insights",
+          starter: "2 chats",
+          popular: "5 chats",
+          pro: "15 chats",
+        },
+        {
+          name: "Family insights",
+          starter: "2 chats",
+          popular: "5 chats",
+          pro: "15 chats",
+        },
+        {
+          name: "Workplace insights",
           starter: "2 chats",
           popular: "5 chats",
           pro: "15 chats",

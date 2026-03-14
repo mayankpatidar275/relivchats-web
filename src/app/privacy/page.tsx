@@ -105,7 +105,7 @@ export default function PrivacyPolicyPage() {
                   Data Encryption
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Your data is encrypted in transit using TLS 1.3
+                  Encrypted in transit (TLS 1.3) and at rest (AES-128 field-level encryption)
                 </p>
               </div>
               <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
@@ -440,6 +440,16 @@ export default function PrivacyPolicyPage() {
                       <span>
                         <strong>In Transit:</strong> All data transmitted using
                         TLS 1.3 encryption
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+                      <span>
+                        <strong>At Rest:</strong> Your chat messages, participant
+                        names, and AI-generated insights are encrypted in our
+                        database using AES-128 field-level encryption. Even in
+                        the event of a data breach, your conversation content
+                        is unreadable without the encryption key.
                       </span>
                     </li>
                   </ul>

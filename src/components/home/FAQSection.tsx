@@ -117,7 +117,7 @@ export default function FAQSection() {
             Still have questions?
           </p>
           <a
-            href="mailto:mayankpatidar275@gmail.com"
+            href="mailto:relivchats@gmail.com"
             className="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-xl font-semibold transition-all text-sm md:text-base"
           >
             Contact Support

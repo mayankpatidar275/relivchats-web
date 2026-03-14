@@ -473,10 +473,10 @@ export default function RefundPolicyPage() {
                   <p className="text-sm">
                     Email us at{" "}
                     <a
-                      href="mailto:mayankpatidar275@gmail.com"
+                      href="mailto:relivchats@gmail.com"
                       className="text-primary hover:underline font-semibold"
                     >
-                      mayankpatidar275@gmail.com
+                      relivchats@gmail.com
                     </a>{" "}
                     with your issue. Most disputes can be resolved within 24-48
                     hours.
@@ -565,10 +565,10 @@ export default function RefundPolicyPage() {
                     Email Support
                   </h3>
                   <a
-                    href="mailto:mayankpatidar275@gmail.com"
+                    href="mailto:relivchats@gmail.com"
                     className="text-primary hover:underline font-semibold"
                   >
-                    mayankpatidar275@gmail.com
+                    relivchats@gmail.com
                   </a>
                   <p className="text-xs text-gray-500 mt-2">
                     Response time: 24-48 hours
@@ -662,10 +662,10 @@ export default function RefundPolicyPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5">
                 <h3 className="font-semibold mb-2">Email</h3>
                 <a
-                  href="mailto:mayankpatidar275@gmail.com"
+                  href="mailto:relivchats@gmail.com"
                   className="text-white hover:underline"
                 >
-                  mayankpatidar275@gmail.com
+                  relivchats@gmail.com
                 </a>
               </div>
 
@@ -682,7 +682,7 @@ export default function RefundPolicyPage() {
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5">
                 <h3 className="font-semibold mb-2">Mailing Address</h3>
                 <p className="text-sm text-white/90">
-                  Mayank Patidar
+                  Reliv Chats
                   <br />
                   Ratlam, MP 457441, India
                 </p>

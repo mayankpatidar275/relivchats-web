@@ -205,8 +205,8 @@ export default function ShippingPolicyPage() {
             <div className="grid md:grid-cols-2 gap-4 mb-6">
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5">
                 <h3 className="font-semibold mb-2">Email Support</h3>
-                <a href="mailto:mayankpatidar275@gmail.com" className="text-white hover:underline">
-                  mayankpatidar275@gmail.com
+                <a href="mailto:relivchats@gmail.com" className="text-white hover:underline">
+                  relivchats@gmail.com
                 </a>
               </div>
 

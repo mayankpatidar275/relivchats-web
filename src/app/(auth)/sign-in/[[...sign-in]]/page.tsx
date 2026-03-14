@@ -1,4 +1,5 @@
 import { SignIn } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default function SignInPage() {
   return (
@@ -31,6 +32,19 @@ export default function SignInPage() {
           fallbackRedirectUrl="/dashboard" // used when there's no redirect_url in the URL
           signUpUrl="/sign-up"
         />
+
+        {/* Consent */}
+        <p className="mt-4 text-center text-xs text-gray-500">
+          By continuing, you agree to our{" "}
+          <Link href="/terms" className="underline hover:text-gray-700">
+            Terms of Service
+          </Link>{" "}
+          and{" "}
+          <Link href="/privacy" className="underline hover:text-gray-700">
+            Privacy Policy
+          </Link>
+          .
+        </p>
 
         {/* Features */}
         <div className="mt-8 grid grid-cols-3 gap-4 text-center">

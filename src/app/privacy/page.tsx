@@ -652,10 +652,10 @@ export default function PrivacyPolicyPage() {
                 <p className="text-sm text-gray-700">
                   <strong>To exercise these rights:</strong> Email us at{" "}
                   <a
-                    href="mailto:mayankpatidar275@gmail.com"
+                    href="mailto:relivchats@gmail.com"
                     className="text-primary hover:underline font-semibold"
                   >
-                    mayankpatidar275@gmail.com
+                    relivchats@gmail.com
                   </a>{" "}
                   or use the data controls in your account settings. We'll
                   respond within 30 days.
@@ -840,20 +840,20 @@ export default function PrivacyPolicyPage() {
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5">
                   <h3 className="font-semibold mb-3">Privacy Inquiries</h3>
                   <a
-                    href="mailto:mayankpatidar275@gmail.com"
+                    href="mailto:relivchats@gmail.com"
                     className="text-white hover:underline font-semibold"
                   >
-                    mayankpatidar275@gmail.com
+                    relivchats@gmail.com
                   </a>
                 </div>
 
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5">
                   <h3 className="font-semibold mb-3">General Support</h3>
                   <a
-                    href="mailto:mayankpatidar275@gmail.com"
+                    href="mailto:relivchats@gmail.com"
                     className="text-white hover:underline font-semibold"
                   >
-                    mayankpatidar275@gmail.com
+                    relivchats@gmail.com
                   </a>
                 </div>
 
@@ -870,7 +870,7 @@ export default function PrivacyPolicyPage() {
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5">
                   <h3 className="font-semibold mb-3">Mailing Address</h3>
                   <p className="text-sm text-white/90">
-                    Mayank Patidar
+                    Reliv Chats
                     <br />
                     Ratlam, MP 457441, India
                   </p>

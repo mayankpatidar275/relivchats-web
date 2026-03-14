@@ -58,10 +58,10 @@ export default function ContactPage() {
                       Email
                     </h3>
                     <a
-                      href="mailto:mayankpatidar275@gmail.com"
+                      href="mailto:relivchats@gmail.com"
                       className="text-sm text-primary hover:underline"
                     >
-                      mayankpatidar275@gmail.com
+                      relivchats@gmail.com
                     </a>
                   </div>
                 </div>
@@ -92,7 +92,7 @@ export default function ContactPage() {
                       Address
                     </h3>
                     <p className="text-sm text-gray-600">
-                      Mayank Patidar
+                      Reliv Chats
                       <br />
                       Ratlam, Madhya Pradesh
                       <br />
@@ -134,10 +134,10 @@ export default function ContactPage() {
                 For data protection, GDPR, or privacy-related questions:
               </p>
               <a
-                href="mailto:mayankpatidar275@gmail.com"
+                href="mailto:relivchats@gmail.com"
                 className="text-sm font-semibold text-primary hover:underline"
               >
-                mayankpatidar275@gmail.com
+                relivchats@gmail.com
               </a>
             </div>
 
@@ -194,10 +194,10 @@ export default function ContactPage() {
               <p className="text-gray-600 leading-relaxed">
                 The best way to get in touch is by emailing us at{" "}
                 <a
-                  href="mailto:mayankpatidar275@gmail.com"
+                  href="mailto:relivchats@gmail.com"
                   className="text-primary hover:underline font-semibold"
                 >
-                  mayankpatidar275@gmail.com
+                  relivchats@gmail.com
                 </a>
                 . We typically respond within 24–48 hours. You can also reach us
                 by phone during support hours listed on the left.
@@ -249,7 +249,7 @@ export default function ContactPage() {
                       </h4>
                       <p className="text-sm text-gray-600">
                         Data privacy or GDPR requests? Email us at
-                        mayankpatidar275@gmail.com for faster response.
+                        relivchats@gmail.com for faster response.
                       </p>
                     </div>
                   </div>

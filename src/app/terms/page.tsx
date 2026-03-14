@@ -93,7 +93,7 @@ export default function TermsOfServicePage() {
                   By creating an account, accessing, or using RelivChats ("Service", "Platform", "we", "us", or "our"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not use the Service.
                 </p>
                 <p>
-                  These Terms constitute a legally binding agreement between you ("User", "you", or "your") and RelivChats, operated by Mayank Patidar.
+                  These Terms constitute a legally binding agreement between you ("User", "you", or "your") and RelivChats, operated by Reliv Chats.
                 </p>
               </div>
             </section>
@@ -648,8 +648,8 @@ export default function TermsOfServicePage() {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5">
                   <h3 className="font-semibold mb-2">Email</h3>
-                  <a href="mailto:mayankpatidar275@gmail.com" className="text-white hover:underline">
-                    mayankpatidar275@gmail.com
+                  <a href="mailto:relivchats@gmail.com" className="text-white hover:underline">
+                    relivchats@gmail.com
                   </a>
                 </div>
 

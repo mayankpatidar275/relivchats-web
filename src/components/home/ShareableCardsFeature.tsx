@@ -12,7 +12,7 @@ export default function ShareableCardsFeature() {
           {/* Left side - Illustration */}
           <div className="flex items-center justify-center order-2 md:order-1">
             <div className="relative w-full max-w-lg">
-              <div className="absolute inset-0 bg-linear-to-br from-purple-400 to-pink-400 rounded-full blur-3xl opacity-20 animate-pulse" />
+              {/* <div className="absolute inset-0 bg-linear-to-br from-purple-400 to-pink-400 rounded-full blur-3xl opacity-20 animate-pulse" /> */}
               <Image
                 src={ChatIllustration}
                 alt="Analyze your conversations"

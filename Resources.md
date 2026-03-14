@@ -12,3 +12,13 @@ https://www.analyticsvidhya.com/blog/2023/02/whatsapp-chat-analysis-end-to-end-d
 https://www.chattier.ai/pricing
 https://www.scribd.com/document/761056830/Dating
 https://www.reddit.com/r/SaaS/comments/1i80y3v/your_hero_section_is_trash_and_thats_okay_well/
+
+Competiters
+https://chatrecap.io/
+https://chatrecapai.org/
+https://chatanalyzer.app/
+https://zapzipped.com/
+https://eliteai.tools/tool/zapzipped
+https://eliteai.tools/tool/chat-analyzer/alternatives
+https://eliteai.tools/tool/chat-analyzer
+https://www.chattier.ai/

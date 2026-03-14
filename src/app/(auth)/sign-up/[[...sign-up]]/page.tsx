@@ -1,4 +1,5 @@
 import { SignUp } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default function SignUpPage() {
   return (
@@ -45,6 +46,19 @@ export default function SignUpPage() {
           fallbackRedirectUrl="/dashboard?welcome=true" // used when there's no redirect_url in the URL
           signInUrl="/sign-in"
         />
+
+        {/* Consent */}
+        <p className="mt-4 text-center text-xs text-gray-500">
+          By signing up, you agree to our{" "}
+          <Link href="/terms" className="underline hover:text-gray-700">
+            Terms of Service
+          </Link>{" "}
+          and{" "}
+          <Link href="/privacy" className="underline hover:text-gray-700">
+            Privacy Policy
+          </Link>
+          .
+        </p>
       </div>
     </div>
   );

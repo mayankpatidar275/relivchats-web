@@ -21,8 +21,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://relivchats.com"),
   title: "Reliv Chats",
   description: "AI-powered chat insights platform",
+  openGraph: {
+    title: "Reliv Chats",
+    description: "Upload your chats and get AI-powered insights about your conversations.",
+    url: "https://relivchats.com",
+    siteName: "Reliv Chats",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Reliv Chats - AI-powered chat insights",
+      },
+    ],
+    type: "website",
+  },
 };
 
 export default function RootLayout({

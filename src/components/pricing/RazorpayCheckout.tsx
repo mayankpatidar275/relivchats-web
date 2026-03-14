@@ -1,8 +1,10 @@
 // src/components/pricing/RazorpayCheckout.tsx
 "use client";
 
-import { useCreatePaymentOrder } from "@/src/features/payments/api/hooks";
-import { useEffect, useState } from "react";
+import { useCreatePaymentOrder, useOrderStatus } from "@/src/features/payments/api/hooks";
+import { useEffect, useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/src/lib/query/keys";
 import { toast } from "sonner";
 
 declare global {
@@ -24,6 +26,25 @@ export function useRazorpayCheckout({
   onError,
 }: RazorpayCheckoutProps) {
   const createOrder = useCreatePaymentOrder();
+  const queryClient = useQueryClient();
+  const [pendingOrderId, setPendingOrderId] = useState("");
+  const balanceRefreshed = useRef(false);
+  const { data: orderStatus } = useOrderStatus(pendingOrderId);
+
+  // When the order is confirmed server-side (webhook processed), refresh balance.
+  // useOrderStatus stops polling automatically once status leaves pending/processing,
+  // so we only need a guard ref to prevent firing more than once per order.
+  useEffect(() => {
+    if (
+      pendingOrderId &&
+      !balanceRefreshed.current &&
+      (orderStatus?.status === "completed" || orderStatus?.status === "paid")
+    ) {
+      balanceRefreshed.current = true;
+      queryClient.invalidateQueries({ queryKey: queryKeys.credits.balance() });
+    }
+  }, [orderStatus?.status, pendingOrderId, queryClient]);
+
   const [isScriptLoaded, setIsScriptLoaded] = useState(() => {
     // Initialize with current state
     return typeof window !== "undefined" && !!window.Razorpay;
@@ -95,6 +116,10 @@ export function useRazorpayCheckout({
         provider: "razorpay",
         idempotency_key: `${packageId}-${Date.now()}`,
       });
+
+      // Start polling order status — balance will refresh when webhook completes
+      balanceRefreshed.current = false;
+      setPendingOrderId(order.order_id);
 
       // Initialize Razorpay checkout
       const options = {

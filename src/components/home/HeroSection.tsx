@@ -70,7 +70,7 @@ export default function HeroSection() {
 
             {/* Main heading */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tight">
-              <span className="block text-gray-900">Understand Your</span>
+              <span className="block text-gray-900">Understand Your </span>
               <span className="block mt-2 bg-linear-to-r from-primary-deep via-primary to-accent-pink bg-clip-text text-transparent animate-gradient">
                 {/* Relationships Deeper */}
                 <span className="text-[#25D366]">WhatsApp </span>
